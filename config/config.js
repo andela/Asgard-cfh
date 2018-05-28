@@ -1,3 +1,4 @@
+require('dotenv-extended').load();
 var _ = require('underscore');
 
 // Load app configuration

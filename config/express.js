@@ -1,3 +1,4 @@
+require('dotenv-extended').load();
 /**
  * Module dependencies.
  */
