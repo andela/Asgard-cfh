@@ -1,4 +1,4 @@
-require('dotenv-extended').load();
+require('dotenv').config();
 var path = require('path'),
 rootPath = path.normalize(__dirname + '/../..');
 var keys = rootPath + '/keys.txt';

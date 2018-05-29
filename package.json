@@ -24,7 +24,7 @@
     "connect-flash": "~0.1.1",
     "connect-mongo": "^2.0.1",
     "console-stamp": "~0.1.1",
-    "dotenv-extended": "^2.0.2",
+    "dotenv": "^5.0.1",
     "express": "~3.4.0",
     "forever": "latest",
     "grunt": "~0.4.1",
