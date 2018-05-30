@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 var _ = require('underscore');
 
 // Load app configuration
