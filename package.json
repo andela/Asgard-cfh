@@ -9,8 +9,8 @@
     "url": "https://github.com/cardsforhumanity/cardsforhumanity.git"
   },
   "engines": {
-    "node": "0.10.x",
-    "npm": "1.2.x"
+    "node": "8.11.x",
+    "npm": "5.6.x"
   },
   "scripts": {
     "start": "node node_modules/grunt-cli/bin/grunt",
