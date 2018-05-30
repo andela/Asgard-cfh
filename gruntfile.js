@@ -1,3 +1,4 @@
+require('dotenv').config();
 module.exports = function(grunt) {
     // Project Configuration
     grunt.initConfig({
@@ -48,7 +49,7 @@ module.exports = function(grunt) {
                     debug: true,
                     delayTime: 1,
                     env: {
-                        PORT: 3000
+                        PORT: process.env.PORT
                     },
                     cwd: __dirname
                 }
