@@ -1,9 +1,3 @@
 {
-    "name": "asgard-cfh",
-    "scripts": {},
-    "env": {},
-    "formation": {},
-    "addons": [
-    ],
-    "buildpacks": []
+    "name": "asgard-cfh"
 }
