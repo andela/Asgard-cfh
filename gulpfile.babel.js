@@ -44,7 +44,7 @@ gulp.task('nodemon', () => nodemon({
   script: 'server.js',
   ext: 'js html jade scss css',
   ignore: ['README.md', 'node_modules/**', 'public/lib/**', '.DS_Store'],
-  watch: ['app', 'config', 'public', 'server.js', 'hi.js'],
+  watch: ['app', 'config', 'public', 'server.js'],
   env: {
     PORT: 3000,
     NODE_ENV: process.env.NODE_ENV

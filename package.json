@@ -13,7 +13,7 @@
     "npm": "5.6.0"
   },
   "scripts": {
-    "start": "node node_modules/gulp-cli/bin/gulp build && node node_modules/gulp-cli/bin/gulp",
+    "start": "babel-node node_modules/gulp-cli/bin/gulp",
     "start:dev": "babel-node node_modules/gulp-cli/bin/gulp",
     "test": "node node_modules/gulp-cli/bin/gulp test",
     "postinstall": "node node_modules/gulp-cli/bin/gulp install"
