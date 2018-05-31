@@ -17,7 +17,7 @@ const avatars = ['/img/chosen/E01.png',
   '/img/chosen/N03.png',
   '/img/chosen/N04.png',
   '/img/chosen/N05.png'];
-
+/* eslint-disable */
 exports.allJSON = function (req, res) {
   // Only return the first 12
   // The last 4 are reserved for guests
