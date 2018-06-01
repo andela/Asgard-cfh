@@ -22,8 +22,12 @@ module.exports = function(app, passport, mongoose) {
 
     //Setting the fav icon and static folder
     app.use(express.favicon());
-    app.use(express.static(config.root + '/public'));
-
+    if(process.env.NODE_ENV !== 'production') {
+        app.use(express.static(config.root + '/public'));
+    } else {
+        app.use(express.static(config.root + 'dist/public'));
+    } 
+    
     //Don't use logger for test env
     if (process.env.NODE_ENV !== 'test') {
         app.use(express.logger('dev'));
