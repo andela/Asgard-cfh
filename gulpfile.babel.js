@@ -19,14 +19,9 @@ const { reload } = browserSync;
 const moveFiles = (src, dest) => gulp.src(src).pipe(gulp.dest(dest));
 
 gulp.task('install', () => {
-  if (process.env.NODE_ENV !== 'production') {
     return bower({
       directory: 'public/lib'
     });
-  }
-  return bower({
-    directory: 'dist/public/lib'
-  });
 });
 
 gulp.task('watch', () => {

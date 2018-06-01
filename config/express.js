@@ -11,7 +11,6 @@ var express = require('express'),
 
 module.exports = function(app, passport, mongoose) {
     app.set('showStackError', true);
-
     //Should be placed before express.static
     app.use(express.compress({
         filter: function(req, res) {
@@ -22,12 +21,8 @@ module.exports = function(app, passport, mongoose) {
 
     //Setting the fav icon and static folder
     app.use(express.favicon());
-    if(process.env.NODE_ENV !== 'production') {
-        app.use(express.static(config.root + '/public'));
-    } else {
-        app.use(express.static(config.root + 'dist/public'));
-    } 
-    
+    app.use(express.static(config.root + '/public'));
+
     //Don't use logger for test env
     if (process.env.NODE_ENV !== 'test') {
         app.use(express.logger('dev'));
