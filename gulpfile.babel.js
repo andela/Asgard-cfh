@@ -46,7 +46,7 @@ gulp.task('nodemon', () => nodemon({
   ignore: ['README.md', 'node_modules/**', 'public/lib/**', '.DS_Store'],
   watch: ['app', 'config', 'public', 'server.js', 'hi.js'],
   env: {
-    PORT: 3000,
+    PORT: process.env.PORT || 3000,
     NODE_ENV: process.env.NODE_ENV
   }
 }));
@@ -93,7 +93,10 @@ gulp.task('test', () => {
     .pipe(mocha({
       reporter: 'spec',
       exit: true,
-      compilers: 'babel-core/register'
+      compilers: 'babel-core/register',
+      timeout: 5000
     }))
+    .on('error', () => exit())
+    .on('end', () => exit())
     .pipe(exit());
 });
