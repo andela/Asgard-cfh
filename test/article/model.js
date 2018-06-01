@@ -21,7 +21,6 @@
 //                 username: 'user',
 //                 password: 'password'
 //             });
-
 //             user.save(function(err) {                
 //                 article = new Article({
 //                     title: 'Article Title',
@@ -32,7 +31,6 @@
 //                 done();
 //             });
 //         });
-
 //         describe('Method Save', function() {
 //             it('should be able to save whithout problems', function(done) {
 //                 return article.save(function(err) {
@@ -50,7 +48,6 @@
 //                 });
 //             });
 //         });
-
 //         afterEach(function(done) {
 //             done();
 //         });
