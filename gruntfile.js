@@ -49,7 +49,7 @@ module.exports = function(grunt) {
                     debug: true,
                     delayTime: 1,
                     env: {
-                        PORT: process.env.PORT
+                        PORT: process.env.PORT || 3000
                     },
                     cwd: __dirname
                 }

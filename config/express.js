@@ -11,7 +11,6 @@ var express = require('express'),
 
 module.exports = function(app, passport, mongoose) {
     app.set('showStackError', true);
-
     //Should be placed before express.static
     app.use(express.compress({
         filter: function(req, res) {
@@ -21,8 +20,7 @@ module.exports = function(app, passport, mongoose) {
     }));
 
     //Setting the fav icon and static folder
-    // app.use(favicon(__dirname + '/public/favicon.png'));
-    app.use(express.favicon(config.root + '/public/img/icons/favicon.ico'));
+    app.use(express.favicon());
     app.use(express.static(config.root + '/public'));
 
     //Don't use logger for test env
