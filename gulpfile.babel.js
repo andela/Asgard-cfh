@@ -91,7 +91,5 @@ gulp.task('test', () => {
       compilers: 'babel-core/register',
       timeout: 5000
     }))
-    .on('error', () => exit())
-    .on('end', () => exit())
     .pipe(exit());
 });

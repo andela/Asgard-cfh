@@ -7,5 +7,5 @@ const path = require('path'),
 module.exports = {
   root: rootPath,
   port: process.env.PORT,
-  db: process.env.MONGOHQ_URL || 'mongodb://localhost:27017/asgard-cfh'
+  db: process.env.MONGOHQ_URL
 };
