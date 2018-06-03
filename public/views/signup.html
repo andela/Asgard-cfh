@@ -60,15 +60,14 @@
                 <input class="input-info" id="password" type="password" name="password" placeholder="Password" ng-model="user.password" required novalidate />
               </div>
             </div>
-            <input
-              ng-change="readImage()"
-              id="profile-pic" 
-              type="file" 
-              ng-model="user.image"
-              name="image"
-              accept=".jpg, .png, .jpeg">
-            </input>
-            <img ng-src="{{image_preview}}" class="image_preview" >
+            <div class="control-group">
+              <div class="controls choose-image">
+                  <!-- <label for="profile-pic">Select file</label> -->
+                <input ng-change="readImage()" id="profile-pic" type="file" ng-model="user.image" name="image" accept=".jpg, .png, .jpeg">
+                </input>
+              </div>
+            </div>
+            <img ng-src="{{image_preview}}" class="image-preview" >
             <!-- <div clas="form-group" id="contain-avatars">
               <div clas="input-group" ng-controller="IndexController"
                 id="exampleFormControlFile1">

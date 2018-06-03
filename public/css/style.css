@@ -1255,3 +1255,30 @@
       margin: 0 0 0 4px;
    }
  }
+
+ .image-preview {
+  height: 170px;
+    width: 170px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-bottom: 10px;
+    background-color: #999;
+ }
+
+ #profile-pic {
+  display: flex;
+  margin: 10px 0;
+  padding-top: 5px !important;
+  justify-content: center;
+  width: 319px;
+  object-fit: contain
+ }
+
+ #profile-pic::after {
+   color: white;
+ }
+
+ .choose-image {
+  display: flex;
+  justify-content: center;
+ }

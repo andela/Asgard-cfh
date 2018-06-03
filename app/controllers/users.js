@@ -14,7 +14,7 @@ const secret = process.env.SECRET;
  * Auth callback
  */
 exports.authCallback = (req, res) => {
-  res.redirect('/chooseavatars');
+  res.redirect('/#!/app');
 };
 
 /**
@@ -113,22 +113,16 @@ exports.create = (req, res, next) => {
 };
 
 exports.signUp = (req, res) => {
-  const {
-    name,
-    password,
-    email
-  } = req.body;
-
-  if (name && password && email) {
+  if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
-      email
+      email: req.body.email
     })
       .then((user) => {
         if (!user) {
           const newUser = new User(req.body);
           newUser.avatar = avatars[newUser.avatar];
           newUser.provider = 'local';
-          newUser.save((error, nuUser) => {
+          newUser.save((error) => {
             if (error) {
               return res.render('/#!/signup?error=unknown', {
                 errors: error.errors,
@@ -141,6 +135,7 @@ exports.signUp = (req, res) => {
               _id,
               email
             }, secret);
+            console.log(token);
             return res.status(201).send({
               message: 'Signed up successfully',
               token

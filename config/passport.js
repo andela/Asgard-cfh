@@ -73,6 +73,7 @@ module.exports = function(passport) {
                         name: profile.displayName,
                         username: profile.username,
                         provider: 'twitter',
+                        profileImage: profile.photos ? profile.photos[0].value : null,
                         twitter: profile._json
                     });
                     user.save(function(err) {
@@ -101,7 +102,6 @@ module.exports = function(passport) {
                     return done(err);
                 }
                 if (!user) {
-                    console.log(profile);
                     user = new User({
                         name: profile.displayName,
                         email: (profile.emails && profile.emails[0].value) || '',
@@ -138,9 +138,10 @@ module.exports = function(passport) {
                 }
                 if (!user) {
                     user = new User({
-                        name: profile.displayName,
+                        name: profile.username,
                         email: profile.emails[0].value,
                         username: profile.username,
+                        profileImage: profile._json.avatar_url,
                         provider: 'github',
                         github: profile._json
                     });
@@ -173,6 +174,7 @@ module.exports = function(passport) {
                         name: profile.displayName,
                         email: profile.emails[0].value,
                         username: profile.username,
+                        profileImage: profile._json.picture,
                         provider: 'google',
                         google: profile._json
                     });
