@@ -6,6 +6,8 @@ var express = require('express'),
     passport = require('passport'),
     logger = require('mean-logger'),
     io = require('socket.io');
+    require('dotenv').config();
+
 
 /**
  * Main application entry file.
@@ -55,7 +57,7 @@ require('./config/express')(app, passport, mongoose);
 require('./config/routes')(app, passport, auth);
 
 //Start the app by listening on <port>
-var port = process.env.PORT;
+var port = process.env.PORT || 3000;
 var server = app.listen(port);
 var ioObj = io.listen(server, { log: false });
 //game logic handled here

@@ -19,14 +19,9 @@ const { reload } = browserSync;
 const moveFiles = (src, dest) => gulp.src(src).pipe(gulp.dest(dest));
 
 gulp.task('install', () => {
-  if (process.env.NODE_ENV !== 'production') {
     return bower({
       directory: 'public/lib'
     });
-  }
-  return bower({
-    directory: 'dist/public/lib'
-  });
 });
 
 gulp.task('watch', () => {
@@ -46,7 +41,7 @@ gulp.task('nodemon', () => nodemon({
   ignore: ['README.md', 'node_modules/**', 'public/lib/**', '.DS_Store'],
   watch: ['app', 'config', 'public', 'server.js', 'hi.js'],
   env: {
-    PORT: 3000,
+    PORT: process.env.PORT || 3000,
     NODE_ENV: process.env.NODE_ENV
   }
 }));
@@ -93,7 +88,8 @@ gulp.task('test', () => {
     .pipe(mocha({
       reporter: 'spec',
       exit: true,
-      compilers: 'babel-core/register'
+      compilers: 'babel-core/register',
+      timeout: 5000
     }))
     .pipe(exit());
 });

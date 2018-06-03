@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/andela/asgard-cfh/badge.svg?branch=develop)](https://coveralls.io/github/andela/asgard-cfh?branch=develop)
+[![Build Status](https://travis-ci.org/andela/asgard-cfh.svg?branch=develop)](https://travis-ci.org/andela/asgard-cfh)
 
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========

@@ -2,7 +2,7 @@ require('dotenv').config();
 const path = require('path'),
   rootPath = path.normalize(`${__dirname}/../..`);
 
-const keys = `${rootPath}/keys.txt`;
+// const keys = `${rootPath}/keys.txt`;
 
 module.exports = {
   root: rootPath,
