@@ -23,7 +23,6 @@ describe('<Unit Test>', () => {
     });
     describe('Method Save', () => {
       it('should be able to save whithout problems', done => user.save((err) => {
-        console.log('Show me this userrrr::', user);
         should.not.exist(err);
         done();
       }));
@@ -36,7 +35,7 @@ describe('<Unit Test>', () => {
         });
       });
     });
-    after((done) => {
+    afterEach((done) => {
       done();
     });
   });
