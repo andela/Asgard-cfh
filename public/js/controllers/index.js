@@ -1,5 +1,3 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
 /* eslint-disable */
 angular.module('mean.system').controller('IndexController', [
   '$scope',
@@ -31,7 +29,6 @@ angular.module('mean.system').controller('IndexController', [
 
       $scope.image = '';
       $scope.image_preview = '';
-      // $scope.user = { };
       $scope.readImage = () => {
         const file = event.target.files[0];
         if(file) {
@@ -43,27 +40,16 @@ angular.module('mean.system').controller('IndexController', [
           };
         }
       }
-      // const readImage = () => {
-      //   const myFile = $('#profile-pic').prop('files')[0];
-      //   const fReader = new FileReader();
-      //   fReader.readAsDataURL(myFile);
-      //   fReader.onload = e => {
-      //     $('.profile-image').attr('src', e.target.result);
-      //   };
-      // };
 
      $scope.signUp = () => {
        if ($scope.image) {
         const imageData = new FormData();
-        // let headers = new Headers();
-        // headers.append('Content-Type', 'application/json')
         imageData.append('file', $scope.image);
         imageData.append('upload_preset', 'zyu1ajoa');
         imageData.append('api_key', '126852175969548')
         $.ajax({
           url: "https://api.cloudinary.com/v1_1/clintfidel/image/upload",
           data: imageData,
-          // headers: headers,
           method: 'POST',
           contentType: false,
           processData: false,
@@ -77,10 +63,6 @@ angular.module('mean.system').controller('IndexController', [
         })
           },
         })
-          //  $scope.user.image = res.secure_url;
-          //  console.log($scope.user.image, 'i set the image here');
-          //  // $scope.user = res.public_id
-      
        } else {
         $http.post('/users', $scope.user)
         .then((response) => {
@@ -99,7 +81,6 @@ angular.module('mean.system').controller('IndexController', [
        //  $http.default.headers.common['x-access-token'] = response.data.token;
         $location.path('/');
       }, (error) => {
-        // console.log(error.data, '=====>');
         $scope.showError = true;
       });
       

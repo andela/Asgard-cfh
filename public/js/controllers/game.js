@@ -1,3 +1,4 @@
+
 angular.module('mean.system')
 .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;

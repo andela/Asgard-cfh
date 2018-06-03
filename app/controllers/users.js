@@ -112,7 +112,7 @@ exports.create = (req, res, next) => {
   }
 };
 
-exports.signUp = (req, res) => {
+exports.signUp = (req, res, next) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
@@ -129,16 +129,19 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
+            
             const { _id, email } = newUser;
             const token = jwt.sign({
               exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
               _id,
               email
             }, secret);
-            console.log(token);
-            return res.status(201).send({
-              message: 'Signed up successfully',
-              token
+            req.logIn(newUser, (err) => {
+              if (err) return next(err);
+              return res.status(201).send({
+                message: 'Signed up successfully',
+                token
+              });
             });
           });
         } else {
@@ -150,7 +153,7 @@ exports.signUp = (req, res) => {
   }
 };
 
-exports.login = (req, res) => {
+exports.login = (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.status(406).json({
       error: 'plaese fill in required fields'
@@ -174,9 +177,12 @@ exports.login = (req, res) => {
         _id,
         email
       }, secret);
-      return res.status(200).send({
-        message: 'logged in',
-        token
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+        return res.status(201).send({
+          message: 'Logged in Successfully',
+          token
+        });
       });
     }
   });
