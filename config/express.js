@@ -11,7 +11,6 @@ var express = require('express'),
 
 module.exports = function(app, passport, mongoose) {
     app.set('showStackError', true);
-
     //Should be placed before express.static
     app.use(express.compress({
         filter: function(req, res) {
