@@ -1,3 +1,4 @@
+require('dotenv').config();
 var mongoose = require('mongoose'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
@@ -89,7 +90,8 @@ module.exports = function(passport) {
     passport.use(new FacebookStrategy({
             clientID: process.env.FB_CLIENT_ID || config.facebook.clientID,
             clientSecret: process.env.FB_CLIENT_SECRET || config.facebook.clientSecret,
-            callbackURL: config.facebook.callbackURL
+            callbackURL: config.facebook.callbackURL,
+            profileFields: ['id', 'displayName', 'photos', 'email']
         },
         function(accessToken, refreshToken, profile, done) {
             User.findOne({
@@ -105,6 +107,7 @@ module.exports = function(passport) {
                         email: (profile.emails && profile.emails[0].value) || '',
                         username: profile.username,
                         provider: 'facebook',
+                        profileImage: profile.photos ? profile.photos[0].value : null,
                         facebook: profile._json
                     });
                     user.save(function(err) {
