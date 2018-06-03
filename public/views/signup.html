@@ -60,7 +60,22 @@
                 <input class="input-info" id="password" type="password" name="password" placeholder="Password" ng-model="user.password" required novalidate />
               </div>
             </div>
-            <div id="contain-avatars">
+            <div class="control-group">
+              <div class="controls choose-image">
+                  <!-- <label for="profile-pic">Select file</label> -->
+                <input ng-change="readImage()" id="profile-pic" type="file" ng-model="user.image" name="image" accept=".jpg, .png, .jpeg">
+                </input>
+              </div>
+            </div>
+            <img ng-src="{{image_preview}}" class="image-preview" >
+            <!-- <div clas="form-group" id="contain-avatars">
+              <div clas="input-group" ng-controller="IndexController"
+                id="exampleFormControlFile1">
+                <span class="input-group-addon" />
+                
+              </div>
+            </div> -->
+            <!-- <div id="contain-avatars">
               <ul ng-controller="IndexController" class="avatar-list">
                 <li ng-repeat="avatar in avatars" class="avatars ng-scope">
                   <input name="avatar" type='radio' value="{{$index}}">
@@ -68,7 +83,7 @@
                   </input>
                 </li>
               </ul>
-            </div>
+            </div> -->
             <div class="form-actions">
               <button id="sign-up-btn-other" type='submit'>Sign Up</button>
             </div>
