@@ -108,7 +108,6 @@ describe("Game Server",function(){
       client4.disconnect();
       client5.disconnect();
       client6.disconnect();
-      done();
     };
     var expectStartGame = function() {
       client1.emit('startGame');
@@ -163,5 +162,6 @@ describe("Game Server",function(){
         }
       });
     });
+    done();
   });
 });

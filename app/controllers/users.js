@@ -116,38 +116,37 @@ exports.signUp = (req, res, next) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
-    })
-      .then((user) => {
-        if (!user) {
-          const newUser = new User(req.body);
-          newUser.avatar = avatars[newUser.avatar];
-          newUser.provider = 'local';
-          newUser.save((error) => {
-            if (error) {
-              return res.render('/#!/signup?error=unknown', {
-                errors: error.errors,
-                user: newUser
-              });
-            }
-            
-            const { _id, email } = newUser;
-            const token = jwt.sign({
-              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
-              _id,
-              email
-            }, secret);
-            req.logIn(newUser, (err) => {
-              if (err) return next(err);
-              return res.status(201).send({
-                message: 'Signed up successfully',
-                token
-              });
+    }).exec((err, user) => {
+      if (!user) {
+        const newUser = new User(req.body);
+        newUser.avatar = avatars[newUser.avatar];
+        newUser.provider = 'local';
+        newUser.save((error) => {
+          if (error) {
+            return res.render('/#!/signup?error=unknown', {
+              errors: error.errors,
+              user: newUser
+            });
+          }
+
+          const { _id, email } = newUser;
+          const token = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+            _id,
+            email
+          }, secret);
+          req.logIn(newUser, (err) => {
+            if (err) return next(err);
+            return res.status(201).send({
+              message: 'Signed up successfully',
+              token
             });
           });
-        } else {
-          return res.redirect('/#!/signup?error=existinguser');
-        }
-      });
+        });
+      } else {
+        return res.redirect('/#!/signup?error=existinguser');
+      }
+    });
   } else {
     return res.redirect('/#!/signup?error=incomplete');
   }
