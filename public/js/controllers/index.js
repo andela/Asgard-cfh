@@ -55,7 +55,7 @@ angular.module('mean.system').controller('IndexController', [
           processData: false,
           success(res){
             $scope.user.profileImage = res.secure_url;
-            $http.post('/users', $scope.user)
+            $http.post('/api/auth/signup', $scope.user)
             .then((response) => {
             localStorage.setItem('token', response.data.token);
          //  $http.default.headers.common['x-access-token'] = response.data.token;
@@ -64,9 +64,8 @@ angular.module('mean.system').controller('IndexController', [
           },
         })
        } else {
-        $http.post('/users', $scope.user)
+        $http.post('/api/auth/signup', $scope.user)
         .then((response) => {
-          console.log(response, 'i got here');
           localStorage.setItem('token', response.data.token);
          //  $http.default.headers.common['x-access-token'] = response.data.token;
           $location.path('/');

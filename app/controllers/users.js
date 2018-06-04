@@ -112,12 +112,12 @@ exports.create = (req, res, next) => {
   }
 };
 
-exports.signUp = (req, res, next) => {
+exports.signUp = (req, res) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
     })
-      .then((user) => {
+      .exec((err, user) => {
         if (!user) {
           const newUser = new User(req.body);
           newUser.avatar = avatars[newUser.avatar];
@@ -137,7 +137,9 @@ exports.signUp = (req, res, next) => {
               email
             }, secret);
             req.logIn(newUser, (err) => {
-              if (err) return next(err);
+              if (err) {
+                return res.status(500).send({ message: 'Internal Server Error' });
+              }
               return res.status(201).send({
                 message: 'Signed up successfully',
                 token
