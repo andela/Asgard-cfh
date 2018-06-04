@@ -129,7 +129,7 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
-            
+
             const { _id, email } = newUser;
             const token = jwt.sign({
               exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
