@@ -179,7 +179,7 @@ exports.login = function (req, res) {
         email
       }, secret);
       return res.status(200).send({
-        message: 'logged in',
+        message: 'logged in successfully',
         token
       });
     }
