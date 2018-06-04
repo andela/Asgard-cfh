@@ -19,7 +19,6 @@ angular.module('mean.system')
        $http.post('/api/auth/signup', $scope.user)
        .then((response) => {
          localStorage.setItem('token', response.data.token);
-        //  $http.default.headers.common['x-access-token'] = response.data.token;
          $location.path('/');
        })
      }
@@ -28,10 +27,8 @@ angular.module('mean.system')
       $http.post('/api/auth/login', $scope.user)
       .then((response) => {
         localStorage.setItem('token', response.data.token);
-       //  $http.default.headers.common['x-access-token'] = response.data.token;
         $location.path('/');
       }, (error) => {
-        // console.log(error.data, '=====>');
         $scope.showError = true;
       });
       
