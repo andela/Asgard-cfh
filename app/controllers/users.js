@@ -15,6 +15,7 @@ const secret = process.env.SECRET;
  */
 exports.authCallback = (req, res) => {
   res.redirect('/#!/app');
+}
 
 /**
  * Show login form
