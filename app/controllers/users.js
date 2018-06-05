@@ -50,7 +50,7 @@ exports.signout = (req, res) => {
 /**
  * Session
  */
-exports.session = function (req, res) {
+exports.session = (req, res) => {
   res.redirect('/');
 };
 
@@ -158,7 +158,7 @@ exports.signUp = (req, res) => {
 exports.login = (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.status(406).json({
-      error: 'plaese fill in required fields'
+      error: 'please fill in required fields'
     });
   }
   return User.findOne({
@@ -181,7 +181,7 @@ exports.login = (req, res, next) => {
       }, secret);
       req.logIn(user, (err) => {
         if (err) return next(err);
-        return res.status(201).send({
+        return res.status(200).send({
           message: 'Logged in Successfully',
           token
         });
