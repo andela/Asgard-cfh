@@ -13,8 +13,13 @@ const secret = process.env.SECRET;
 /**
  * Auth callback
  */
+<<<<<<< HEAD
 exports.authCallback = (req, res) => {
   res.redirect('/#!/app');
+=======
+exports.authCallback = (req, res, next) => {
+  res.redirect('/chooseavatars');
+>>>>>>> 09fb6fa44d4d9498c2fbd4ce60021bafa50e261d
 };
 
 /**
@@ -219,13 +224,21 @@ exports.addDonation = (req, res) => {
         .exec((err, user) => {
         // Confirm that this object hasn't already been entered
           let duplicate = false;
+<<<<<<< HEAD
           for (let i = 0; i < user.donations.length; i += 1) {
+=======
+          for (let i = 0; i < user.donations.length; i++) {
+>>>>>>> 09fb6fa44d4d9498c2fbd4ce60021bafa50e261d
             if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
               duplicate = true;
             }
           }
           if (!duplicate) {
+<<<<<<< HEAD
             // console.log('Validated donation');
+=======
+            console.log('Validated donation');
+>>>>>>> 09fb6fa44d4d9498c2fbd4ce60021bafa50e261d
             user.donations.push(req.body);
             user.premium = 1;
             user.save();
