@@ -1,5 +1,5 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, Global, $location, socket, game, AvatarService) {
+.controller('IndexController', ['$scope', '$http', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, $http, Global, $location, socket, game, AvatarService) {
     $scope.global = Global;
 
     $scope.playAsGuest = function() {
@@ -7,18 +7,35 @@ angular.module('mean.system')
       $location.path('/app');
     };
 
-    $scope.showError = function() {
-      if ($location.search().error) {
-        return $location.search().error;
-      } else {
-        return false;
-      }
-    };
+    $scope.showError = false;
 
     $scope.avatars = [];
     AvatarService.getAvatars()
       .then(function(data) {
         $scope.avatars = data;
       });
+      
+     $scope.signUp = function() {
+       $http.post('/api/auth/signup', $scope.user)
+       .then((response) => {
+         localStorage.setItem('token', response.data.token);
+         $location.path('/');
+       })
+     }
 
+     $scope.login = function() {
+      $http.post('/api/auth/login', $scope.user)
+      .then((response) => {
+        localStorage.setItem('token', response.data.token);
+        $location.path('/');
+      }, (error) => {
+        $scope.showError = true;
+      });
+      
+    }
+
+    $scope.logout = function() {
+        localStorage.removeItem('token');
+        $location.path('/#!');
+    }
 }]);
