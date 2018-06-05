@@ -13,9 +13,8 @@ const secret = process.env.SECRET;
 /**
  * Auth callback
  */
-exports.authCallback = (req, res, next) => {
-  res.redirect('/chooseavatars');
-};
+exports.authCallback = (req, res) => {
+  res.redirect('/#!/app');
 
 /**
  * Show login form
@@ -113,17 +112,11 @@ exports.create = (req, res, next) => {
 };
 
 exports.signUp = (req, res) => {
-  const {
-    name,
-    password,
-    email
-  } = req.body;
-
-  if (name && password && email) {
+  if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
-      email
+      email: req.body.email
     })
-      .then((user) => {
+      .exec((err, user) => {
         if (!user) {
           const newUser = new User(req.body);
           newUser.avatar = avatars[newUser.avatar];
@@ -135,15 +128,21 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
+
             const { _id, email } = newUser;
             const token = jwt.sign({
               exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
               _id,
               email
             }, secret);
-            return res.status(201).send({
-              message: 'Signed up successfully',
-              token
+            req.logIn(newUser, (err) => {
+              if (err) {
+                return res.status(500).send({ message: 'Internal Server Error' });
+              }
+              return res.status(201).send({
+                message: 'Signed up successfully',
+                token
+              });
             });
           });
         } else {
@@ -155,10 +154,10 @@ exports.signUp = (req, res) => {
   }
 };
 
-exports.login = (req, res) => {
+exports.login = (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.status(406).json({
-      error: 'plaese fill in required fields'
+      error: 'please fill in required fields'
     });
   }
   return User.findOne({
@@ -179,9 +178,12 @@ exports.login = (req, res) => {
         _id,
         email
       }, secret);
-      return res.status(200).send({
-        message: 'logged in successfully',
-        token
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+        return res.status(200).send({
+          message: 'Logged in Successfully',
+          token
+        });
       });
     }
   });
@@ -222,7 +224,6 @@ exports.addDonation = (req, res) => {
             }
           }
           if (!duplicate) {
-            console.log('Validated donation');
             user.donations.push(req.body);
             user.premium = 1;
             user.save();

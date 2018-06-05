@@ -4,6 +4,7 @@ function Player(socket) {
   this.points = 0;
   this.username = null;
   this.premium = 0;
+  this.profileImage = null;
   this.avatar = null;
   this.userID = null;
   this.color = null;
