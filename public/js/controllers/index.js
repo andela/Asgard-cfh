@@ -77,7 +77,6 @@ angular.module('mean.system').controller('IndexController', [
       $http.post('/api/auth/login', $scope.user)
       .then((response) => {
         localStorage.setItem('token', response.data.token);
-       //  $http.default.headers.common['x-access-token'] = response.data.token;
         $location.path('/');
       }, (error) => {
         $scope.showError = true;
