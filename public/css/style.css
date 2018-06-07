@@ -1282,3 +1282,135 @@
   display: flex;
   justify-content: center;
  }
+
+ /* New design for landing page */
+
+/* .main-screen {
+  background-image: url("./images/background.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.how-to-play {
+  background-image: url("./images/card-image.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 70vh;
+}
+.charity {
+  height: 100vh;
+  background-color: brown;
+}
+
+.business-footer {
+  background-color: rgb(59, 16, 16);
+  padding: 15px 0;
+  color: white;
+  font-size:15px;
+  clear: both;
+}
+
+#horrible {
+  color: orange;
+}
+
+.main-card {
+  width: 80%;
+}
+
+.content {
+  padding: 3% 5%;
+}
+
+.game-text {
+  padding-top: 8%;
+  color: #fff;
+  font-size: 60px;
+}
+
+.game-card {
+  text-align: right;
+}
+
+.brief-info {
+  padding-top: 1%;
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.button-wrapper {
+  text-align: center;
+  padding-top: 2%;
+}
+
+.btn-play-as-guest {
+  margin-top: 2%;
+  background-color: #f47820;
+  color: #fff;
+  font-size: 20px;
+  padding: 1% 2%;
+  box-shadow: 5%;
+  border-radius: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+  margin-left: 2%;
+}
+
+.btn-signup {
+  margin-top: 2%;
+  background-color: #f47820;
+  color: #fff;
+  font-size: 20px;
+  padding: 1% 4.5%;
+  box-shadow: 5%;
+  border-radius: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+  margin-right: 2%;
+}
+.slide {
+    height: 50vh;
+}
+.move {
+    color: black;
+}
+@media screen and (max-width: 750px) {
+  .game-text {
+    padding-top: 8%;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+
+  } 
+
+  .game-card {
+    text-align: center;
+  }
+
+  .brief-info {
+      padding-top: 3%;
+      color: #fff;
+      font-size: 10px;
+      text-align: center;
+      line-height: 1.5;
+  }
+    
+}
+
+@media (max-width: 1020px) and (min-width: 768px) {
+  .game-text {
+    padding-top: 8%;
+    color: #fff;
+    font-size: 30px;
+  } 
+}
+
+
+@media (max-width: 1320px) and (min-width: 1024px) {
+  .game-text {
+    padding-top: 8%;
+    color: #fff;
+    font-size: 40px;
+  } 
+} */
