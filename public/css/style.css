@@ -1286,14 +1286,14 @@
  /* New design for landing page */
 
 /* .main-screen {
-  background-image: url("./images/background.png");
+  background-image: url("./images/landing/background.png");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 .how-to-play {
-  background-image: url("./images/card-image.jpg");
+  background-image: url("./images/landing/card-image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 70vh;
