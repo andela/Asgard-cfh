@@ -275,3 +275,32 @@ exports.user = (req, res, next, id) => {
 /**
  * Invite user to play game.
  */
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey('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');
+
+exports.invite = (req, res) => {
+  const { senderEmail, recieverEmail, gameURL } = req.body;
+  const { name } = req;
+  const msg = {
+    from: senderEmail, // sender address
+    to: recieverEmail, // list of receivers
+    subject: `${name} is inviting you to join a game`, // Subject line
+    html: `<h1>Testing</h1><p>Join the game ${gameURL}</p>` // plain text body
+  };
+
+  sgMail.send(msg, (err, info) => {
+    if (err) {
+      res.status(400).json({
+        error: err,
+      });
+    }
+    else {
+      res.status(200).json({
+        message: 'Email sent successfully',
+        sentInfo: info
+      });
+    }
+});
+};
+
