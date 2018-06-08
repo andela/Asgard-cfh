@@ -129,12 +129,12 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
-
-            const { _id, email } = newUser;
+            const { _id, email, name } = newUser;
             const token = jwt.sign({
               exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
               _id,
-              email
+              email,
+              name,
             }, secret);
             req.logIn(newUser, (err) => {
               if (err) {
@@ -172,12 +172,14 @@ exports.login = (req, res, next) => {
     if (user && bcrypt.compareSync(req.body.password, user.hashed_password)) {
       const {
         _id,
-        email
+        email,
+        name,
       } = user;
       const token = jwt.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
         _id,
-        email
+        email,
+        name
       }, secret);
       req.logIn(user, (err) => {
         if (err) return next(err);
@@ -269,3 +271,7 @@ exports.user = (req, res, next, id) => {
       next();
     });
 };
+
+/**
+ * Invite user to play game.
+ */
