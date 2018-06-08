@@ -9,7 +9,6 @@ const { check, validationResult } = require('express-validator/check');
 exports.validateSignup = (req, res, next) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
   const errors = validationResult(req);
-  console.log(errors);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
