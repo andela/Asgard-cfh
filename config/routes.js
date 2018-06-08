@@ -83,6 +83,11 @@ module.exports = function(app, passport, auth) {
     // Finish with setting up the questionId param
     app.param('questionId', questions.question);
 
+    //Game Routes
+    var games = require('../app/controllers/game');
+    app.post('/api/game/save', games.saveGame);
+    app.post('/api/games/:id/start', games.startGame);
+
     // Avatar Routes
     var avatars = require('../app/controllers/avatars');
     app.get('/avatars', avatars.allJSON);

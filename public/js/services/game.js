@@ -170,7 +170,7 @@ angular.module('mean.system')
     } else if (data.state === 'game dissolved' || data.state === 'game ended') {
       game.players[game.playerIndex].hand = [];
       game.time = 0;
-    }
+    } 
   });
 
   socket.on('notification', function(data) {

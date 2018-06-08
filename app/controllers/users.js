@@ -14,7 +14,7 @@ const secret = process.env.SECRET;
  * Auth callback
  */
 exports.authCallback = (req, res) => {
-  res.redirect('/#!/app');
+  res.redirect('/#!/');
 }
 
 /**
@@ -44,7 +44,7 @@ exports.signup = (req, res) => {
  */
 exports.signout = (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.send('loggedOut');
 };
 
 /**
