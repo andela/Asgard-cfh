@@ -5,11 +5,19 @@ const mongoose = require('mongoose'),
   Game = mongoose.model('Game');
 
 /**
- * Save Game
- */
+   * @description - Saves the Game After Game Ends
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/game/save
+   */
 exports.saveGame = (req, res) => {
   if (req.body.gameId) {
-    Game.findOneAndUpdate({ gameId: req.body.gameId })
+    Game.findOne({ gameId: req.body.gameId })
       .exec((err, game) => {
         if (err) return res.status(500).json({ message: 'An error occured' });
         if (!game) return res.status(404).json({ message: 'Game not found' });
@@ -25,13 +33,21 @@ exports.saveGame = (req, res) => {
         });
       });
   } else {
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(400).json({ message: 'Please enter a gameId' });
   }
 };
 
 /**
- * Start Game
- */
+   * @description - Create the Game At the Beginning of the Game
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/game/:id/start
+   */
 exports.startGame = (req, res) => {
   if (req.params.id) {
     Game.findOne({ gameId: req.params.id })
@@ -53,6 +69,6 @@ exports.startGame = (req, res) => {
         }
       });
   } else {
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(400).json({ message: 'Game Id Missing' });
   }
 };
