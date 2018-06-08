@@ -11,7 +11,6 @@ angular.module('mean.system').controller('IndexController', [
   'AvatarService',
   ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
     $scope.global = Global;
-
     
 
    $scope.playAsGuest = () => {
@@ -20,7 +19,6 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.showError = false;
-
     $scope.avatars = [];
     AvatarService.getAvatars()
       .then(function(data) {

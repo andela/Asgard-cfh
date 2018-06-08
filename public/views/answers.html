@@ -27,6 +27,20 @@
 
 <div id="info-container" ng-show="game.state === 'awaiting players'">
   <div id="inner-info">
+      <div ng-app="myApp" ng-controller="SearchController" ng-init="search = 'ra'">
+          <form ng-submit="inviteFriend()" method="post">
+          <h5><label for="friendEmail"> Input friend's email and send an invite! </label></h5>
+          <input id="friendEmail" type="text" class="form-control" ng-model="search" placeholder="Search a friend..."/>
+          <ul ng-show="search">
+              <h3>Results :</h3>
+              <li ng-repeat="user in foundUsers | filter : search" ng-bind-html="user | highlight:search"></li>
+          </ul>
+          <div ng-show=false>
+          <input id="inviteLink" type="text" name="inviteLink" value= "invite.link" ng-model="invite.link"/>
+          </div>
+          <input type= "submit" value="invite now">
+          </form>
+          </div>
     <div id="lobby-how-to-play">How To Play</div>
     <ol id="oh-el">
       <li>Each player begins with, and will always have, 10 white answer cards.</li>
@@ -87,3 +101,23 @@
 
   </div>
 </div>
+
+
+
+
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-app="myApp" ng-controller="SearchController" ng-init="terms = 'ra'">
+        <h1>AngularJS Highlight Live Search Terms</h1>
+        <p>This live-search highlights the search terms within the results.</p>
+        <input type="text" class="form-control" placeholder="Search a buzzword..." ng-model="terms" />
+        <ul ng-show="terms">
+            <h3>Résultats :</h3>
+            <li ng-repeat="buzzWord in buzzWords | filter : terms" ng-bind-html="buzzWord | highlight:terms"></li>
+        </ul>
+    </div>
+  </body>
+    
