@@ -57,19 +57,15 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
             .then((response) => {
-            localStorage.setItem('token', response.data.token);
-         //  $http.default.headers.common['x-access-token'] = response.data.token;
-          $location.path('/');
+          $location.path('/confirmaccount');
         })
           },
         })
        } else {
         $http.post('/api/auth/signup', $scope.user)
         .then((response) => {
-          localStorage.setItem('token', response.data.token);
-         //  $http.default.headers.common['x-access-token'] = response.data.token;
-          $location.path('/');
-        })
+          $location.path('/confirmaccount');
+        });
       }
       }
 

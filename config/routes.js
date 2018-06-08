@@ -1,5 +1,6 @@
 var async = require('async');
 
+
 module.exports = function(app, passport, auth) {
     //User Routes
     var users = require('../app/controllers/users');
@@ -11,6 +12,7 @@ module.exports = function(app, passport, auth) {
     //Setting up the users api
     app.post('/users', users.create);
     app.post('/api/auth/signup', users.signUp);
+    // app.put('/:token', users.sendCredentials);
     // app.post('/api/auth/login', users.login);
     app.post('/users/avatars', users.avatars);
 
@@ -24,6 +26,8 @@ module.exports = function(app, passport, auth) {
 
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
+
+    app.get('/activate/:token', users.sendCredentials);
 
     //Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {

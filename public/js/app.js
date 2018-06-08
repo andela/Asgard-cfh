@@ -3,7 +3,13 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
       function($routeProvider) {
           $routeProvider.
           when('/', {
-            templateUrl: 'views/index.html'
+            templateUrl: 'views/index.html',
+          }).
+          when('/confirmaccount', {
+            templateUrl: '/views/activateEmail.html',
+          }).
+          when('/activationComplete', {
+            templateUrl: '/views/activateComplete.html',
           }).
           when('/app', {
             templateUrl: '/views/app.html',

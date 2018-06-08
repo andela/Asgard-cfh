@@ -7,6 +7,7 @@ const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
+const sendgridgMail = require('@sendgrid/mail');
 
 const secret = process.env.SECRET;
 
@@ -15,7 +16,7 @@ const secret = process.env.SECRET;
  */
 exports.authCallback = (req, res) => {
   res.redirect('/#!/app');
-}
+};
 
 /**
  * Show login form
@@ -120,31 +121,38 @@ exports.signUp = (req, res) => {
       .exec((err, user) => {
         if (!user) {
           const newUser = new User(req.body);
-          newUser.avatar = avatars[newUser.avatar];
+          const { _id, email } = newUser;
           newUser.provider = 'local';
+          newUser.temporaryToken = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+            _id,
+            email
+          }, secret);
           newUser.save((error) => {
             if (error) {
-              return res.render('/#!/signup?error=unknown', {
+              return res.redirect('/#!/signup?error=unknown', {
                 errors: error.errors,
                 user: newUser
               });
             }
-
-            const { _id, email } = newUser;
-            const token = jwt.sign({
-              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
-              _id,
-              email
-            }, secret);
-            req.logIn(newUser, (err) => {
-              if (err) {
-                return res.status(500).send({ message: 'Internal Server Error' });
-              }
+            sendgridgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+              to: newUser.email,
+              from: 'noreply@asgardcfh.com',
+              subject: 'CFH EMAIL VERIFICATION',
+              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click http://localhost:3000/activate/${newUser.temporaryToken}>here to complete your registration process`,
+              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href="http://localhost:3000/activate/${newUser.temporaryToken}">http://localhost:3000/activate/</a>`,
+            };
+            sendgridgMail.send(msg, (err) => {
+              if (err) return err;
               return res.status(201).send({
-                message: 'Signed up successfully',
-                token
+                message: 'Signed up successfully, please check email for activation link',
               });
             });
+            // req.logIn(newUser, (err) => {
+            //   if (err) {
+            //     return res.status(500).send({ message: 'Internal Server Error' });
+            //   }
           });
         } else {
           return res.redirect('/#!/signup?error=existinguser');
@@ -155,10 +163,73 @@ exports.signUp = (req, res) => {
   }
 };
 
+// app.put('/:token', function(req, res){
+// app.put('/:token', sendCredentials);
+exports.sendCredentials = (req, res) => {
+  if (req.params.token) {
+    User.findOne(
+      {
+        temporaryToken: req.params.token
+      },
+      (err, user) => {
+        if (err) throw err;
+        const { token } = req.params;
+        jwt.verify(token, secret, (err, decoded) => {
+          if (err) {
+            res.json({ success: false, message: 'activation link has expired' });
+          } else if (!user) {
+            res.json({ success: false, message: 'activation link has expired' });
+          } else {
+            user.temporaryToken = false;
+            user.active = true;
+            user.save((err) => {
+              if (err) {
+                return err;
+              }
+              sendgridgMail.setApiKey(process.env.SENDGRID_API_KEY);
+              const msg = {
+                to: req.body.email,
+                from: 'noreply@asgard_cfh.com',
+                subject: 'account activated',
+                text: `Hello ${user.name}Your Account has been successfully activated`,
+                html: `Hello <strong>${user.name}Your account has been successfully activated`,
+              };
+              sendgridgMail.send(msg);
+
+              return res.redirect('#!/activationComplete');
+            });
+          }
+        });
+      }
+    );
+  } else {
+    return res.status(404).json({ message: 'Token found' });
+  }
+};
+
+
+// app.use(function(req, res, next){
+exports.checkCredentials = (req, res, next) => {
+  const token = req.body.token || req.body.query || req.headers['x-access-token'];
+
+  if (token) {
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        res.json({ success: false, message: 'Invalid token' });
+      } else {
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+    res.json({ success: false, message: 'No token provided' });
+  }
+};
+
 exports.login = (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.status(406).json({
-      error: 'please fill in required fields'
+      error: 'Please fill in required fields'
     });
   }
   return User.findOne({
@@ -166,8 +237,11 @@ exports.login = (req, res, next) => {
   }).exec((err, user) => {
     if (!user) {
       return res.status(401).json({
-        error: 'invalid credentials'
+        error: 'Invalid credentials'
       });
+    }
+    if (user.active !== true) {
+      return res.status(401).json({ message: 'You need to confirm your email to activate your account' });
     }
     if (user && bcrypt.compareSync(req.body.password, user.hashed_password)) {
       const {
@@ -269,3 +343,4 @@ exports.user = (req, res, next, id) => {
       next();
     });
 };
+
