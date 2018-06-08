@@ -304,3 +304,36 @@ exports.invite = (req, res) => {
 });
 };
 
+exports.searchUser = (req, res) => {
+  const { term } = req.body;
+  const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  const searchQuery = new RegExp(escapeRegex, 'gi');
+  let foundUser = [];
+  User.find()
+    .or([
+      { name: searchQuery }, { email: searchQuery }
+    ])
+    .exec((err, users) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Server Error'
+        });
+      }
+      if (users.length === 0) { 
+        return res.status(404).json({ 
+          message: 'User not found'
+        });
+      }
+      users.forEach((user) => {
+        const userInfo = {
+          email: user.email,
+          name: user.name
+        };
+        foundUser.push(userInfo);
+      });
+      return res.status(200).json({
+        message: 'Users Found',
+        foundUser
+      });
+    });
+};
