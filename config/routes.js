@@ -1,8 +1,8 @@
 var async = require('async');
-
 module.exports = function(app, passport, auth) {
     //User Routes
     var users = require('../app/controllers/users');
+
     app.get('/signin', users.signin);
     app.get('/signup', users.signup);
     app.get('/chooseavatars', users.checkAvatar);
@@ -92,4 +92,10 @@ module.exports = function(app, passport, auth) {
     app.get('/play', index.play);
     app.get('/', index.render);
 
+    // Invitation
+    var middleWare = require('../config/middlewares/isLoggedIn')
+    app.post('/invite', middleWare.isLoggedIn, users.invite);
+    
+    // Search User
+    app.post('/search', users.searchUser);
 };
