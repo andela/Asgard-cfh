@@ -149,10 +149,6 @@ exports.signUp = (req, res) => {
                 message: 'Signed up successfully, please check email for activation link',
               });
             });
-            // req.logIn(newUser, (err) => {
-            //   if (err) {
-            //     return res.status(500).send({ message: 'Internal Server Error' });
-            //   }
           });
         } else {
           return res.redirect('/#!/signup?error=existinguser');
@@ -163,8 +159,6 @@ exports.signUp = (req, res) => {
   }
 };
 
-// app.put('/:token', function(req, res){
-// app.put('/:token', sendCredentials);
 exports.sendCredentials = (req, res) => {
   if (req.params.token) {
     User.findOne(
@@ -208,7 +202,6 @@ exports.sendCredentials = (req, res) => {
 };
 
 
-// app.use(function(req, res, next){
 exports.checkCredentials = (req, res, next) => {
   const token = req.body.token || req.body.query || req.headers['x-access-token'];
 
@@ -240,7 +233,7 @@ exports.login = (req, res, next) => {
         error: 'Invalid credentials'
       });
     }
-    if (user.active !== true) {
+    if (!user.active) {
       return res.status(401).json({ message: 'You need to confirm your email to activate your account' });
     }
     if (user && bcrypt.compareSync(req.body.password, user.hashed_password)) {
