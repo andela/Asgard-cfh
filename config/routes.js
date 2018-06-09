@@ -1,4 +1,6 @@
 var async = require('async');
+const { check } = require('express-validator/check');
+var validation = require('../config/middlewares/validations');
 module.exports = function(app, passport, auth) {
     //User Routes
     var users = require('../app/controllers/users');
@@ -10,7 +12,10 @@ module.exports = function(app, passport, auth) {
 
     //Setting up the users api
     app.post('/users', users.create);
-    app.post('/api/auth/signup', users.signUp);
+    app.post('/api/auth/signup',
+    validation.signupChecks,
+     validation.validateSignup,
+     users.signUp);
     // app.post('/api/auth/login', users.login);
     app.post('/users/avatars', users.avatars);
 

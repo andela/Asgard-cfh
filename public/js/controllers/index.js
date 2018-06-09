@@ -11,15 +11,18 @@ angular.module('mean.system').controller('IndexController', [
   'AvatarService',
   ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
     $scope.global = Global;
-    
 
    $scope.playAsGuest = () => {
       game.joinGame();
       $location.path('/app');
     };
 
-    $scope.showError = false;
+    $scope.showLoginError = false;
+    $scope.hasSignupError = false;
+    $scope.SignupError = null;
+    $scope.dontShow = false;
     $scope.avatars = [];
+
     AvatarService.getAvatars()
       .then(function(data) {
         $scope.avatars = data;
@@ -56,8 +59,12 @@ angular.module('mean.system').controller('IndexController', [
             $http.post('/api/auth/signup', $scope.user)
             .then((response) => {
             localStorage.setItem('token', response.data.token);
-            $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
+        }, (error) => {
+          if(error.data.errors) {
+            $scope.hasSignupError = true;
+            $scope.signupError = error.data.errors[0].msg
+          }
         })
           },
         })
@@ -67,6 +74,11 @@ angular.module('mean.system').controller('IndexController', [
           localStorage.setItem('token', response.data.token);
           $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
+        }, (error) => {
+          if(error.data.errors) {
+            $scope.hasSignupError = true;
+            $scope.signupError = error.data.errors[0].msg
+          }
         })
       }
       }
@@ -78,7 +90,7 @@ angular.module('mean.system').controller('IndexController', [
         $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         $location.path('/');
       }, (error) => {
-        $scope.showError = true;
+        $scope.showSignupError = true;
       });
       
     }
