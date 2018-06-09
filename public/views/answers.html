@@ -27,20 +27,47 @@
 
 <div id="info-container" ng-show="game.state === 'awaiting players'">
   <div id="inner-info">
-      <div ng-app="myApp" ng-controller="SearchController" ng-init="search = 'ra'">
-          <form ng-submit="inviteFriend()" method="post">
-          <h5><label for="friendEmail"> Input friend's email and send an invite! </label></h5>
-          <input id="friendEmail" type="text" class="form-control" ng-model="search" placeholder="Search a friend..."/>
-          <ul ng-show="search">
-              <h3>Results :</h3>
-              <li ng-repeat="user in foundUsers | filter : search" ng-bind-html="user | highlight:search"></li>
-          </ul>
-          <div ng-show=false>
-          <input id="inviteLink" type="text" name="inviteLink" value= "invite.link" ng-model="invite.link"/>
-          </div>
-          <input type= "submit" value="invite now">
-          </form>
-          </div>
+    <!-- trings-->
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Invite friends </button>
+    <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <div ng-controller="searchController" class="text-primary">
+              <h4><label for="friendEmail" class="text-danger"> Input friend's email and send an invite! </label></h4>
+              <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here"/>
+              <table class="table" ng-show="foundUsers && inputValue">
+                <thead >
+                  <tr>
+                    <th style="text-align: center">Name</th>
+                    <th style="text-align: center">Email</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in foundUsers">
+                    <td> {{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td> <button type="button" ng-click="sendInvites(user)"> Invite </button></td>
+                  </tr>
+                </tbody>
+              </table></br>
+              <div class="error" ng-show="userNotFound && inputValue">
+                <h5 style="color: red"> No such user found </h5>
+              </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+    <!-- end of trials-->
     <div id="lobby-how-to-play">How To Play</div>
     <ol id="oh-el">
       <li>Each player begins with, and will always have, 10 white answer cards.</li>
@@ -51,6 +78,7 @@
     </ol>
   </div>
 </div>
+
 <div id="game-end-container" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
   <div id="inner-info-exit">
     <div class="game-end-answer-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -98,26 +126,6 @@
     <div id='charity-logo-container'>
       <img src='/img/make-a-wish-logo.png'/>
     </div>
-
   </div>
 </div>
-
-
-
-
-
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-  </head>
-  <body>
-    <div ng-app="myApp" ng-controller="SearchController" ng-init="terms = 'ra'">
-        <h1>AngularJS Highlight Live Search Terms</h1>
-        <p>This live-search highlights the search terms within the results.</p>
-        <input type="text" class="form-control" placeholder="Search a buzzword..." ng-model="terms" />
-        <ul ng-show="terms">
-            <h3>Résultats :</h3>
-            <li ng-repeat="buzzWord in buzzWords | filter : terms" ng-bind-html="buzzWord | highlight:terms"></li>
-        </ul>
-    </div>
-  </body>
     

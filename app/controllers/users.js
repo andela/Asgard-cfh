@@ -280,10 +280,10 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey('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');
 
 exports.invite = (req, res) => {
-  const { senderEmail, recieverEmail, gameURL } = req.body;
+  const { recieverEmail, gameURL } = req.body;
   const { name } = req;
   const msg = {
-    from: senderEmail, // sender address
+    from: 'cfh@andela.com', // sender address
     to: recieverEmail, // list of receivers
     subject: `${name} is inviting you to join a game`, // Subject line
     html: `<h1>Testing</h1><p>Join the game ${gameURL}</p>` // plain text body
@@ -294,8 +294,7 @@ exports.invite = (req, res) => {
       res.status(400).json({
         error: err,
       });
-    }
-    else {
+    } else {
       res.status(200).json({
         message: 'Email sent successfully',
         sentInfo: info
@@ -308,7 +307,7 @@ exports.searchUser = (req, res) => {
   const { term } = req.body;
   const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
   const searchQuery = new RegExp(escapeRegex, 'gi');
-  let foundUser = [];
+  const foundUser = [];
   User.find()
     .or([
       { name: searchQuery }, { email: searchQuery }
