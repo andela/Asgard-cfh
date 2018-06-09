@@ -43,6 +43,7 @@ $scope.sendInvites = function(user){
         toastr.success('Invitation sent successfully')
     },
     (error) => {
+        toastr.error('Error: invite not sent');
     });
 } 
 });
