@@ -6,6 +6,9 @@ const mongoose = require('mongoose'),
 const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const sendgridMail = require('@sendgrid/mail');
+
+sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 require('dotenv').config();
 
 const secret = process.env.SECRET;
@@ -15,7 +18,7 @@ const secret = process.env.SECRET;
  */
 exports.authCallback = (req, res) => {
   res.redirect('/#!/app');
-}
+};
 
 /**
  * Show login form
@@ -275,21 +278,17 @@ exports.user = (req, res, next, id) => {
 /**
  * Invite user to play game.
  */
-const sgMail = require('@sendgrid/mail');
-
-sgMail.setApiKey('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');
-
 exports.invite = (req, res) => {
   const { recieverEmail, gameURL } = req.body;
   const { name } = req;
   const msg = {
-    from: 'cfh@andela.com', // sender address
-    to: recieverEmail, // list of receivers
-    subject: `${name} is inviting you to join a game`, // Subject line
-    html: `<h1>Testing</h1><p>Join the game ${gameURL}</p>` // plain text body
+    from: 'cfh@andela.com',
+    to: recieverEmail,
+    subject: `${name} is inviting you to join a game`,
+    html: `<h1>Testing</h1><p>Join the game ${gameURL}</p>`
   };
 
-  sgMail.send(msg, (err, info) => {
+  sendgridMail.send(msg, (err, info) => {
     if (err) {
       res.status(400).json({
         error: err,
@@ -300,12 +299,12 @@ exports.invite = (req, res) => {
         sentInfo: info
       });
     }
-});
+  });
 };
 
 exports.searchUser = (req, res) => {
   const { term } = req.body;
-  const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   const searchQuery = new RegExp(escapeRegex, 'gi');
   const foundUser = [];
   User.find()
@@ -318,8 +317,8 @@ exports.searchUser = (req, res) => {
           message: 'Server Error'
         });
       }
-      if (users.length === 0) { 
-        return res.status(404).json({ 
+      if (users.length === 0) {
+        return res.status(404).json({
           message: 'User not found'
         });
       }
