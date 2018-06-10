@@ -1,6 +1,6 @@
 var async = require('async');
-
-
+const { check } = require('express-validator/check');
+var validation = require('../config/middlewares/validations');
 module.exports = function(app, passport, auth) {
     //User Routes
     var users = require('../app/controllers/users');
@@ -11,7 +11,11 @@ module.exports = function(app, passport, auth) {
 
     //Setting up the users api
     app.post('/users', users.create);
-    app.post('/api/auth/signup', users.signUp);
+    app.post('/api/auth/signup',
+    validation.signupChecks,
+     validation.validateSignup,
+     users.signUp);
+    // app.post('/api/auth/login', users.login);
     app.post('/users/avatars', users.avatars);
 
     // Donation Routes
@@ -84,6 +88,11 @@ module.exports = function(app, passport, auth) {
     app.get('/questions/:questionId', questions.show);
     // Finish with setting up the questionId param
     app.param('questionId', questions.question);
+
+    //Game Routes
+    var games = require('../app/controllers/game');
+    app.post('/api/game/save', games.saveGame);
+    app.post('/api/games/:id/start', games.startGame);
 
     // Avatar Routes
     var avatars = require('../app/controllers/avatars');
