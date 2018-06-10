@@ -96,7 +96,10 @@ angular.module('mean.system').controller('IndexController', [
     }
 
     $scope.logout =() => {
-        localStorage.removeItem('token');
-        $location.path('/#!');
+      $http.get('/signout')
+        .then((res) => {
+          localStorage.removeItem('token');
+          $location.path('/#!');
+        });
     }
 }]);

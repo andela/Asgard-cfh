@@ -1,6 +1,6 @@
 
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'game', '$http', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $http, $timeout, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -121,7 +121,8 @@ angular.module('mean.system')
     };
 
     $scope.startGame = function() {
-      game.startGame();
+      $http.post('/api/games/'+$scope.game.gameID+'/start')
+        .then((res) => game.startGame());
     };
 
     $scope.abandonGame = function() {
@@ -146,6 +147,19 @@ angular.module('mean.system')
     $scope.$watch('game.state', function() {
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
+      }
+      const gamePlayers = [];
+      $scope.game.players.forEach((player) => {
+        gamePlayers.push(player.username);
+      })
+      if (game.state === 'game ended') {
+        const saveGame = {
+          gameId: $scope.game.gameID,
+          gameWinner: $scope.game.players[$scope.game.gameWinner].username,
+          players: gamePlayers
+        };
+        $http.post('/api/game/save', saveGame)
+          .then((res) => console.log(res));
       }
     });
 

@@ -4,7 +4,7 @@
       <span ng-show="isPremium($index)">
         <img ng-src="img/king.png" id="king">
       </span>
-      <img ng-src="{{player.profileImage}}"/>
+      <img ng-src="{{player.profileImage || player.avatar}}"/>
     </div>
     <div id="player-container-inner">
       <div id="player-name"><h4>{{player.username | upperFirstLetter}}</h4></div>
