@@ -7,8 +7,9 @@ const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
-const sendgridgMail = require('@sendgrid/mail');
+const sendgridMail = require('@sendgrid/mail');
 
+const emailVerificationURL = process.env.EMAIL_VERIFICATION_URL;
 const secret = process.env.SECRET;
 
 /**
@@ -16,7 +17,7 @@ const secret = process.env.SECRET;
  */
 exports.authCallback = (req, res) => {
   res.redirect('/#!/');
-}
+};
 
 /**
  * Show login form
@@ -123,7 +124,7 @@ exports.signUp = (req, res) => {
           const newUser = new User(req.body);
           const { _id, email } = newUser;
           newUser.provider = 'local';
-          newUser.temporaryToken = jwt.sign({
+          const temporaryToken = jwt.sign({
             exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
             _id,
             email
@@ -135,15 +136,15 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
-            sendgridgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
             const msg = {
               to: newUser.email,
               from: 'noreply@asgardcfh.com',
               subject: 'CFH EMAIL VERIFICATION',
-              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click http://localhost:3000/activate/${newUser.temporaryToken}>here to complete your registration process`,
-              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href="http://localhost:3000/activate/${newUser.temporaryToken}">http://localhost:3000/activate/</a>`,
+              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
+              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
             };
-            sendgridgMail.send(msg, (err) => {
+            sendgridMail.send(msg, (err) => {
               if (err) return err;
               return res.status(201).send({
                 message: 'Signed up successfully, please check email for activation link',
@@ -161,43 +162,37 @@ exports.signUp = (req, res) => {
 
 exports.sendCredentials = (req, res) => {
   if (req.params.token) {
-    User.findOne(
-      {
-        temporaryToken: req.params.token
-      },
-      (err, user) => {
-        if (err) throw err;
-        const { token } = req.params;
-        jwt.verify(token, secret, (err, decoded) => {
-          if (err) {
-            res.json({ success: false, message: 'activation link has expired' });
-          } else if (!user) {
-            res.json({ success: false, message: 'activation link has expired' });
-          } else {
-            user.temporaryToken = false;
-            user.active = true;
-            user.save((err) => {
-              if (err) {
-                return err;
-              }
-              sendgridgMail.setApiKey(process.env.SENDGRID_API_KEY);
-              const msg = {
-                to: req.body.email,
-                from: 'noreply@asgard_cfh.com',
-                subject: 'account activated',
-                text: `Hello ${user.name}Your Account has been successfully activated`,
-                html: `Hello <strong>${user.name}Your account has been successfully activated`,
-              };
-              sendgridgMail.send(msg);
-
-              return res.redirect('#!/activationComplete');
-            });
-          }
-        });
+    const { token } = req.params;
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ success: false, message: 'Activation link has expired' });
       }
-    );
+      User.findOne({
+        /* eslint-disable */
+        _id: decoded._id
+      }).exec((err, user) => {
+        if (err) return err;
+        user.active = true;
+        user.save((err) => {
+          if (err) {
+            return err;
+          }
+          sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+          const msg = {
+            to: req.body.email,
+            from: 'noreply@asgard_cfh.com',
+            subject: 'Account Activated',
+            text: `Hello ${user.name}Your Account has been successfully activated`,
+            html: `Hello <strong>${user.name}Your Account has been successfully activated`,
+          };
+          sendgridMail.send(msg);
+
+          return res.redirect('#!/activationComplete');
+        });
+      });
+    });
   } else {
-    return res.status(404).json({ message: 'Token found' });
+    return res.status(404).json({ message: 'Token Not found' });
   }
 };
 
