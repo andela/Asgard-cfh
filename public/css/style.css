@@ -1286,3 +1286,7 @@
   display: flex;
   justify-content: center;
  }
+
+ .text-decor{
+   color: white;
+ }
