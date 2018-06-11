@@ -26,6 +26,10 @@
    display: block;
 }
 
+.modal1 {
+  margin-top: 5%
+}
+
 #send-link{
    color: white;
    text-align: center;
@@ -1281,4 +1285,8 @@
  .choose-image {
   display: flex;
   justify-content: center;
+ }
+
+ .text-decor{
+   color: white;
  }

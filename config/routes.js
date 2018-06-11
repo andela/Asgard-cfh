@@ -27,7 +27,6 @@ module.exports = function (app, passport, auth) {
   app.post('/donations', users.addDonation);
 
   app.post('/api/auth/login', passport.authenticate('local', {
-    failureRedirect: 'api/auth/login',
     failureFlash: 'Invalid email or password.'
   }), users.login);
 
@@ -91,6 +90,11 @@ module.exports = function (app, passport, auth) {
   app.get('/questions/:questionId', questions.show);
   // Finish with setting up the questionId param
   app.param('questionId', questions.question);
+
+  //Game Routes
+  var games = require('../app/controllers/game');
+  app.post('/api/game/save', games.saveGame);
+  app.post('/api/games/:id/start', games.startGame);
 
   // Avatar Routes
   const avatars = require('../app/controllers/avatars');

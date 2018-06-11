@@ -58,28 +58,26 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
             .then((response) => {
-            localStorage.setItem('token', response.data.token);
-          $location.path('/');
+          $location.path('/confirmaccount');
         }, (error) => {
           if(error.data.errors) {
             $scope.hasSignupError = true;
             $scope.signupError = error.data.errors[0].msg
           }
-        })
-          },
+        });
+          }
         })
        } else {
         $http.post('/api/auth/signup', $scope.user)
         .then((response) => {
-          localStorage.setItem('token', response.data.token);
-          $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          $location.path('/');
-        }, (error) => {
+          $location.path('/confirmaccount');
+        },
+        (error) => {
           if(error.data.errors) {
             $scope.hasSignupError = true;
             $scope.signupError = error.data.errors[0].msg
           }
-        })
+        });
       }
       }
 
