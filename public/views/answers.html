@@ -27,6 +27,47 @@
 
 <div id="info-container" ng-show="game.state === 'awaiting players'">
   <div id="inner-info">
+    <!-- trings-->
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Invite friends </button>
+    <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <div ng-controller="searchController" class="text-primary">
+              <h4><label for="friendEmail" class="text-danger"> Input friend's email and send an invite! </label></h4>
+              <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here"/>
+              <table class="table" ng-show="foundUsers && inputValue">
+                <thead >
+                  <tr>
+                    <th style="text-align: center">Name</th>
+                    <th style="text-align: center">Email</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in foundUsers">
+                    <td> {{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td> <button type="button" ng-click="sendInvites(user)"> Invite </button></td>
+                  </tr>
+                </tbody>
+              </table></br>
+              <div class="error" ng-show="userNotFound && inputValue">
+                <h5 style="color: red"> No such user found </h5>
+              </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+    <!-- end of trials-->
     <div id="lobby-how-to-play">How To Play</div>
     <ol id="oh-el">
       <li>Each player begins with, and will always have, 10 white answer cards.</li>
@@ -37,6 +78,7 @@
     </ol>
   </div>
 </div>
+
 <div id="game-end-container" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
   <div id="inner-info-exit">
     <div class="game-end-answer-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -84,6 +126,6 @@
     <div id='charity-logo-container'>
       <img src='/img/make-a-wish-logo.png'/>
     </div>
-
   </div>
 </div>
+    

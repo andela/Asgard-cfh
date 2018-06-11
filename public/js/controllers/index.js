@@ -85,6 +85,7 @@ angular.module('mean.system').controller('IndexController', [
       $http.post('/api/auth/login', $scope.user)
       .then((response) => {
         localStorage.setItem('token', response.data.token);
+        $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         $location.path('/');
       }, (error) => {
         $scope.showSignupError = true;
