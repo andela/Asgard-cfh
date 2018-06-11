@@ -72,7 +72,7 @@ angular.module('mean.system').controller('IndexController', [
         $http.post('/api/auth/signup', $scope.user)
         .then((response) => {
           localStorage.setItem('token', response.data.token);
-         //  $http.default.headers.common['x-access-token'] = response.data.token;
+          $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
         }, (error) => {
           if(error.data.errors) {
@@ -87,6 +87,7 @@ angular.module('mean.system').controller('IndexController', [
       $http.post('/api/auth/login', $scope.user)
       .then((response) => {
         localStorage.setItem('token', response.data.token);
+        $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         $location.path('/');
       }, (error) => {
         $scope.showSignupError = true;

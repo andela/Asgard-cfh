@@ -21,6 +21,7 @@
     "postinstall": "node node_modules/gulp-cli/bin/gulp install"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.2.1",
     "async": "~0.2.9",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

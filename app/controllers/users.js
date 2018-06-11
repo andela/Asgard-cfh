@@ -6,6 +6,9 @@ const mongoose = require('mongoose'),
 const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const sendgridMail = require('@sendgrid/mail');
+
+sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 require('dotenv').config();
 
 const secret = process.env.SECRET;
@@ -129,12 +132,12 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
-
-            const { _id, email } = newUser;
+            const { _id, email, name } = newUser;
             const token = jwt.sign({
               exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
               _id,
-              email
+              email,
+              name,
             }, secret);
             req.logIn(newUser, (err) => {
               if (err) {
@@ -172,12 +175,14 @@ exports.login = (req, res, next) => {
     if (user && bcrypt.compareSync(req.body.password, user.hashed_password)) {
       const {
         _id,
-        email
+        email,
+        name,
       } = user;
       const token = jwt.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
         _id,
-        email
+        email,
+        name
       }, secret);
       req.logIn(user, (err) => {
         if (err) return next(err);
@@ -267,5 +272,66 @@ exports.user = (req, res, next, id) => {
       if (!user) return next(new Error(`Failed to load User ${id}`));
       req.profile = user;
       next();
+    });
+};
+
+/**
+ * Invite user to play game.
+ */
+exports.invite = (req, res) => {
+  const { recieverEmail, gameURL } = req.body;
+  const { name } = req;
+  const msg = {
+    from: 'cfh@andela.com',
+    to: recieverEmail,
+    subject: `${name} is inviting you to join a game`,
+    html: `<h1>Testing</h1><p>Join the game ${gameURL}</p>`
+  };
+
+  sendgridMail.send(msg, (err, info) => {
+    if (err) {
+      res.status(400).json({
+        error: err,
+      });
+    } else {
+      res.status(200).json({
+        message: 'Email sent successfully',
+        sentInfo: info
+      });
+    }
+  });
+};
+
+exports.searchUser = (req, res) => {
+  const { term } = req.body;
+  const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  const searchQuery = new RegExp(escapeRegex, 'gi');
+  const foundUser = [];
+  User.find()
+    .or([
+      { name: searchQuery }, { email: searchQuery }
+    ])
+    .exec((err, users) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Server Error'
+        });
+      }
+      if (users.length === 0) {
+        return res.status(404).json({
+          message: 'User not found'
+        });
+      }
+      users.forEach((user) => {
+        const userInfo = {
+          email: user.email,
+          name: user.name
+        };
+        foundUser.push(userInfo);
+      });
+      return res.status(200).json({
+        message: 'Users Found',
+        foundUser
+      });
     });
 };
