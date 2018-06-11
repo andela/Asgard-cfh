@@ -14,7 +14,7 @@ $(document).ready(function() {
 </script>
 
 <script></script>
-<div landing id="main-bod"  ng-controller="IndexController">
+<div landing id="main-bod" ng-controller="IndexController"> <!--data-ng-csp="no-inline-style"-->
   <!-- New landing page -->
 <div class="tpl-body">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -70,16 +70,16 @@ $(document).ready(function() {
 
     </div>
 </section>
-<section class="how-to-play overlay">
-    <div class="content overlay">
+<section class="how-to-play overlay container-fluid" ng-controller="CarouselController" >
+    <div class="overlay">
         <h2 class="text-center">HOW TO PLAY</h2>
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row ace-cards">
+        <carousel interval="myInterval">
+            <slide active="active">
+                <!-- <div  class="carousel-item active"> -->
+                    <div class="row"> <!--ace-cards-->
                         <div class="col-sm-3">
                             <div class="card">
-                                <img class="card-img-top" src="./images/joker-card.png" alt="Card image cap">
+                                <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text text-center">Each player begins with, and will always have, 10 white answer cards.</p>
                                 </div>
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
                         <div class="col-sm-3">
                             <div class="card">
-                                <img class="card-img-top" src="./images/joker-card.png" alt="Card image cap">
+                                <img class="card-img-top"  src="../img/landing/joker-card.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text text-center">For each round, one player is randomly chosen as the Card Czar.</p>
                                 </div>
@@ -96,7 +96,7 @@ $(document).ready(function() {
                         </div>
                         <div class="col-sm-3">
                             <div class="card">
-                                <img class="card-img-top" src="./images/joker-card.png" alt="Card image cap">
+                                <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text text-center">Everyone else answers the black question card by clicking on the answer card they want to use.</p>
                                 </div>
@@ -104,37 +104,23 @@ $(document).ready(function() {
                         </div>
                         <div class="col-sm-3">
                             <div class="card">
-                                <img class="card-img-top" src="./images/joker-card.png" alt="Card image cap">
+                                <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text text-center">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
+            </slide>
+            <slide>
                 <div class="carousel-item text-center video slide-hide-on-mobile">
-                        <video width="722" controls>
-                            <source src="./video/how-to-play-card.mp4" type="video/mp4">
-                            Your browser does not support HTML5 video.
-                        </video>
+                    <video controls src="../video/test.mp4" type="video/mp4" >
+                        Your browser does not support HTML5 video.
+                    </video>
                 </div>
-            </div>
-            <p class="text-center cfh-warning">
-                     This game contains offensive, profane, explicit content created by Cards Against Humanity 
-                    <br/>and provided here, uncensored and complete, in digital form. Human Resources made us say that.
-                </p>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true" />
-                <span class="sr-only" id="move">Previous
-                </span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true" />
-                <span class="sr-only" id="move">Next
-                </span>
-            </a>
-        </div>
-
+            </slide>
+        </carousel>
     </div>
 
 </section>

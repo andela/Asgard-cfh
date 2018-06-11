@@ -18,7 +18,8 @@
     "test": "nyc --reporter=html --reporter=text node node_modules/gulp-cli/bin/gulp test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "postinstall": "node node_modules/gulp-cli/bin/gulp install"
+    "postinstall": "node node_modules/gulp-cli/bin/gulp install",
+    "bowerclean": "bower cache clean"
   },
   "dependencies": {
     "async": "~0.2.9",
