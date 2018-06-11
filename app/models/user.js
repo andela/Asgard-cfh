@@ -25,7 +25,6 @@ const UserSchema = new Schema({
   github: {},
   google: {},
   active: { type: Boolean, required: true, default: false },
-  temporaryToken: { type: String, default: true }
 });
 
 /**

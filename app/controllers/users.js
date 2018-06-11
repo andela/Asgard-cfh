@@ -65,11 +65,13 @@ exports.session = (req, res) => {
  * to our Choose an Avatar page.
  */
 exports.checkAvatar = (req, res) => {
+  /* eslint-disable */
   if (req.user && req.user._id) {
     User.findOne({
       _id: req.user._id
     })
       .exec((err, user) => {
+        /* eslint-enable */
         if (user.avatar !== undefined) {
           res.redirect('/#!/');
         } else {
@@ -123,6 +125,7 @@ exports.signUp = (req, res) => {
       email: req.body.email
     })
       .exec((err, user) => {
+        if (err) return err;
         if (!user) {
           const newUser = new User(req.body);
           const { _id, email } = newUser;
@@ -173,6 +176,7 @@ exports.sendCredentials = (req, res) => {
       User.findOne({
         /* eslint-disable */
         _id: decoded._id
+        /* eslint-enable */
       }).exec((err, user) => {
         if (err) return err;
         user.active = true;
@@ -182,11 +186,11 @@ exports.sendCredentials = (req, res) => {
           }
           sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
           const msg = {
-            to: req.body.email,
+            to: user.email,
             from: 'noreply@asgard_cfh.com',
             subject: 'Account Activated',
-            text: `Hello ${user.name}Your Account has been successfully activated`,
-            html: `Hello <strong>${user.name}Your Account has been successfully activated`,
+            text: `Hello ${user.name} Your Account has been successfully activated`,
+            html: `Hello <strong>${user.name} Your Account has been successfully activated`,
           };
           sendgridMail.send(msg);
 
@@ -223,7 +227,7 @@ exports.login = (req, res, next) => {
       error: 'Please fill in required fields'
     });
   }
-  return User.findOne({
+  User.findOne({
     email: req.body.email
   }).exec((err, user) => {
     if (!user) {

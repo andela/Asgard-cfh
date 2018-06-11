@@ -26,6 +26,10 @@
    display: block;
 }
 
+.modal1 {
+  margin-top: 5%
+}
+
 #send-link{
    color: white;
    text-align: center;
