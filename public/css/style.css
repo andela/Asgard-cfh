@@ -1,4 +1,4 @@
- .clear {
+ /* .clear {
    clear:both;
  }
 
@@ -128,7 +128,7 @@
 
 
  /**** Links ****/
- a {
+ /* a {
    color: #60B197;
    -webkit-transition: color 0.5s ease;
    -moz-transition: color 0.5s ease;
@@ -149,11 +149,11 @@
 
  p a:hover {
    color: #2ecc71;
- }
+ } */
 
 
  /**** Top Bar ****/
-#menu-container {
+/* #menu-container {
    width: 100%;
    -webkit-border-radius: 8px;
    -moz-border-radius: 8px;
@@ -263,14 +263,14 @@
    text-transform: uppercase;
    position: relative;
    z-index:1000;
- }
+ } */
 
 
 
 
  /**** LANDING ****/
 
- #main-text {
+ /* #main-text {
    margin: 5px;
  }
 
@@ -346,11 +346,11 @@
 
 #navver {
    height: 60px;
-}
+} */
 
 
  /**** Section Title ****/
- .wpb-section-title {
+ /* .wpb-section-title {
    background-color: #24272a;
    height: 100px;
  }
@@ -414,10 +414,10 @@
    margin-right: 10px;
    padding: 0.1em 35px;
    cursor: pointer;
- }
+ } */
 
  /**** About Us ****/
-#main-bod {
+/* #main-bod {
    max-width: 1400px;
    margin: 0px auto;
 }
@@ -543,7 +543,7 @@
  }
 
  /**** Portfolio ****/
- .wpb-portfolio-list .wpb-portfolio-item {
+ /* .wpb-portfolio-list .wpb-portfolio-item {
    margin-left: 10px;
    list-style-type: none;
    width: 30%;
@@ -605,10 +605,10 @@
 
  .wpb-portfolio-details p {
    color:#515e65 !important;
- }
+ }  */
 
  /**** Portfolio ****/
- .wpb-portfolio-body {
+ /* .wpb-portfolio-body {
 
  }
 
@@ -658,12 +658,12 @@
    -ms-transition: background-color 0.5s ease;
    -o-transition:  background-color 0.5s ease;
    transition:  background-color 0.5s ease;
- }
+ }  */
 
 
 
  /**** Team List ****/
- .wpb-team-list .wpb-team-item {
+ /* .wpb-team-list .wpb-team-item {
    margin-left: 0px;
    margin-right: 10px;
  }
@@ -761,11 +761,11 @@
 
  .wpb-team-details p {
    color:#515e65 !important;
- }
+ } */
 
 
  /**** Single Portfolio Item ****/
- .wpb-single-portfolio {
+ /* .wpb-single-portfolio {
  }
 
  .wpb-single-portfolio .wpb-content-inner {
@@ -874,10 +874,10 @@
 
  .wpb-single-portfolio .wpb-portfolio-description h3 {
    margin: 0;
- }
+ } */
 
  /**** Contact Us ****/
- .wpb-contact-us {
+ /* .wpb-contact-us {
    min-height: 540px;
    position: relative;
    z-index:890;
@@ -906,11 +906,11 @@
    min-height: 100%;
    z-index:900;
    background: #252525;
- }
+ } */
 
 
  /**** Contact Us Information ****/
- .wpb-contact-us-info {
+ /* .wpb-contact-us-info {
    margin-top: 25px;
    color: #fff;
  }
@@ -922,12 +922,12 @@
 
  .wpb-contact-us-info ul li {
    padding-bottom:10px;
- }
+ } */
 
 
  /**** Footer ****/
 
- .foot {
+ /* .foot {
    bottom: 0;
    max-width: 1400px;
    border-radius: 8px;
@@ -943,15 +943,15 @@
 
  /**** Margins ****/
 
-.mod-contain {
+/* .mod-contain { */
    /*padding-right: 15px;
    padding-left: 15px;*/
-   margin-right: auto;
+   /* margin-right: auto;
    margin-left: auto;
-   width: 90%;
-}
+   width: 90%; */
+/* } */
 
- .container-margin {
+ /* .container-margin {
    padding-top:60px;
    padding-bottom: 60px;
  }
@@ -972,10 +972,10 @@
   -webkit-animation-delay: 5s;
   -moz-animation-delay: 5s;
   -o-animation-delay: 5s;
-}
+} */
 
 
-.landing-card {
+/* .landing-card {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -990,22 +990,22 @@
   font-size: 1.1em;
   font-weight: bold;
   vertical-align: top;
-}
+} */
 
 
 /*Override Bootstrap Row Class*/
-.row {
+/* .row {
    margin-left: 0;
    margin-right: 9px;
-}
+} */
 
-#donations {
+/* #donations {
    margin-top: 160px;
-}
+}  */
 
 /*MORE MEDIA QUERIESS WHOOOOOAAAA*/
 
-@media (min-width: 1430px) {
+/* @media (min-width: 1430px) {
    .row {
       margin: 0 0 -9px 0;
    }
@@ -1138,8 +1138,8 @@
       text-transform: uppercase;
       text-align: center;
       line-height: 24px;
-   }
-
+   } */
+/* 
    .wpb-top-bar {
       height: 60px;
       background: transparent;
@@ -1281,8 +1281,412 @@
  .choose-image {
   display: flex;
   justify-content: center;
- }
+ } */
 
+ .body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* ‘consolas’, Fredericka the Great, cursive */
+}
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+.cfh-navbar {
+  display: flex;
+}
+.nav-link {
+  color: #f47820 !important;
+  font-weight: bold;
+  margin: 0 3px;
+}
+.center-link {
+  justify-content: space-around;
+}
+
+.main-screen {
+  background-image: url("./images/background.png");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+.main-content {
+  padding: 8% 10%;
+  
+}
+
+.how-to-play {
+  background-image: url("./images/scattered-cards.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;   
+}
+
+.overlay {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.2);
+}
+
+.video {
+  margin-top: 3%;
+} 
+
+#move {
+  background-color: #291c1f !important;
+}
+.charity {
+  background-image: url("./images/background-charity.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+height: 100px;
+width: 100px;
+background-size: 100%, 100%;
+background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+content: '>';
+font-size: 55px;
+color: rgba(255, 0, 13, 0.774);
+}
+
+.carousel-control-prev-icon:after {
+content: '<';
+font-size: 55px;
+color: rgba(255, 0, 13, 0.774);
+}
+.business-footer {
+  background-color: #291c1f;
+  padding: 15px 0;
+  color: white;
+  font-size:12px;
+  clear: both;
+} 
+
+#change-color {
+  color: orange;
+}
+
+#charity-text {
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+.content {
+  padding: 3% 2%;
+}
+
+.main-card {
+  width: 80%;
+  margin: 3% 0;
+}
+
+.game-text {
+  padding-top: 3%;
+  color: #fff;
+  font-size: 60px;
+  font-family: 'Eater', cursive;
+}
+
+.game-card {
+text-align: right;
+}
+
+.brief-info {
+  padding-top: 5%;
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.button-wrapper {
+  text-align: center;
+  padding-top: 2%;
+}
+
+.btn-play-as-guest {
+  margin-top: 2%;
+  background-color: #f47820;
+  color: #fff;
+  font-size: 20px;
+  padding: 1% 2%;
+  box-shadow: 5%;
+  border-radius: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+  margin-left: 2%;
+}
+
+.btn-signup {
+  margin-top: 2%;
+  background-color: #f47820;
+  color: #fff;
+  font-size: 20px;
+  padding: 1% 4.5%;
+  box-shadow: 5%;
+  border-radius: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+  margin-right: 2%;
+}
+
+.charity-content {
+  text-align: center;
+  color: #fff;
+  margin: auto 10%;
+}
+
+.ace-cards {
+  margin: 2% 8%;
+}
+
+.cfh-card {
+  width: 100%;
+  background-color:#897074;
+  color: #fff;
+  height: 100%;
+}
+
+.card-text {
+  padding: 13px;
+}
+
+.warning {
+  color: #ff0000;
+}
+
+.cfh-warning {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5%;
+  margin: auto 9%;
+  padding: 5px 2px;
+  color: #ff0000;
+}
+
+
+@media screen and (max-width: 750px) {
+
+.center-link {
+  text-align: center;
+}
+.game-text {
+  padding-top: 15%;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+
+} 
+
+.game-card {
+  text-align: center;
+}
+
+.login-button {
+  margin: auto;
+}
+.signup-info {
+  padding-right: 15%;
+}
+
+.authenticate-card {
+  margin: 2%;
+}
+
+.brief-info {
+  padding-top: 3%;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.slide-hide-on-mobile { 
+  display: none !important; 
+}
+  
+}
+
+@media (max-width: 1020px) and (min-width: 768px) {
+  .game-text {
+    padding-top: 8%;
+    color: #fff;
+    font-size: 30px;
+  }
+}
+
+
+@media (max-width: 1320px) and (min-width: 1024px) {
+  .game-text {
+      padding-top: 8%;
+      color: #fff;
+      font-size: 40px;
+  } 
+}
+.asgard {
+  margin-top: 2%;
+  color: #f47820;
+}
+.footer {
+  margin: 1% 10%;
+  line-height: 1.8
+}
+
+
+/* ANIMATIONS */
+
+@keyframes slideRightShow {
+  0% {
+      opacity: 0;
+      transform: translateX(-100px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateX(0px);
+  }
+}
+
+@keyframes slideRightShow {
+  15% {
+      transform: rotate(-15deg);
+  }
+  30% {
+      transform: rotate(0deg);
+  }
+  45% {
+      transform: rotate(15deg);
+  }
+  60% {
+      transform: rotate(0deg);
+  }
+  75% {
+      transform: rotate(-15deg);
+  }
+  90% {
+      transform: rotate(0deg);
+  }
+}
+
+.cfh-card:hover {
+  animation-duration: 0.7s;
+  animation-name: slideRightShow;
+  animation-timing-function: ease-in-out;
+}
+
+
+
+
+.form-gradient .font-small {
+  font-size: 0.8rem; }
+
+.form-gradient .header {
+  border-top-left-radius: .3rem;
+  border-top-right-radius: .3rem; }
+
+.form-gradient input[type=text]:focus:not([readonly]) {
+  border-bottom: 1px solid #fd9267;
+  -webkit-box-shadow: 0 1px 0 0 #fd9267;
+  box-shadow: 0 1px 0 0 #fd9267; }
+
+.form-gradient input[type=text]:focus:not([readonly]) + label {
+  color: #4f4f4f; }
+
+.form-gradient input[type=password]:focus:not([readonly]) {
+  border-bottom: 1px solid #fd9267;
+  -webkit-box-shadow: 0 1px 0 0 #fd9267;
+  box-shadow: 0 1px 0 0 #fd9267; }
+
+.form-gradient input[type=password]:focus:not([readonly]) + label {
+  color: #4f4f4f; }
+
+  .peach-gradient {
+      background: -webkit-linear-gradient(50deg,#ffd86f,#fc6262)!important;
+      background: -o-linear-gradient(50deg,#ffd86f,#fc6262)!important;
+      background: linear-gradient(40deg,#ffd86f,#fc6262)!important;
+  }
+
+  .back-home {
+      color: black !important;
+      border: 2px solid #fd9267 !important;
+      border-radius: 30px;
+      margin: 2%;
+      font-size: 20px;
+      padding: 15px;
+      transition: 1.5s;
+      cursor: pointer
+  }
+
+  .back-home:focus {
+    outline: 0 !important;
+}
+
+  .back-home:hover {
+      color: #fff !important;
+      background-color: #271c1fd3 !important;
+  }
+
+  /* .arror {
+      background-color: #897074
+  } */
+  .btn-rounded {
+      -webkit-border-radius: 10em;
+      border-radius: 10em;
+      background-color: #271c1fd3 !important;
+  }
+
+  .password {
+      margin-bottom: 15%;
+  }
+
+  .Fullname {
+      margin-top: 1% !important;
+  }
+  .parent-form {
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.2);
+      height: 100vh
+  }
+  .authenticate-card {
+      width: 100%;
+      max-width: 28rem;
+      margin: 6% auto 0;
+      box-shadow: 3px 4px 10px rgb(51, 30, 5);
+  }
+
+  .authenticate-signup-card {
+      width: 100%;
+      max-width: 28rem;
+      margin: 2% auto 0;
+      box-shadow: 3px 4px 10px rgb(51, 30, 5);
+
+  }
+
+  .background {
+      background-image: url("../img/landing//htp-background.png");
+      background-attachment: fixed;
+      background-position: center;
+      
+      height: 100vh;
+      background-size: cover;
+       
+  }
+
+  .arrow {
+       color: black;
+    }
+  
+  .arrow:hover {
+    color: #fff;
+  }
  /* New design for landing page */
 
  /* .body {
