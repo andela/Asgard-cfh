@@ -1,14 +1,18 @@
-const async = require('async');
-const { check } = require('express-validator/check');
 const validation = require('../config/middlewares/validations');
 const middleWare = require('../config/middlewares/isLoggedIn');
 
-module.exports = function (app, passport, auth) {
-  // User Routes
-  const users = require('../app/controllers/users');
+const users = require('../app/controllers/users');
+const answers = require('../app/controllers/answers');
+const questions = require('../app/controllers/questions');
+const games = require('../app/controllers/game');
+const avatars = require('../app/controllers/avatars');
+const index = require('../app/controllers/index');
 
+module.exports = (app, passport) => {
+  // User Routes
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
+  app.get('/activate/:token', users.sendCredentials);
   app.get('/chooseavatars', users.checkAvatar);
   app.get('/signout', users.signout);
 
@@ -20,7 +24,7 @@ module.exports = function (app, passport, auth) {
     validation.validateSignup,
     users.signUp
   );
-  // app.post('/api/auth/login', users.login);
+
   app.post('/users/avatars', users.avatars);
 
   // Donation Routes
@@ -78,30 +82,25 @@ module.exports = function (app, passport, auth) {
   app.param('userId', users.user);
 
   // Answer Routes
-  const answers = require('../app/controllers/answers');
   app.get('/answers', answers.all);
   app.get('/answers/:answerId', answers.show);
   // Finish with setting up the answerId param
   app.param('answerId', answers.answer);
 
   // Question Routes
-  const questions = require('../app/controllers/questions');
   app.get('/questions', questions.all);
   app.get('/questions/:questionId', questions.show);
   // Finish with setting up the questionId param
   app.param('questionId', questions.question);
 
-  //Game Routes
-  var games = require('../app/controllers/game');
+  // Game Routes
   app.post('/api/game/save', games.saveGame);
   app.post('/api/games/:id/start', games.startGame);
 
   // Avatar Routes
-  const avatars = require('../app/controllers/avatars');
   app.get('/avatars', avatars.allJSON);
 
   // Home route
-  const index = require('../app/controllers/index');
   app.get('/play', index.play);
   app.get('/', index.render);
 
