@@ -32,6 +32,11 @@
               <!--Header-->
       
               <div class="card-body mx-4 mt-4">
+                <!-- Show signup Error -->
+                <div class= "alert alert-danger" style="color: red" ng-show= "hasSignupError">
+                  <a class="close"></a>
+                  <span>{{signupError}}</span>
+                </div>
                 <form ng-submit="signUp()" method="post">
                   <!--Body-->
                   <div class="md-form Fullname">

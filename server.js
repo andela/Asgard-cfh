@@ -6,7 +6,9 @@ var express = require('express'),
     passport = require('passport'),
     logger = require('mean-logger'),
     io = require('socket.io');
+    const expressValidator = require('express-validator');
     require('dotenv').config();
+
 
 
 /**
@@ -45,10 +47,6 @@ walk(models_path);
 require('./config/passport')(passport);
 
 var app = express();
-
-app.use(function(req, res, next){
-    next();
-});
 
 //express settings
 require('./config/express')(app, passport, mongoose);

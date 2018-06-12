@@ -12,16 +12,17 @@ angular.module('mean.system').controller('IndexController', [
   ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
     $scope.global = Global;
 
-    
-
    $scope.playAsGuest = () => {
       game.joinGame();
       $location.path('/app');
     };
 
-    $scope.showError = false;
-
+    $scope.showLoginError = false;
+    $scope.hasSignupError = false;
+    $scope.SignupError = null;
+    $scope.dontShow = false;
     $scope.avatars = [];
+
     AvatarService.getAvatars()
       .then(function(data) {
         $scope.avatars = data;
@@ -57,19 +58,26 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
             .then((response) => {
-            localStorage.setItem('token', response.data.token);
-         //  $http.default.headers.common['x-access-token'] = response.data.token;
-          $location.path('/');
-        })
-          },
+          $location.path('/confirmaccount');
+        }, (error) => {
+          if(error.data.errors) {
+            $scope.hasSignupError = true;
+            $scope.signupError = error.data.errors[0].msg
+          }
+        });
+          }
         })
        } else {
         $http.post('/api/auth/signup', $scope.user)
         .then((response) => {
-          localStorage.setItem('token', response.data.token);
-         //  $http.default.headers.common['x-access-token'] = response.data.token;
-          $location.path('/');
-        })
+          $location.path('/confirmaccount');
+        },
+        (error) => {
+          if(error.data.errors) {
+            $scope.hasSignupError = true;
+            $scope.signupError = error.data.errors[0].msg
+          }
+        });
       }
       }
 
@@ -77,15 +85,19 @@ angular.module('mean.system').controller('IndexController', [
       $http.post('/api/auth/login', $scope.user)
       .then((response) => {
         localStorage.setItem('token', response.data.token);
+        $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         $location.path('/');
       }, (error) => {
-        $scope.showError = true;
+        $scope.showSignupError = true;
       });
       
     }
 
     $scope.logout =() => {
-        localStorage.removeItem('token');
-        $location.path('/#!');
+      $http.get('/signout')
+        .then((res) => {
+          localStorage.removeItem('token');
+          $location.path('/#!');
+        });
     }
 }]);
