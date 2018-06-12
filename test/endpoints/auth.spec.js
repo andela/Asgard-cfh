@@ -5,7 +5,7 @@ import app from '../../server';
 
 const User = mongoose.model('User');
 
-// Request handler for making calls
+// Request handler for making API calls
 const request = supertest.agent(app);
 
 describe('Authentication', () => {
