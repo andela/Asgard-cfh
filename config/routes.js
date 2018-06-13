@@ -105,8 +105,8 @@ module.exports = (app, passport) => {
   app.get('/', index.render);
 
   // Invitation
-  app.post('/invite', middleWare.isLoggedIn, users.invite);
+  app.post('/api/invite', middleWare.isLoggedIn, users.invite);
 
   // Search User
-  app.post('/search', users.searchUser);
+  app.post('/api/search', users.searchUser);
 };
