@@ -1,5 +1,6 @@
 var should = require('should');
 var io = require('socket.io-client');
+var mongoose = require('mongoose');
 
 var socketURL = 'http://localhost:3000';
 
