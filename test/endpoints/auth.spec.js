@@ -3,19 +3,83 @@ import mongoose from 'mongoose';
 import supertest from 'supertest';
 import app from '../../server';
 
-const User = mongoose.model('User');
+let token;
+const token2 = 'hjbjbjbfjbjbjhfbhbvbrjbbhjbhyurrhbub4urghubjbhbrbjruybhb';
 
 // Request handler for making API calls
-const request = supertest.agent(app);
+const request = supertest(app);
 
 describe('Authentication', () => {
   describe('Signup', () => {
-    it('Should return a JWT upon user signup', () => {
-      should(1).equal(1);
+    it('should create a new User', (done) => {
+      request
+        .post('/api/auth/signup')
+        .send({
+          name: 'Fidelis clinton',
+          email: 'clint@example.com',
+          password: 'clint2016'
+        })
+        .expect(201)
+        .end((err, res) => {
+          token = res.body.token;
+          if (err) {
+            return done(err);
+          }
+          (res.body.message).should.be.eql('Signed up successfully, please check email for activation link');
+          done();
+        });
     });
   });
 
-  describe('Signin', () => {
-    it('Should be able to login', () => should(2).equal(2));
+  describe('confirmEmail', () => {
+    it('confirm users email', (done) => {
+      request
+        .get(`/activate/${token2}`)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          (res.body.message).should.be.eql('Activation link has expired');
+          done();
+        });
+    });
+  });
+
+  describe('confirmEmail', () => {
+    it('confirm users email', (done) => {
+      request
+        .get(`/activate/${token}`)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          (res.status).should.be.eql(302);
+          done();
+        });
+    });
+  });
+
+  describe('Login', () => {
+    it('should log in an existing user', (done) => {
+      request
+        .post('/api/auth/login')
+        .send({
+          email: 'clint@example.com',
+          password: 'clint2016',
+        })
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          (res.body.message).should.be.eql('Logged in Successfully');
+          done();
+        });
+    });
+  });
+
+  after((done) => {
+    mongoose.connection.db.dropCollection('users')
+      .then(() => done());
   });
 });
