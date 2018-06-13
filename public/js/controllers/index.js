@@ -20,6 +20,7 @@ angular.module('mean.system').controller('IndexController', [
     $scope.showLoginError = false;
     $scope.hasSignupError = false;
     $scope.SignupError = null;
+    $scope.loginError = null;
     $scope.dontShow = false;
     $scope.avatars = [];
 
@@ -62,7 +63,7 @@ angular.module('mean.system').controller('IndexController', [
         }, (error) => {
           if(error.data.errors) {
             $scope.hasSignupError = true;
-            $scope.signupError = error.data.errors[0].msg
+            $scope.signupError = error.data.errors[0].msg || error.data.msg
           }
         });
           }
@@ -73,9 +74,11 @@ angular.module('mean.system').controller('IndexController', [
           $location.path('/confirmaccount');
         },
         (error) => {
+          console.log(error)
+            console.log('--->>>>>-----')
           if(error.data.errors) {
             $scope.hasSignupError = true;
-            $scope.signupError = error.data.errors[0].msg
+            $scope.signupError = error.data.errors[0].msg || error.data.msg
           }
         });
       }
@@ -88,7 +91,9 @@ angular.module('mean.system').controller('IndexController', [
         $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         $location.path('/');
       }, (error) => {
-        $scope.showSignupError = true;
+        $scope.showLoginError = true;
+        console.log(error.data.message);
+        $scope.loginError = error.data.message;
       });
       
     }
