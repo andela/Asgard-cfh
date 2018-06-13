@@ -6,7 +6,9 @@ var express = require('express'),
     passport = require('passport'),
     logger = require('mean-logger'),
     io = require('socket.io');
+    const expressValidator = require('express-validator');
     require('dotenv').config();
+
 
 
 /**
@@ -22,7 +24,12 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     mongoose = require('mongoose');
 
 //Bootstrap db connection
-var db = mongoose.connect(config.db);
+if (process.env.NODE_ENV !== 'test') {
+    var db = mongoose.connect(config.db);
+} else {
+    var db = mongoose.connect(process.env.CFH_TESTDB)
+}
+
 
 //Bootstrap models
 var models_path = __dirname + '/app/models';
@@ -45,10 +52,6 @@ walk(models_path);
 require('./config/passport')(passport);
 
 var app = express();
-
-app.use(function(req, res, next){
-    next();
-});
 
 //express settings
 require('./config/express')(app, passport, mongoose);

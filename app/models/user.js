@@ -23,7 +23,8 @@ const UserSchema = new Schema({
   facebook: {},
   twitter: {},
   github: {},
-  google: {}
+  google: {},
+  active: { type: Boolean, required: true, default: false },
 });
 
 /**

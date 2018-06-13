@@ -278,7 +278,6 @@ carousel-indicators .active {
       color: #fff;
       font-size: 40px;
   } 
-}
 .asgard {
   margin-top: 2%;
   color: #f47820;
@@ -336,4 +335,5 @@ carousel-indicators .active {
   animation-duration: 0.7s;
   animation-name: slideRightShow;
   animation-timing-function: ease-in-out;
+}
 }

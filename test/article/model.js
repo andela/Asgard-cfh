@@ -3,9 +3,10 @@
  */
 const should = require('should'),
   app = require('../../server'),
-  mongoose = require('mongoose'),
-  User = mongoose.model('User'),
-  Article = mongoose.model('Article');
+  mongoose = require('mongoose');
+
+const User = mongoose.model('User');
+const Article = mongoose.model('Article');
 
 // Globals
 let user;

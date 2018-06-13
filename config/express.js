@@ -1,4 +1,4 @@
-require('dotenv').config();
+ require('dotenv').config();
 
 /**
  * Module dependencies.
@@ -41,13 +41,14 @@ module.exports = function(app, passport, mongoose) {
 
         //bodyParser should be above methodOverride
         app.use(express.bodyParser());
+        app.use(express.json());
         app.use(express.methodOverride());
 
         //express/mongo session storage
         app.use(express.session({
             secret: 'MEAN',
             store: new mongoStore({
-                url: config.db,
+                url: process.env.NODE_ENV !== 'test' ? config.db : process.env.CFH_TESTDB,
                 collection: 'sessions',
                 mongoose_connection: mongoose.connection
             })
