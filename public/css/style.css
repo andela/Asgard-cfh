@@ -1581,19 +1581,40 @@ text-align: right;
   font-size: 55px;
   color: rgba(255, 0, 13, 0.774);
 } */
+.carousel-inner > .active {
+  height: 325px;
+}
 .carousel-indicators {
   display: none !important;
 }
 .how-to-play .overlay h2 {
   margin: 0px;
-  padding: 15px;
+  padding: 3%;
 }
-.how-to-play {
-  padding: 35px;
+/* 
+  override for the carousel to stop it from moving about
+  need for media query on this...
+*/
+.carousel {
+  min-height: 380px;
+}
+@media (min-width: 992px) {
+  .carousel {
+    min-height: 430px;
+  }
+}
+.carousel-inner{
+  overflow: visible;
+  margin-top: 1%;
+  min-height: 100%;
+}
+/* .how-to-play {
+  /* padding: 35px; 
 }
 .carousel-inner {
-  padding: 20px;
-}
+  /* padding: 20px; 
+} */
+
 /* Bootstrap 4 cut-ins*/
 .navbar-collapse {
   -ms-flex-preferred-size: 100%;
