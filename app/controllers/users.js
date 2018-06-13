@@ -141,20 +141,20 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
-            // sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
-            // const msg = {
-            //   to: newUser.email,
-            //   from: 'noreply@asgardcfh.com',
-            //   subject: 'CFH EMAIL VERIFICATION',
-            //   text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
-            //   html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
-            // };
-            // sendgridMail.send(msg, (err) => {
-            //   if (err) return err;
-            //   return res.status(201).send({
-            //     message: 'Signed up successfully, please check email for activation link',
-            //   });
-            // });
+            sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+              to: newUser.email,
+              from: 'noreply@asgardcfh.com',
+              subject: 'CFH EMAIL VERIFICATION',
+              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
+              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
+            };
+            sendgridMail.send(msg, (err) => {
+              if (err) return err;
+              return res.status(201).send({
+                message: 'Signed up successfully, please check email for activation link',
+              });
+            });
             return res.status(201).send({
                   message: 'Signed up successfully, please check email for activation link',
                 });

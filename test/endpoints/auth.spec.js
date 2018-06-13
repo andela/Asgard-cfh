@@ -9,13 +9,75 @@ const User = mongoose.model('User');
 const request = supertest.agent(app);
 
 describe('Authentication', () => {
-  describe('Signup', () => {
-    it('Should return a JWT upon user signup', () => {
-      should(1).equal(1);
+  describe('Test for signup with an invalid password', () => {
+    it('Should flag invalid password errors', (done) => {
+      request
+        .post('/api/auth/signup')
+        .send({
+          name: 'tajudeen',
+          email: 'were@taju.com',
+          password: 'qq'
+        })
+        .end((err, res) => {
+          should(res.body.errors[0].msg).equal('passwords must be at least 6 chars long and contain one number');
+          should(res.status).equal(422);
+          if (err) return done(err);
+          done();
+        });
     });
   });
 
-  describe('Signin', () => {
-    it('Should be able to login', () => should(2).equal(2));
+  describe('Test for signup with an invalid username', () => {
+    it('Should flag invalid username errors', (done) => {
+      request
+        .post('/api/auth/signup')
+        .send({
+          name: 'q',
+          email: 'were@taju.com',
+          password: 'qq11ggttre'
+        })
+        .end((err, res) => {
+          should(res.body.errors[0].msg).equal('name must be a minimum of two letters');
+          should(res.status).equal(422);
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('Test for signup with an invalid email', () => {
+    it('Should flag invalid email errors', (done) => {
+      request
+        .post('/api/auth/signup')
+        .send({
+          name: 'tajudeen',
+          email: 'com',
+          password: 'hgfh64gt45qq'
+        })
+        .end((err, res) => {
+          should(res.body.errors[0].msg).equal('please enter a valid email');
+          should(res.status).equal(422);
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('Test for signup with an existing email', () => {
+    it('Should flag duplicate email errors', (done) => {
+      request
+        .post('/api/auth/signup')
+        .send({
+          name: 'tajudeen',
+          email: 'olatunjiyso@gmail.com',
+          password: 'hgfh64gt45qq'
+        })
+        .end((err, res) => {
+          should(res.body.message).equal('this email is in use already');
+          should(res.status).equal(409);
+          if (err) return done(err);
+          done();
+        });
+    });
   });
 });
