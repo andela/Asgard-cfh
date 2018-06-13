@@ -5,22 +5,19 @@ require('../../server');
 const should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
+require('dotenv').config();
 
 // Globals
-let user;
+let user = new User({
+  name: 'Full name',
+  email: 'test@test.com',
+  username: 'user',
+  password: 'password'
+});
 
 // The tests
 describe('<Unit Test>', () => {
   describe('Model User:', () => {
-    before((done) => {
-      user = new User({
-        name: 'Full name',
-        email: 'test@test.com',
-        username: 'user',
-        password: 'password'
-      });
-      done();
-    });
     describe('Method Save', () => {
       it('should be able to save whithout problems', done => user.save((err) => {
         should.not.exist(err);
@@ -28,15 +25,17 @@ describe('<Unit Test>', () => {
       }));
 
       it('should be able to show an error when try to save witout name', (done) => {
-        user.name = '';
+        user = new User({
+          name: '',
+          email: 'test@test.com',
+          username: 'user',
+          password: 'password'
+        });
         return user.save((err) => {
           should.exist(err);
           done();
         });
       });
-    });
-    afterEach((done) => {
-      done();
     });
   });
 });
