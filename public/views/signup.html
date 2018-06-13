@@ -3,82 +3,51 @@
 <div class="background">
   <section class="form-gradient parent-form ">
       <button class="back-home"><a href="/" class="fa-lg p-2 m-2 arrow-ic arrow"><i class="fa fa-arrow-circle-left"></i></a>Back</button>
-  
-      
-          <!--Form with header-->
           <div class="card authenticate-signup-card">
-      
-              <!--Header-->
               <div class="header pt-3 peach-gradient">
-      
                   <div class="row d-flex justify-content-center">
                       <h3 class="white-text mb-3 pt-3 font-weight-bold">Sign Up</h3>
                   </div>
-      
                   <div class="row mt-2 mb-3 d-flex justify-content-center">
-                      <!--Facebook-->
                       <a href="/auth/facebook" class="fa-lg p-2 m-2 fb-ic"><i class="fa fa-facebook white-text fa-lg"> </i></a>
-                      <!--Twitter-->
                       <a href="/auth/twitter" class="fa-lg p-2 m-2 tw-ic"><i class="fa fa-twitter white-text fa-lg"> </i></a>
-                      <!--Google +-->
                       <a href="/auth/google" class="fa-lg p-2 m-2 gplus-ic"><i class="fa fa-google-plus white-text fa-lg"> </i></a>
-  
-                      <!--Github +-->
                       <a href="/auth/github" class="fa-lg p-2 m-2 gh-ic"><i class="fa fa-github white-text fa-lg"> </i></a>
   
                   </div>
-      
               </div>
-              <!--Header-->
-      
               <div class="card-body mx-4 mt-4">
-                <!-- Show signup Error -->
                 <div class= "alert alert-danger" style="color: red" ng-show= "hasSignupError">
                   <a class="close"></a>
                   <span>{{signupError}}</span>
                 </div>
                 <form ng-submit="signUp()" method="post">
-                  <!--Body-->
                   <div class="md-form Fullname">
                       <input type="text" id="Form-email3" class="form-control" name="name" ng-model="user.name" required novalidate />
                       <label for="Form-email3">Your Fullname</label>
                   </div>
-
                   <div class="md-form">
                       <input id="Form-email3" class="form-control" type="email" name="email" ng-model="user.email" required novalidate />
                       <label for="Form-email3">Your email</label>
                   </div>
-      
                   <div class="md-form pb-1 pb-md-3 ">
                       <input type="password" id="Form-pass3" class="form-control" ng-model="user.password" required novalidate />
                       <label for="Form-pass3">Your password</label>
                   </div>
-                     
-                  <!--Grid row-->
                   <div class="row d-flex align-items-center mb-4">
-      
-                      <!--Grid column-->
                       <div class="col-md-1 col-md-5 d-flex align-items-start">
                           <div class="text-center login-button">
                               <button type="submit" class="btn btn-grey btn-rounded z-depth-1a">Sign Up</button>
                           </div>
                       </div>
-                      <!--Grid column-->
-      
-                      <!--Grid column-->
                       <div class="col-md-7">
                           <p class="font-small grey-text d-flex justify-content-end mt-3 signup-info">Already have an account? <a href="#!/signin" class="dark-grey-text ml-1 font-weight-bold">Log in</a></p>
                       </div>
-                      <!--Grid column-->
-      
                   </div>
-                  <!--Grid row-->
                 </form>
               </div>
       
           </div>
-          <!--/Form with header-->
-      
       </section>
 </div>
 </div>
