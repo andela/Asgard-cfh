@@ -1,162 +1,179 @@
 <script type="text/javascript">
-$(document).ready(function() {
+  $(document).ready(function () {
 
-  var ChroMo = '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile';
+    var ChroMo = '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile';
 
-  if (/Android|webOS|CriOs|ChroMo|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false && location.href !== "http://localhost:3000/#!/app") {
-    // $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
-  }
+    if (/Android|webOS|CriOs|ChroMo|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false && location.href !== "http://localhost:3000/#!/app") {
+      // $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
+    }
 
-  //Twitter buttons
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    //Twitter buttons
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');
 
   });
 </script>
 
 <script></script>
-<div landing id="main-bod" ng-controller="IndexController"> <!--data-ng-csp="no-inline-style"-->
+<div landing id="main-bod" ng-controller="IndexController">
+  <!--data-ng-csp="no-inline-style"-->
   <!-- New landing page -->
-<div class="tpl-body">
+  <div class="tpl-body">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button> -->
-        <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
-            <ul class="navbar-nav cfh-navbar">
-            <li class="nav-item">
-                <a class="nav-link" href="#">HOW TO PLAY <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">CHARITY</a>
-            </li>
-            </ul>
-            <a class="navbar-brand" href="#"><img src="../img/landing/logo.png" width="100px" alt="logo"/></a>
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">SIGN UP</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">SIGN IN</a>
-            </li>
-            </ul>
-        </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
+        <ul class="navbar-nav cfh-navbar">
+          <li class="nav-item">
+            <a class="nav-link" href="#">HOW TO PLAY
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">CHARITY</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">
+          <img src="../img/landing/logo.png" width="100px" alt="logo" />
+        </a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">SIGN UP</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">SIGN IN</a>
+          </li>
+        </ul>
+      </div>
     </nav>
-<section class="main-screen">
-    <div class="container-fluid">
+    <section class="main-screen">
+      <div class="container-fluid">
         <div class="main-content">
-            <div class="row">
-                <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6">
 
-                    <h2 class="game-text">
-                        A GAME FOR
-                        <br/>
-                        <span id="change-color">HORRIBLE PEOPLE</span>
-                        <br/> DESPERATELY
-                        <br/> TRYING TO DO GOOD
-                    </h2>
-                </div>
-                <div class="col-sm-6 game-card">
-                    <img class="main-card" src="../img/landing/card-design.png" alt="cards">
-                </div>
+              <h2 class="game-text">
+                A GAME FOR
+                <br/>
+                <span id="change-color">HORRIBLE PEOPLE</span>
+                <br/> DESPERATELY
+                <br/> TRYING TO DO GOOD
+              </h2>
             </div>
-            <h3 class="brief-info">Cards for Humanity is a fast-paced online version of the popular card game,
-                <br/>Cards Against Humanity, that gives you the opportunity to donate to children in need -
-                <br/>all while remaining as despicable and awkward as you naturally are.</h3>
-            <div class="button-wrapper">
-                <button class="btn btn-signup">SIGNUP</button>
-                <button class="btn btn-play-as-guest">PLAY AS GUEST</button>
+            <div class="col-sm-6 game-card">
+              <img class="main-card" src="../img/landing/card-design.png" alt="cards">
             </div>
+          </div>
+          <h3 class="brief-info">Cards for Humanity is a fast-paced online version of the popular card game,
+            <br/>Cards Against Humanity, that gives you the opportunity to donate to children in need -
+            <br/>all while remaining as despicable and awkward as you naturally are.</h3>
+          <div class="button-wrapper">
+            <button class="btn btn-signup">SIGNUP</button>
+            <button class="btn btn-play-as-guest">PLAY AS GUEST</button>
+          </div>
         </div>
 
-    </div>
-</section>
-<section class="how-to-play overlay container-fluid" ng-controller="CarouselController" >
-    <div class="overlay">
+      </div>
+    </section>
+
+    <section class="how-to-play overlay">
+      <div class="content overlay">
         <h2 class="text-center">HOW TO PLAY</h2>
-        <carousel interval="myInterval">
-            <slide active="active">
-                <!-- <div  class="carousel-item active"> -->
-                    <div class="row"> <!--ace-cards-->
-                        <div class="col-sm-3">
-                            <div class="card">
-                                <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text text-center">Each player begins with, and will always have, 10 white answer cards.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="card">
-                                <img class="card-img-top"  src="../img/landing/joker-card.png" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text text-center">For each round, one player is randomly chosen as the Card Czar.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card">
-                                <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text text-center">Everyone else answers the black question card by clicking on the answer card they want to use.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card">
-                                <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text text-center">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
-                                </div>
-                            </div>
-                        </div>
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row ace-cards">
+                <div class="col-sm-3">
+                  <div class="card cfh-card">
+                    <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text text-center">Each player begins with, and will always have, 10 white answer cards.</p>
                     </div>
-                <!-- </div> -->
-            </slide>
-            <!-- pleaseinsert red text in the div below -->
-            <!--<div></div>-->
-            <slide>
-                <div class="carousel-item text-center video slide-hide-on-mobile">
-                    <video controls>
-                        <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
+                  </div>
                 </div>
-            </slide>
-        </carousel>
-    </div>
 
-</section>
-<section class="charity">
-    <div class="content">
+                <div class="col-sm-3">
+                  <div class="card cfh-card">
+                    <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text text-center">For each round, one player is randomly chosen as the Card Czar.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="card cfh-card">
+                    <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text text-center">Everyone else answers the black question card by clicking on the answer card they want to use.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="card cfh-card">
+                    <img class="card-img-top" src="../img/landing/joker-card.png" alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text text-center">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item text-center video slide-hide-on-mobile">
+              <video width="725" controls>
+                <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4"> Your browser does not support HTML5 video.
+              </video>
+            </div>
+          </div>
+          <p class="text-center cfh-warning">
+            This game contains offensive, profane, explicit content created by Cards Against Humanity
+            <br/>and provided here, uncensored and complete, in digital form. Human Resources made us say that.
+          </p>
+          <a class="carousel-control-prev" data-target="#myCarousel" href="#carouselExampleControls" role="button" data-slide="prev" ng-non-bindable>
+            <span class="carousel-control-prev-icon" aria-hidden="true" />
+            <span class="sr-only" id="move">Previous
+            </span>
+          </a>
+          <a class="carousel-control-next" data-target="#myCarousel" href="#carouselExampleControls" role="button" data-slide="next" ng-non-bindable>
+            <span class="carousel-control-next-icon" aria-hidden="true" />
+            <span class="sr-only" id="move">Next
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+    <section class="charity">
+      <div class="content">
         <h2 class="text-center">CHARITY</h2>
         <div class="charity-content">
-            <p id="charity-text">
-                "If you don't give back, no one will like you™"
-                <span id="change-color"> - crowdrise.com</span>
-            </p>
-            <p id="charity-text">
-                We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle
-                reminders throughout the game to give you the opportunity to donate. If you're signed in when you
-                donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other
-                players how much better you are than them). All donations go to the Make-a-Wish Foundation and benefit
-                children in need.
-            </p>
+          <p id="charity-text">
+            "If you don't give back, no one will like you™"
+            <span id="change-color"> - crowdrise.com</span>
+          </p>
+          <p id="charity-text">
+            We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle
+            reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll
+            even upgrade your account and place a crown on your avatar's head (to remind other players how much better you
+            are than them). All donations go to the Make-a-Wish Foundation and benefit children in need.
+          </p>
         </div>
-    </div>
+      </div>
 
-</section>
-<footer>
-    <div class="business-footer">
+    </section>
+    <footer>
+      <div class="business-footer">
         <div class="text-center">
-            <p class="footer">
-                Legal stuff: This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA). <br/> Cards for Humanity is not affiliated with Cards Against Humanity. 
-                In complying with the Creative Commons license of the Cards Against Humanity card game, <br /> all proceeds from donations go directly to charity, as managed by crowdrise.
-            </p>
-            <span class="asgard"> created By: Team Asgard</span>
+          <p class="footer">
+            Legal stuff: This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA).
+            <br/> Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license
+            of the Cards Against Humanity card game,
+            <br /> all proceeds from donations go directly to charity, as managed by crowdrise.
+          </p>
+          <span class="asgard"> created By: Team Asgard</span>
         </div>
-    </div>
-</footer>
-</div>
+      </div>
+    </footer>
+  </div>
 
 </div>
