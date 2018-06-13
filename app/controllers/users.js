@@ -153,7 +153,7 @@ exports.signUp = (req, res) => {
             sendgridMail.send(msg, (err) => {
               if (err) return err;
               return res.status(201).send({
-                message: 'Signed up successfully, please check email for activation link',
+                message: 'Signed up successfully, please check email for activation link'
               });
             });
           });
