@@ -27,8 +27,8 @@ describe('Authentication', () => {
     });
   });
 
-  describe('Test for signup with an invalid username', () => {
-    it('Should flag invalid username errors', (done) => {
+  describe('Test for signup with an invalid name', () => {
+    it('Should flag invalid name errors', (done) => {
       request
         .post('/api/auth/signup')
         .send({
