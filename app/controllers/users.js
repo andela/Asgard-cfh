@@ -120,7 +120,6 @@ exports.create = (req, res, next) => {
 };
 
 exports.signUp = (req, res) => {
-  if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
     })
@@ -142,28 +141,31 @@ exports.signUp = (req, res) => {
                 user: newUser
               });
             }
-            sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-              to: newUser.email,
-              from: 'noreply@asgardcfh.com',
-              subject: 'CFH EMAIL VERIFICATION',
-              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
-              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
-            };
-            sendgridMail.send(msg, (err) => {
-              if (err) return err;
-              return res.status(201).send({
-                message: 'Signed up successfully, please check email for activation link',
-              });
-            });
+            // sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+            // const msg = {
+            //   to: newUser.email,
+            //   from: 'noreply@asgardcfh.com',
+            //   subject: 'CFH EMAIL VERIFICATION',
+            //   text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
+            //   html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
+            // };
+            // sendgridMail.send(msg, (err) => {
+            //   if (err) return err;
+            //   return res.status(201).send({
+            //     message: 'Signed up successfully, please check email for activation link',
+            //   });
+            // });
+            return res.status(201).send({
+                  message: 'Signed up successfully, please check email for activation link',
+                });
           });
         } else {
-          return res.redirect('/#!/signup?error=existinguser');
+          return res.status(409).send({
+            message: 'this email is in use already',
+            success: false
+          })
         }
       });
-  } else {
-    return res.redirect('/#!/signup?error=incomplete');
-  }
 };
 
 exports.sendCredentials = (req, res) => {
@@ -232,7 +234,7 @@ exports.login = (req, res, next) => {
   }).exec((err, user) => {
     if (!user) {
       return res.status(401).json({
-        error: 'Invalid credentials'
+        message: 'Invalid email or password'
       });
     }
     if (!user.active) {
@@ -256,6 +258,10 @@ exports.login = (req, res, next) => {
           message: 'Logged in Successfully',
           token
         });
+      });
+    } else {
+      res.status(401).json({
+        message: 'Invalid email or password'
       });
     }
   });
