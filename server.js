@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'test') {
  } else {
     var db = mongoose.connect(process.env.CFH_TESTDB)
  }
-
+ 
 //Bootstrap models
 var models_path = __dirname + '/app/models';
 var walk = function(path) {
