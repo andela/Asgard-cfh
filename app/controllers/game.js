@@ -25,18 +25,20 @@ exports.saveGame = (req, res) => {
           const newGame = new Game(req.body);
           newGame.save((err) => {
             if (err) return err;
+            return res.status(200).json({ message: 'Game Saved', game });
+          });
+        } else {
+          game.gameId = req.body.gameId;
+          game.players = req.body.players;
+          game.gameWinner = req.body.gameWinner;
+
+          game.save((err) => {
+            if (err) {
+              return res.status(500).json({ error: err.errors });
+            }
+            return res.status(200).json({ message: 'Game Saved', game });
           });
         }
-        game.gameId = req.body.gameId;
-        game.players = req.body.players;
-        game.gameWinner = req.body.gameWinner;
-
-        game.save((err) => {
-          if (err) {
-            return res.status(500).json({ error: err.errors });
-          }
-          return res.status(200).json({ message: 'Game Saved', game });
-        });
       });
   } else {
     return res.status(400).json({ message: 'Please enter a gameId' });
@@ -68,10 +70,10 @@ exports.startGame = (req, res) => {
             if (err) {
               return res.status(500).json({ error: err.errors });
             }
-            return res.status(200).json({ message: 'Game Created', newGame });
+            return res.status(201).json({ message: 'Game Created', newGame });
           });
-        } else {
-          return res.status(304).json({ message: 'Game Exists' });
+        } else if (game) {
+          return res.status(400).json({ message: 'Game Exists' });
         }
       });
   } else {
