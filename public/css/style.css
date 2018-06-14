@@ -306,7 +306,8 @@ carousel-indicators .active {
       padding-top: 8%;
       color: #fff;
       font-size: 40px;
-  } 
+  }
+} 
 .asgard {
   margin-top: 2%;
   color: #f47820;
@@ -464,4 +465,4 @@ carousel-indicators .active {
   .arrow:hover {
     color: #fff;
   }
-}
+  
