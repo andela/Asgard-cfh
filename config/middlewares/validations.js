@@ -1,3 +1,6 @@
+const mongoose = require('mongoose'),
+  User = mongoose.model('User');
+
 const { check, validationResult } = require('express-validator/check');
 /**
  * @description - Validate user signup
@@ -15,11 +18,24 @@ exports.validateSignup = (req, res, next) => {
   return next();
 };
 
+exports.confirmUserExistence = (req, res, next) => {
+  User.findOne({
+    email: req.body.email
+  }).exec((err, user) => {
+    if (!user) {
+      return res.status(401).json({
+        message: 'Invalid email or password'
+      });
+    }
+    next();
+  });
+};
+
  exports.signupChecks = [check('email', 'please enter a valid email')
-        .isEmail(),
-        check('name', 'name must be a minimum of two letters')
-        .trim()
-        .isLength({ min: 2 }),
-        check('password', 'passwords must be at least 6 chars long and contain one number')
-        .isLength({ min: 6 })
-        .matches(/\d/)];
+  .isEmail(),
+check('name', 'name must be a minimum of two letters')
+  .trim()
+  .isLength({ min: 2, max: 25 }),
+check('password', 'passwords must be at least 6 chars long and contain one number')
+  .isLength({ min: 6 })
+  .matches(/\d/)];

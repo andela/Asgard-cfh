@@ -30,9 +30,11 @@ module.exports = (app, passport) => {
   // Donation Routes
   app.post('/donations', users.addDonation);
 
-  app.post('/api/auth/login', passport.authenticate('local', {
-    failureFlash: 'Invalid email or password.'
-  }), users.login);
+  app.post(
+    '/api/auth/login',
+    validation.confirmUserExistence,
+    passport.authenticate('local'), users.login
+  );
 
   app.get('/users/me', users.me);
   app.get('/users/:userId', users.show);

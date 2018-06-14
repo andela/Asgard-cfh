@@ -26,11 +26,10 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 //Bootstrap db connection
 if (process.env.NODE_ENV !== 'test') {
     var db = mongoose.connect(config.db);
-} else {
+ } else {
     var db = mongoose.connect(process.env.CFH_TESTDB)
-}
-
-
+ }
+ 
 //Bootstrap models
 var models_path = __dirname + '/app/models';
 var walk = function(path) {
