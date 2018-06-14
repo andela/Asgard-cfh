@@ -1,10 +1,10 @@
-
  /* New design for landing page */
 body{
   margin: 0 !important;
 }
  .tpl-body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* ‘consolas’, Fredericka the Great, cursive */
 }
 .navbar {
   position: fixed;
@@ -62,14 +62,33 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
 }
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+height: 100px;
+width: 100px;
+background-size: 100%, 100%;
+background-image: none;
+}
 
+.carousel-control-next-icon:after
+{
+content: '>';
+font-size: 55px;
+color: rgba(255, 0, 13, 0.774);
+}
+
+.carousel-control-prev-icon:after {
+content: '<';
+font-size: 55px;
+color: rgba(255, 0, 13, 0.774);
+}
 .business-footer {
   background-color: #291c1f;
   padding: 15px 0;
   color: white;
   font-size:12px;
   clear: both;
-}
+} 
 
 #change-color {
   color: orange;
@@ -224,7 +243,6 @@ carousel-indicators .active {
   margin: auto 9%;
   padding: 5px 2px;
   color: #ff0000;
-  
 }
 
 
@@ -243,6 +261,17 @@ carousel-indicators .active {
 
 .game-card {
   text-align: center;
+}
+
+.login-button {
+  margin: auto;
+}
+.signup-info {
+  padding-right: 15%;
+}
+
+.authenticate-card {
+  margin: 2%;
 }
 
 .brief-info {
@@ -336,4 +365,103 @@ carousel-indicators .active {
   animation-name: slideRightShow;
   animation-timing-function: ease-in-out;
 }
+
+.form-gradient .font-small {
+  font-size: 0.8rem; }
+
+.form-gradient .header {
+  border-top-left-radius: .3rem;
+  border-top-right-radius: .3rem; }
+
+.form-gradient input[type=text]:focus:not([readonly]) {
+  border-bottom: 1px solid #fd9267;
+  -webkit-box-shadow: 0 1px 0 0 #fd9267;
+  box-shadow: 0 1px 0 0 #fd9267; }
+
+.form-gradient input[type=text]:focus:not([readonly]) + label {
+  color: #4f4f4f; }
+
+.form-gradient input[type=password]:focus:not([readonly]) {
+  border-bottom: 1px solid #fd9267;
+  -webkit-box-shadow: 0 1px 0 0 #fd9267;
+  box-shadow: 0 1px 0 0 #fd9267; }
+
+.form-gradient input[type=password]:focus:not([readonly]) + label {
+  color: #4f4f4f; }
+
+  .peach-gradient {
+      background: -webkit-linear-gradient(50deg,#ffd86f,#fc6262)!important;
+      background: -o-linear-gradient(50deg,#ffd86f,#fc6262)!important;
+      background: linear-gradient(40deg,#ffd86f,#fc6262)!important;
+  }
+
+  .back-home {
+      color: black !important;
+      border: 2px solid #fd9267 !important;
+      border-radius: 30px;
+      margin: 2%;
+      font-size: 20px;
+      padding: 15px;
+      transition: 1.5s;
+      cursor: pointer
+  }
+
+  .back-home:focus {
+    outline: 0 !important;
+}
+
+  .back-home:hover {
+      color: #fff !important;
+      background-color: #271c1fd3 !important;
+  }
+  .btn-rounded {
+      -webkit-border-radius: 10em;
+      border-radius: 10em;
+      background-color: #271c1fd3 !important;
+  }
+
+  .password {
+      margin-bottom: 15%;
+  }
+
+  .Fullname {
+      margin-top: 1% !important;
+  }
+  .parent-form {
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.2);
+      height: 100vh
+  }
+  .authenticate-card {
+      width: 100%;
+      max-width: 28rem;
+      margin: 6% auto 0;
+      box-shadow: 3px 4px 10px rgb(51, 30, 5);
+  }
+
+  .authenticate-signup-card {
+      width: 100%;
+      max-width: 28rem;
+      margin: 2% auto 0;
+      box-shadow: 3px 4px 10px rgb(51, 30, 5);
+
+  }
+
+  .background {
+      background-image: url("../img/landing//htp-background.png");
+      background-attachment: fixed;
+      background-position: center;
+      
+      height: 100vh;
+      background-size: cover;
+       
+  }
+
+  .arrow {
+       color: black;
+    }
+  
+  .arrow:hover {
+    color: #fff;
+  }
 }
