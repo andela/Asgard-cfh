@@ -15,7 +15,6 @@ const user = new User({
 // Request handler for making API calls
 const request = supertest.agent(app);
 
-let token;
 const token2 = 'hjbjbjbfjbjbjhfbhbvbrjbbhjbhyurrhbub4urghubjbhbrbjruybhb';
 
 describe('Authentication', () => {
@@ -37,7 +36,6 @@ describe('Authentication', () => {
         })
         .expect(201)
         .end((err, res) => {
-          token = res.body.token;
           if (err) {
             return done(err);
           }
