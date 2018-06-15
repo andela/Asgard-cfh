@@ -32,7 +32,7 @@ describe('Authentication', () => {
   });
 
   describe('confirmEmail', () => {
-    it('confirm users email', (done) => {
+    it('Should fail if activation link is expired', (done) => {
       request
         .get(`/activate/${token2}`)
         .end((err, res) => {
@@ -73,6 +73,7 @@ describe('Authentication', () => {
             return done(err);
           }
           (res.body.message).should.be.eql('Logged in Successfully');
+          should(res.body).have.property('token');
           done();
         });
     });
