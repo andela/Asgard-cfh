@@ -69,8 +69,7 @@ describe("Game Server",function(){
     var disconnect = function() {
       client1.disconnect();
       client2.disconnect();
-      client3.disconnect();
-      done();
+      client3.disconnect(); 
     };
     var expectStartGame = function() {
       client1.emit('startGame');
@@ -84,6 +83,7 @@ describe("Game Server",function(){
         data.state.should.equal("waiting for players to pick");
       });
       setTimeout(disconnect,200);
+      done();
     };
     client1.on('connect', function(data){
       client1.emit('joinGame',{userID:'unauthenticated',room: '', createPrivate: false});
