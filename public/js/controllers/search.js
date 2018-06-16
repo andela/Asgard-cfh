@@ -14,7 +14,7 @@ app.controller('searchController', function($scope, $http) {
       $scope.invite = {};
       $scope.link = window.location.href;
 $scope.findUsers = function(){
-    $http.post('/search', {term: $scope.inputValue})
+    $http.post('/api/search', {term: $scope.inputValue})
     .then((response) => {
         $scope.foundUsers = response.data.foundUser;
         $scope.userNotFound = false;
@@ -32,7 +32,7 @@ $scope.sendInvites = function(user){
 
     $http({
         method: 'POST',
-        url: '/invite',
+        url: '/api/invite',
         data: { recieverEmail: user.email,
                 gameURL: $scope.link, },
         headers: {
