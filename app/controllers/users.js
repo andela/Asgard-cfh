@@ -120,53 +120,53 @@ exports.create = (req, res, next) => {
 };
 
 exports.signUp = (req, res) => {
-    User.findOne({
-      email: req.body.email
-    })
-      .exec((err, user) => {
-        if (err) return err;
-        if (!user) {
-          const newUser = new User(req.body);
-          const { _id, email } = newUser;
-          newUser.provider = 'local';
-          const temporaryToken = jwt.sign({
-            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
-            _id,
-            email
-          }, secret);
-          newUser.save((error) => {
-            if (error) {
-              return res.redirect('/#!/signup?error=unknown', {
-                errors: error.errors,
-                user: newUser
-              });
-            }
-            sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-              to: newUser.email,
-              from: 'noreply@asgardcfh.com',
-              subject: 'CFH EMAIL VERIFICATION',
-              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
-              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
-            };
-            sendgridMail.send(msg, (err) => {
-              if (err) return err;
-              return res.status(201).send({
-                message: 'Signed up successfully, please check email for activation link',
-                token: temporaryToken
-              });
+  User.findOne({
+    email: req.body.email
+  })
+    .exec((err, user) => {
+      if (err) return err;
+      if (!user) {
+        const newUser = new User(req.body);
+        const { _id, email } = newUser;
+        newUser.provider = 'local';
+        const temporaryToken = jwt.sign({
+          exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+          _id,
+          email
+        }, secret);
+        newUser.save((error) => {
+          if (error) {
+            return res.redirect('/#!/signup?error=unknown', {
+              errors: error.errors,
+              user: newUser
             });
+          }
+          sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+          const msg = {
+            to: newUser.email,
+            from: 'noreply@asgardcfh.com',
+            subject: 'CFH EMAIL VERIFICATION',
+            text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
+            html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
+          };
+          sendgridMail.send(msg, (err) => {
+            if (err) return err;
             return res.status(201).send({
-                  message: 'Signed up successfully, please check email for activation link',
-                });
+              message: 'Signed up successfully, please check email for activation link',
+              token: temporaryToken
+            });
           });
-        } else {
-          return res.status(409).send({
-            message: 'this email is in use already',
-            success: false
-          })
-        }
-      });
+          return res.status(201).send({
+            message: 'Signed up successfully, please check email for activation link',
+          });
+        });
+      } else {
+        return res.status(409).send({
+          message: 'this email is in use already',
+          success: false
+        });
+      }
+    });
 };
 
 exports.sendCredentials = (req, res) => {
@@ -407,4 +407,21 @@ exports.searchUser = (req, res) => {
         foundUser
       });
     });
+};
+
+exports.profile = (req, res) => {
+  const { id } = req.params;
+  User.findById({ _id: id }).then((user) => {
+    if (!user) {
+      return res.status(404).json({
+        message: 'User Not Found',
+      });
+    }
+    return res.status(200).json({
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      active: user.active,
+    });
+  }).catch(() => res.status(500).json({ message: 'Server Error' }));
 };

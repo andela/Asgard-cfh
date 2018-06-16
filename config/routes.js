@@ -111,4 +111,8 @@ module.exports = (app, passport) => {
 
   // Search User
   app.post('/search', users.searchUser);
+
+
+  //  User Profile
+  app.get('/api/profile/:id', users.profile);
 };
