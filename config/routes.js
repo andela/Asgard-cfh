@@ -30,9 +30,11 @@ module.exports = (app, passport) => {
   // Donation Routes
   app.post('/donations', users.addDonation);
 
-  app.post('/api/auth/login', passport.authenticate('local', {
-    failureFlash: 'Invalid email or password.'
-  }), users.login);
+  app.post(
+    '/api/auth/login',
+    validation.confirmUserExistence,
+    passport.authenticate('local'), users.login
+  );
 
   app.get('/users/me', users.me);
   app.get('/users/:userId', users.show);
@@ -105,8 +107,8 @@ module.exports = (app, passport) => {
   app.get('/', index.render);
 
   // Invitation
-  app.post('/invite', middleWare.isLoggedIn, users.invite);
+  app.post('/api/invite', middleWare.isLoggedIn, users.invite);
 
   // Search User
-  app.post('/search', users.searchUser);
+  app.post('/api/search', users.searchUser);
 };
