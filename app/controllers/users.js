@@ -17,6 +17,9 @@ const secret = process.env.SECRET;
 
 /**
  * Auth callback
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
  */
 exports.authCallback = (req, res) => {
   res.redirect('/#!/');
@@ -24,6 +27,9 @@ exports.authCallback = (req, res) => {
 
 /**
  * Show login form
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
  */
 exports.signin = (req, res) => {
   if (!req.user) {
@@ -35,6 +41,9 @@ exports.signin = (req, res) => {
 
 /**
  * Show sign up form
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
  */
 exports.signup = (req, res) => {
   if (!req.user) {
@@ -46,6 +55,9 @@ exports.signup = (req, res) => {
 
 /**
  * Logout
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
  */
 exports.signout = (req, res) => {
   req.logout();
@@ -54,6 +66,9 @@ exports.signout = (req, res) => {
 
 /**
  * Session
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
  */
 exports.session = (req, res) => {
   res.redirect('/');
@@ -63,15 +78,16 @@ exports.session = (req, res) => {
  * Check avatar - Confirm if the user who logged in via passport
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
  */
 exports.checkAvatar = (req, res) => {
-  /* eslint-disable */
   if (req.user && req.user._id) {
     User.findOne({
       _id: req.user._id
     })
       .exec((err, user) => {
-        /* eslint-enable */
         if (user.avatar !== undefined) {
           res.redirect('/#!/');
         } else {
@@ -87,6 +103,10 @@ exports.checkAvatar = (req, res) => {
 
 /**
  * Create user
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @returns {void}
  */
 exports.create = (req, res, next) => {
   if (req.body.name && req.body.password && req.body.email) {
@@ -118,55 +138,57 @@ exports.create = (req, res, next) => {
     return res.redirect('/#!/signup?error=incomplete');
   }
 };
-
+/**
+ * Signup Method
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
 exports.signUp = (req, res) => {
-    User.findOne({
-      email: req.body.email
-    })
-      .exec((err, user) => {
-        if (err) return err;
-        if (!user) {
-          const newUser = new User(req.body);
-          const { _id, email } = newUser;
-          newUser.provider = 'local';
-          const temporaryToken = jwt.sign({
-            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
-            _id,
-            email
-          }, secret);
-          newUser.save((error) => {
-            if (error) {
-              return res.redirect('/#!/signup?error=unknown', {
-                errors: error.errors,
-                user: newUser
-              });
-            }
-            sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
-            const msg = {
-              to: newUser.email,
-              from: 'noreply@asgardcfh.com',
-              subject: 'CFH EMAIL VERIFICATION',
-              text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
-              html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
-            };
-            sendgridMail.send(msg, (err) => {
-              if (err) return err;
-              return res.status(201).send({
-                message: 'Signed up successfully, please check email for activation link',
-                token: temporaryToken
-              });
+  User.findOne({
+    email: req.body.email
+  })
+    .exec((err, user) => {
+      if (err) return err;
+      if (!user) {
+        const newUser = new User(req.body);
+        const { _id, email } = newUser;
+        newUser.provider = 'local';
+        const temporaryToken = jwt.sign({
+          exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
+          _id,
+          email
+        }, secret);
+        newUser.save((error) => {
+          if (error) {
+            return res.redirect('/#!/signup?error=unknown', {
+              errors: error.errors,
+              user: newUser
             });
+          }
+          sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+          const msg = {
+            to: newUser.email,
+            from: 'noreply@asgardcfh.com',
+            subject: 'CFH EMAIL VERIFICATION',
+            text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
+            html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
+          };
+          sendgridMail.send(msg, (err) => {
+            if (err) return err;
             return res.status(201).send({
-                  message: 'Signed up successfully, please check email for activation link',
-                });
+              message: 'Signed up successfully, please check email for activation link',
+              token: temporaryToken
+            });
           });
-        } else {
-          return res.status(409).send({
-            message: 'this email is in use already',
-            success: false
-          })
-        }
-      });
+        });
+      } else {
+        return res.status(409).send({
+          message: 'this email is in use already',
+          success: false
+        });
+      }
+    });
 };
 
 exports.sendCredentials = (req, res) => {
@@ -177,9 +199,7 @@ exports.sendCredentials = (req, res) => {
         return res.status(401).json({ success: false, message: 'Activation link has expired' });
       }
       User.findOne({
-        /* eslint-disable */
         _id: decoded._id
-        /* eslint-enable */
       }).exec((err, user) => {
         if (err) return err;
         user.active = true;
@@ -271,6 +291,9 @@ exports.login = (req, res, next) => {
 
 /**
  * Assign avatar to user
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
 exports.avatars = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
@@ -315,6 +338,9 @@ exports.addDonation = (req, res) => {
 
 /**
  *  Show profile
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
 exports.show = (req, res) => {
   const user = req.profile;
@@ -327,6 +353,9 @@ exports.show = (req, res) => {
 
 /**
  * Send User
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
 exports.me = (req, res) => {
   res.jsonp(req.user || null);
@@ -334,6 +363,11 @@ exports.me = (req, res) => {
 
 /**
  * Find user by id
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @param {object} id
+ * @return {void}
  */
 exports.user = (req, res, next, id) => {
   User
@@ -350,6 +384,9 @@ exports.user = (req, res, next, id) => {
 
 /**
  * Invite user to play game.
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
 exports.invite = (req, res) => {
   const { recieverEmail, gameURL } = req.body;
