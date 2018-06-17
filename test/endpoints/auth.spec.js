@@ -14,8 +14,8 @@ const user = new User({
 
 // Request handler for making API calls
 const request = supertest.agent(app);
-
-const token2 = 'hjbjbjbfjbjbjhfbhbvbrjbbhjbhyurrhbub4urghubjbhbrbjruybhb';
+const userEmail = `steve${Math.random() * 100}@andela.com`;
+const fakeToken = 'hjbjbjbfjbjbjhfbhbvbrjbbhjbhyurrhbub4urghubjbhbrbjruybhb';
 
 describe('Authentication', () => {
   before((done) => {
@@ -44,9 +44,26 @@ describe('Authentication', () => {
         });
     });
 
+    it('Should return a JWT upon user signup', (done) => {
+      request
+        .post('/api/auth/signup')
+        .send({
+          name: 'Clinton',
+          email: userEmail,
+          password: 'password1234'
+        })
+        .end((err, res) => {
+          res.body.message.should.equal('Signed up successfully, please check email for activation link');
+          should(res.body).have.property('token');
+          should.exist(res.body.token);
+          res.status.should.equal(201);
+          done();
+        });
+    });
+
     it('Should fail if activation link is expired', (done) => {
       request
-        .get(`/activate/${token2}`)
+        .get(`/activate/${fakeToken}`)
         .end((err, res) => {
           if (err) {
             return done(err);

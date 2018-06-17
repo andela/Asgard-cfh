@@ -1,8 +1,8 @@
 /**
  * Module dependencies.
  */
+require('../../server');
 const should = require('should'),
-  app = require('../../server'),
   mongoose = require('mongoose');
 
 const User = mongoose.model('User');

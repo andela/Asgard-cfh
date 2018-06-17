@@ -181,9 +181,6 @@ exports.signUp = (req, res) => {
               token: temporaryToken
             });
           });
-          return res.status(201).send({
-            message: 'Signed up successfully, please check email for activation link',
-          });
         });
       } else {
         return res.status(409).send({

@@ -12,19 +12,18 @@ describe('Game Server', () => {
     const client1 = io.connect(socketURL, options);
     const disconnect = () => {
       client1.disconnect();
-      done();
     };
     client1.on('connect', () => {
       client1.emit('joinGame', { userID: 'unauthenticated', room: '', createPrivate: false });
       setTimeout(disconnect, 200);
     });
+    done();
   });
 
   it('Should send a game update upon receiving request to joinGame', (done) => {
     const client1 = io.connect(socketURL, options);
     const disconnect = () => {
       client1.disconnect();
-      done();
     };
     client1.on('connect', () => {
       client1.emit('joinGame', { userID: 'unauthenticated', room: '', createPrivate: false });
@@ -33,6 +32,7 @@ describe('Game Server', () => {
       });
       setTimeout(disconnect, 200);
     });
+    done();
   });
 
   it('Should announce new user to all users', (done) => {
@@ -41,7 +41,6 @@ describe('Game Server', () => {
     const disconnect = () => {
       client1.disconnect();
       client2.disconnect();
-      done();
     };
     client1.on('connect', () => {
       client1.emit('joinGame', { userID: 'unauthenticated', room: '', createPrivate: false });
@@ -54,6 +53,7 @@ describe('Game Server', () => {
       });
       setTimeout(disconnect, 200);
     });
+    done();
   });
 
   it('Should start game when startGame event is sent with 3 players', (done) => {
@@ -76,7 +76,6 @@ describe('Game Server', () => {
         data.state.should.equal('waiting for players to pick');
       });
       setTimeout(disconnect, 200);
-      done();
     };
     client1.on('connect', () => {
       client1.emit('joinGame', { userID: 'unauthenticated', room: '', createPrivate: false });
@@ -90,6 +89,7 @@ describe('Game Server', () => {
         });
       });
     });
+    done();
   });
 
   it('Should automatically start game when 6 players are in a game', (done) => {

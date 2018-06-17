@@ -15,6 +15,7 @@ describe('POST to /invite', () => {
         password: 'password1234'
       })
       .end((err, res) => {
+        if (err) return done(err);
         user = res.body;
         user.active = true;
         done();
@@ -24,11 +25,12 @@ describe('POST to /invite', () => {
     request
       .post('/api/invite')
       .send({
-        gameURL: 'localhost:3000',
+        gameURL: 'http://localhost:3000',
         recieverEmail: 'douglas@gmail.com',
         token: user.token
       })
       .end((err, res) => {
+        if (err) return done(err);
         res.body.message.should.equal('Email sent successfully');
         res.status.should.equal(200);
         done();
@@ -44,6 +46,7 @@ describe('Should be able to search users', () => {
         term: userEmail,
       })
       .end((err, res) => {
+        if (err) return done(err);
         res.body.message.should.equal('Users Found');
         res.body.foundUser.should.be.eql([{
           email: userEmail,
@@ -61,6 +64,7 @@ describe('Should be able to search users', () => {
         term: 'cfgvhbjknlmknjbhvgfhvjbknlm',
       })
       .end((err, res) => {
+        if (err) return done(err);
         res.body.message.should.equal('User not found');
         res.status.should.equal(404);
         done();
