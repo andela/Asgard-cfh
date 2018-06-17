@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import app from '../../server';
 
 const request = supertest.agent(app);
-let user;
+let user = null;
 const userEmail = `isaiah${Math.random() * 100}@andela.com`;
 
 describe('POST to /invite', () => {
