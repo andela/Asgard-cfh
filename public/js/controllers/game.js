@@ -3,9 +3,9 @@ angular.module('mean.system') //eslint-disable-line
   .controller('GameController', [
     '$scope', 'game', '$http', '$timeout', '$location',
     'MakeAWishFactsService', '$dialog',
-    function ( //eslint-disable-line
+    (
       $scope, game, $http, $timeout, $location,
-      MakeAWishFactsService, $dialog) { //eslint-disable-line
+      MakeAWishFactsService, $dialog) => { //eslint-disable-line
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
@@ -15,7 +15,7 @@ angular.module('mean.system') //eslint-disable-line
       $scope.pickedCards = [];
       $scope.makeAWishFact = makeAWishFacts.pop();
 
-      $scope.pickCard = function(card) { //eslint-disable-line
+      $scope.pickCard = (card) => {
         if (!$scope.hasPickedCards) {
           if ($scope.pickedCards.indexOf(card.id) < 0) {
             $scope.pickedCards.push(card.id);
@@ -33,105 +33,97 @@ angular.module('mean.system') //eslint-disable-line
           }
         }
       };
-      $scope.pointerCursorStyle = function() { //eslint-disable-line
+      $scope.pointerCursorStyle = () => {
         if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
           return { cursor: 'pointer' };
         }
         return {};
       };
 
-      $scope.sendPickedCards = function() { //eslint-disable-line
+      $scope.sendPickedCards = () => {
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
       };
 
-      $scope.cardIsFirstSelected = function(card) { //eslint-disable-line
+      $scope.cardIsFirstSelected = (card) => {
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[0];
         }
         return false;
       };
 
-      $scope.cardIsSecondSelected = function(card) { //eslint-disable-line
+      $scope.cardIsSecondSelected = (card) => {
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[1];
         }
         return false;
       };
 
-      $scope.firstAnswer = function($index) { //eslint-disable-line
+      $scope.firstAnswer = ($index) => {
         if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
           return true;
         }
         return false;
       };
 
-      $scope.secondAnswer = function($index) { //eslint-disable-line
+      $scope.secondAnswer = ($index) => {
         if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
           return true;
         }
         return false;
       };
 
-      $scope.showFirst = function(card) { //eslint-disable-line
-        return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
-      };
+      $scope.showFirst = card =>
+        game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
 
-      $scope.showSecond = function(card) { //eslint-disable-line
-        return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
-      };
+      $scope.showSecond = card =>
+        game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
 
-      $scope.isCzar = function() { //eslint-disable-line
-        return game.czar === game.playerIndex;
-      };
+      $scope.isCzar = () =>
+        game.czar === game.playerIndex;
 
-      $scope.isPlayer = function($index) { //eslint-disable-line
-        return $index === game.playerIndex;
-      };
+      $scope.isPlayer = $index =>
+        $index === game.playerIndex;
 
-      $scope.isCustomGame = function() { //eslint-disable-line
-        return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
-      };
+      $scope.isCustomGame = () =>
+        !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
 
-      $scope.isPremium = function($index) { //eslint-disable-line
-        return game.players[$index].premium;
-      };
+      $scope.isPremium = $index =>
+        game.players[$index].premium;
 
-      $scope.currentCzar = function($index) { //eslint-disable-line
-        return $index === game.czar;
-      };
+      $scope.currentCzar = $index =>
+        $index === game.czar;
 
-      $scope.winningColor = function($index) { //eslint-disable-line
+      $scope.winningColor = ($index) => {
         if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
           return $scope.colors[game.players[game.winningCardPlayer].color];
         }
         return '#f9f9f9';
       };
 
-      $scope.pickWinning = function(winningSet) { //eslint-disable-line
+      $scope.pickWinning = (winningSet) => {
         if ($scope.isCzar()) {
           game.pickWinning(winningSet.card[0]);
           $scope.winningCardPicked = true;
         }
       };
 
-      $scope.winnerPicked = function() { //eslint-disable-line
-        return game.winningCard !== -1;
-      };
+      $scope.winnerPicked = () =>
+        game.winningCard !== -1;
 
-      $scope.startGame = function() { //eslint-disable-line
+      $scope.startGame = () => {
         $http.post(`/api/games/${$scope.game.gameID}/start`)
           .then(() => game.startGame());
       };
 
-      $scope.abandonGame = function() { //eslint-disable-line
+      $scope.abandonGame = () => {
         game.leaveGame();
         $location.path('/');
       };
 
       // Catches changes to round to update when no players pick card
       // (because game.state remains the same)
-      $scope.$watch('game.round', function() { //eslint-disable-line
+      $scope.$watch('game.round', () => {
         $scope.hasPickedCards = false;
         $scope.showTable = false;
         $scope.winningCardPicked = false;
@@ -143,7 +135,7 @@ angular.module('mean.system') //eslint-disable-line
       });
 
       // In case player doesn't pick a card in time, show the table
-      $scope.$watch('game.state', function() { //eslint-disable-line
+      $scope.$watch('game.state', () => {
         if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
           $scope.showTable = true;
         }
@@ -162,7 +154,7 @@ angular.module('mean.system') //eslint-disable-line
         }
       });
 
-      $scope.$watch('game.gameID', function() { //eslint-disable-line
+      $scope.$watch('game.gameID', () => {
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {
             // If the player didn't successfully enter the request room,
