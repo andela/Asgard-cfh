@@ -1,4 +1,4 @@
-<div ng-controller="indexController">
+<div ng-controller="IndexController">
     <nav class="navbar  nav-decor navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-sm-3 col-1">
             <a class="cat-form profile-image">
-                <img class="img img-fluid profile-image" src="img/profile.png" alt="Card image cap" width="537.5">
+                <img class="img img-fluid profile-image" ng-src = "{{ user.image ? user.image : 'img/profile.png' }}" alt="Card image cap" width="537.5">
             </a>
 
             <div class="col-sm user-details-card">
@@ -43,8 +43,11 @@
                 <div class="text-position profile-text center-text">
                     <strong>Profile Details</strong>
                 </div>
+                <p class="text-space profile-text center-text mt-3">
+                    {{user.name}}
+                </p>
                 <p class="text-space profile-text center-text">
-                    Horrible Penguin Uzumaki
+                    {{user.email}}
                 </p>
 
             </div>

@@ -459,6 +459,7 @@ exports.profile = (req, res) => {
       email: user.email,
       name: user.name,
       active: user.active,
+      image: user.profileImage,
     });
   }).catch(() => res.status(500).json({ message: 'Server Error' }));
 };
