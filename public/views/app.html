@@ -1,4 +1,3 @@
-</script>
 <div class="app-container" id="heythere" ng-controller="GameController">
   <nav class="navbar1 navbar-expand-lg navbar-light bg-light">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -10,15 +9,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="game-nav navbar-nav mr-auto">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-        <li class="nav-item">
+        <li class="nav-item" data-step="1" data-intro="Welcome to Card for Humanity a Game for horrible people 😄, I will be taking you on a brief tour on how to play the game click next to continue">
           <img src="../img/landing/logo.png" alt="logo" width="80px">
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-          <button type="button" class="btn btn-info">Take a tour</button>
+          <a href="javascript:void(0);" class="btn btn-info" ng-show="showTour" data-step="13" data-intro="Did you miss anything? Click the back button or click here to start again 🧐" onclick="javascript:introJs().start();">Take a tour</a>
         <!-- trings-->
         <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Invite friends </button>
+        <button type="button" class="btn btn-info" ng-show="isCustomGame() && game.state === 'awaiting players'" data-step="11" data-intro="You can invite your friends to join your game. Just search for a friend and click the invite button next to his name" data-toggle="modal" data-target="#myModal">Invite friends </button>
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -63,7 +62,7 @@
         </div>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <div class="nav-link abandon-game" ng-click="abandonGame()">
+            <div class="nav-link abandon-game" data-step="12" data-intro="Click to leave the game and go back to the Home Page. You wont be able to join the game again if it has already started." ng-click="abandonGame()">
               Abandon Game
             </div>
           </li>
@@ -73,7 +72,27 @@
         </div>
       </form>
     </div>
-  </nav>
+  </nav>  
+  <!-- Tour Modal -->
+  <div id="gameModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Play Game</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <p>Would you like to Take a Tour on How To Play Before the Game begins?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="javascript:void(0);" class="btn btn-primary" data-dismiss="modal" onclick="javascript:introJs().start();">Take Tour</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container gameplay-container">
     <div class="upper-gameplay-container">
       <div class="container">
@@ -83,30 +102,30 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="component-wrapper">
-                    <div class="timer-container">
+                    <div class="timer-container" data-step="5" data-intro="This is a countdown timer that shows how much time is remaining to select answer and start next round. Stay Alert🚨">
                       <timer></timer>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="component-wrapper">
-                    <div class="question-container-outer">
-                      <question></question>
+                    <div class="question-container-outer" data-step="3" data-intro="You can see how many players have joined the game. A minimum of 3 players and a maximum of 12 players can play the gamne for each round.">
+                      <question data-step="4" data-intro="When the game begins the questions would come up here 👍"></question>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-3">
-                  <div class="czar-card">
+                  <div class="czar-card" data-step="6" data-intro="This is a card you click when you are the czar to draw the next question 🃏">
                     <img class="czar-image" src="../img/landing/czar.png"  alt="czar-pick">
                   </div>
                 </div>
               </div>
             </div>
-            <div class="player-answer">
-              <answers></answers>
+            <div class="player-answer" data-step="2" data-intro="Here are the instructions to play the game so you don't look like a dummy 😱">
+              <answers data-step="5" data-intro="When the game begins answers to questions would come up here 👍"></answers>
             </div>
           </div>
-          <div class="col-sm-3 player-outer">
+          <div class="col-sm-3 player-outer" data-step="10" data-intro="Here You can see the list of players that have joined the game">
             <div class="social-bar-container">
               <player></player>
             </div>
@@ -117,14 +136,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
 
 <!-- <span id="tweet-container">
   <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>

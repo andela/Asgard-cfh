@@ -1,6 +1,6 @@
 
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$http', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $http, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'game', '$http', '$window', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $http, $window, $timeout, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -9,7 +9,8 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
-
+    $scope.showTour = true;
+    $scope.gameModal = true;
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -35,12 +36,11 @@ angular.module('mean.system')
         return {};
       }
     };
-
     $scope.sendPickedCards = function() {
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
     };
-
+    $window.onload = $('#gameModal').modal('show');
     $scope.cardIsFirstSelected = function(card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[0];
@@ -123,8 +123,12 @@ angular.module('mean.system')
     $scope.startGame = function() {
       if ($scope.isCustomGame()) {
         $http.post('/api/games/'+$scope.game.gameID+'/start')
-          .then((res) => game.startGame());
+          .then(() => {
+            $scope.showTour = false;
+            return game.startGame();
+          });
       } else {
+        $scope.showTour = false;
         game.startGame();
       }
     };
