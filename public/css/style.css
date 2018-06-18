@@ -595,7 +595,8 @@ li {
 
 .question-block {
   height: 100%;
-  text-align: center
+  text-align: center;
+  background-color: #fff;
 }
 
 #question-text {
@@ -636,6 +637,62 @@ li {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
 }
 
+.game-end-question {
+  margin: 5%
+}
+.game-end-answer {
+  margin:  1% 5%;
+  line-height: 1.6;
+  padding: 2% 1%;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+}
+
+#inner-text-container {
+  display: flex;
+  justify-content: center;
+  margin: 5% 4%;
+  
+}
+
+#join-new-game {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: green;
+  color: #fff;
+  padding: 2% 2px;
+  margin: 0 5px;
+}
+
+#exit-match {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: red;
+  color: #fff;
+  padding: 2% 2px;
+  margin: 0 5px;
+}
+
+/* #charity-widget-container {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+} */
+
+#people-left-game-top {
+  margin-top: 5%;
+  font-weight: bold;
+}
+
+#charity-widget-container {
+  margin-top: 20px; }
+  
+  @media (max-width: 520px) {
+  #charity-widget-container {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 20px; } }
 /* card-design */
 
 .oldcard {
@@ -701,3 +758,53 @@ li {
       right: -0.357em;
       display: inline-block;
       content: '.'; }
+
+      .crDonateWidget {
+        -webkit-box-shadow: 0px 0px 0px 0px transparent !important;
+        -moz-box-shadow: 0px 0px 0px 0px transparent !important;
+        box-shadow: 0px 0px 0px 0px transparent !important;
+        -webkit-border-radius: 8px !important;
+        -moz-border-radius: 8px !important;
+        border-radius: 8px !important; }
+      
+      .crDonateWidgetOuter {
+        text-align: center;
+        background-color: transparent !important;
+        -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+        border: 0px solid #e6e6e6 !important;
+        margin: 0px 0px !important; }
+      
+      .crDonated {
+        margin-top: 2px !important; }
+      
+      .crImageAndTitle {
+        display: none; }
+      
+      .crImageAndTitleOuter {
+        display: none; }
+      
+      .startFundraiser {
+        display: none; }
+
+      #crDonateWidget_cfhio_cards4humanity {
+        width: 90% !important;
+        margin: 0 auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 1) !important;
+        margin-top: 67px !important; }
+        #crDonateWidget_cfhio_cards4humanity .crDonateTriangle {
+          right: 6px !important; }
+        #crDonateWidget_cfhio_cards4humanity h4 {
+          margin-bottom: 8px !important; }
+      
+      .gradientButton {
+        width: 80% !important;
+        margin-top: 8px !important;
+        background: #f4781f !important;
+        -webkit-border-radius: 8px !important;
+        -moz-border-radius: 8px !important;
+        border-radius: 8px !important;
+        text-transform: none !important; }
+        .gradientButton .donateNow {
+          border-top: 0px solid black !important; }
+      
