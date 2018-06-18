@@ -1,14 +1,14 @@
 angular.module('mean.directives', []) //eslint-disable-line
-  .directive('player', () => (
-    {
+  .directive('player', function () { //eslint-disable-line
+    return {
       restrict: 'EA',
       templateUrl: '/views/player.html',
       link(scope, elem, attr) { //eslint-disable-line
         scope.colors = ['#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95'];
       }
-    }
-  )).directive('answers', () => (
-    {
+    };
+  }).directive('answers', function () { //eslint-disable-line
+    return {
       restrict: 'EA',
       templateUrl: '/views/answers.html',
       link(scope, elem, attr) { //eslint-disable-line
@@ -52,23 +52,23 @@ angular.module('mean.directives', []) //eslint-disable-line
           }
         });
       }
-    }
-  )).directive('question', () => (
-    {
+    };
+  }).directive('question', function () { //eslint-disable-line
+    return {
       restrict: 'EA',
       templateUrl: '/views/question.html',
       link(scope, elem, attr) {} //eslint-disable-line
-    }
-  ))
-  .directive('timer', () => (
-    {
+    };
+  })
+  .directive('timer', function () { //eslint-disable-line
+    return {
       restrict: 'EA',
       templateUrl: '/views/timer.html',
       link(scope, elem, attr){}//eslint-disable-line
-    }
-  ))
-  .directive('landing', () => (
-    {
+    };
+  })
+  .directive('landing', function () { //eslint-disable-line
+    return {
       restrict: 'EA',
       link(scope, elem, attr) { //eslint-disable-line
         scope.showOptions = true;
@@ -78,5 +78,12 @@ angular.module('mean.directives', []) //eslint-disable-line
           scope.showOptions = true;
         }
       }
-    }
-  ));
+    };
+  })
+  .directive('chatpanel', function () { //eslint-disable-line
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/chat-panel.html',
+      link(scope, elem, attr) {} //eslint-disable-line
+    };
+  });

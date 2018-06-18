@@ -402,3 +402,68 @@ text-align: right;
   .arrow:hover {
     color: #fff;
   }
+/*
+chat styles
+*/
+
+@media (max-width: 700px){
+  #chat-container {
+    width: 40%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: purple;
+  }
+}
+@media (min-width: 701px){
+  #chat-container {
+    width: 30%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: purple;
+  }
+}
+@media (min-width: 1300px){
+  #chat-container {
+    width: 20%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: purple;
+  }
+}
+/* #chat-container {
+  width: 30%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: purple;
+} */
+#msg-container {
+  height: 90%;
+  width: 100%;
+  background-color: orange
+}
+#input-container {
+  height: 10%;
+  width: 100%;
+  background-color: pink;
+}
+#input-container #chat-form {
+  height: 100%;
+  width: 100%;
+}
+#chat-input {
+  height: 100%;
+  width: 80%;
+  float: left;
+}
+#chat-submit-btn {
+  height: 100%;
+  width: 20%;
+}
