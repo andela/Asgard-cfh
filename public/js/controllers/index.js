@@ -10,7 +10,6 @@ angular.module('mean.system').controller('IndexController', [
   'AvatarService',
   ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
     $scope.global = Global;
-
     $scope.playAsGuest = () => {
       game.joinGame();
       $location.path('/app');
