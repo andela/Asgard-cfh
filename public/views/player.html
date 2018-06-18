@@ -8,11 +8,11 @@
                   </span>
                   <img class="user-image" ng-src="{{player.profileImage || player.avatar}}"/>
                 </div>
-            <div id="player-name"><p>{{player.username | upperFirstLetter}}</p></div>
-            <div id="player-score"><p>{{player.points}}/{{game.pointLimit}}</p></div>
+            <div id="player-name" data-step="8" data-intro="Here You can see the name of a player in the game"><p>{{player.username | upperFirstLetter}}</p></div>
+            <div id="player-score" data-step="9" data-intro="Here You can see the points of players that are participating in the game"><p>{{player.points}}/{{game.pointLimit}}</p></div>
           </div>
           <div ng-show="isPlayer($index)" id="player-star">
-              <i id="active-user" class="fa fa-user"></i>           
+              <i id="active-user" data-step="7" data-intro="This shows the current player" class="fa fa-user"></i>           
            </div>
         </div>
         <div id="czar-container" ng-show="currentCzar($index)">
