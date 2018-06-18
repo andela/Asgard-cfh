@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 const mongoose = require('mongoose'),
+  Game = mongoose.model('Game'),
   User = mongoose.model('User');
 const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
@@ -454,12 +455,17 @@ exports.profile = (req, res) => {
         message: 'User Not Found',
       });
     }
-    return res.status(200).json({
-      id: user._id,
-      email: user.email,
-      name: user.name,
-      active: user.active,
-      image: user.profileImage,
-    });
+    Game.find({ gameWinner: user.username })
+      .exec((err, games) => {
+        if (err) return err;
+        return res.status(200).json({
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          username: user.username,
+          image: user.profileImage,
+          gamesWon: games.length
+        });
+      });
   }).catch(() => res.status(500).json({ message: 'Server Error' }));
 };

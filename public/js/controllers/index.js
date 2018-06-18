@@ -33,11 +33,14 @@ angular.module('mean.system').controller('IndexController', [
         $scope.avatars = data;
       });
 
-    $window.onload = $http.get(`/api/profile/${userId}`)
-      .then((res) => {
-        $scope.user = res.data;
-        console.log(res);
-      });
+    if (window.user) {
+      $window.onload = $http.get(`/api/profile/${userId}`)
+        .then((res) => {
+          $scope.user = res.data;
+        });
+    } else {
+      $location.path('/');
+    }
     $scope.image = '';
     $scope.image_preview = '';
     $scope.readImage = () => {

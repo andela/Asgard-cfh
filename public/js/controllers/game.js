@@ -150,7 +150,10 @@ angular.module('mean.system')
       }
       const gamePlayers = [];
       $scope.game.players.forEach((player) => {
-        gamePlayers.push(player.username);
+        gamePlayers.push({
+          username: player.username,
+          points: player.points
+        });
       })
       if (game.state === 'game ended') {
         const saveGame = {
