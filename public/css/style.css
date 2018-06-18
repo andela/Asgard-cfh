@@ -139,13 +139,14 @@ text-align: right;
   height: 100px;
   width: 100px;
   background-size: 100%, 100%;
-  background-image: none;
+  background-image: none !important;
   /* background-color: red; */
   -webkit-animation: bounce .3s infinite alternate;
   -moz-animation: bounce .3s infinite alternate;
   animation: bounce .3s infinite alternate;
-  padding: 0 5%;
+  /* padding: 0 5%; */
 }
+
 
 carousel-indicators .active {
   width: 48px;
@@ -226,6 +227,7 @@ carousel-indicators .active {
 
 .card-text {
   padding: 23px 13px;
+  color: #fff !important;
 }
 
 .landingcard-body{
@@ -454,7 +456,7 @@ carousel-indicators .active {
   .authenticate-card {
       width: 100%;
       max-width: 28rem;
-      margin: 6% auto 0;
+      margin: 2% auto 0;
       box-shadow: 3px 4px 10px rgb(51, 30, 5);
   }
 
@@ -463,7 +465,6 @@ carousel-indicators .active {
       max-width: 28rem;
       margin: 2% auto 0;
       box-shadow: 3px 4px 10px rgb(51, 30, 5);
-
   }
 
   .background {
