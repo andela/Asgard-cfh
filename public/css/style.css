@@ -54,9 +54,9 @@ body{
   height: 440.64px
 }
 
-#move {
+/* #move {
   background-color: #291c1f !important;
-}
+} */
 .charity {
   background-image: url("../img/landing/background-charity.png");
   background-repeat: no-repeat;
@@ -72,14 +72,14 @@ background-image: none;
 
 .carousel-control-next-icon:after
 {
-content: '>';
-font-size: 55px;
+content: '>' !important;
+font-size: 50px  !important;
 color: rgba(255, 0, 13, 0.774);
 }
 
 .carousel-control-prev-icon:after {
 content: '<';
-font-size: 55px;
+font-size: 50px;
 color: rgba(255, 0, 13, 0.774);
 }
 .business-footer {
@@ -203,7 +203,7 @@ carousel-indicators .active {
   margin-bottom: 20px; 
 }
 
-.card {
+.landingcard {
   width: 100%;
   background-color:#897074;
   color: #fff;
@@ -221,7 +221,7 @@ carousel-indicators .active {
   padding: 23px 13px;
 }
 
-.card-body{
+.landingcard-body{
   padding: 2px 16px
 }
 
@@ -361,7 +361,7 @@ carousel-indicators .active {
   to { transform: scale(1.2); }
 }
 
-.card:hover {
+.landingcard:hover {
   animation-duration: 0.7s;
   animation-name: slideRightShow;
   animation-timing-function: ease-in-out;
