@@ -6,6 +6,8 @@ body{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   /* ‘consolas’, Fredericka the Great, cursive */
 }
+
+
 .navbar {
   position: fixed;
   width: 100%;
@@ -21,6 +23,11 @@ body{
 }
 .center-link {
   justify-content: space-around;
+}
+
+.abandon-game {
+  color: #f42020 !important;
+  margin-right: 20px;
 }
 
 .main-screen {
@@ -258,6 +265,9 @@ carousel-indicators .active {
   text-align: center;
 
 } 
+.main-player-container {
+  margin: 4% auto;
+}
 
 .game-card {
   text-align: center;
@@ -274,12 +284,20 @@ carousel-indicators .active {
   margin: 2%;
 }
 
+.player-answer {
+  margin-top: 8% !important;
+}
+
 .brief-info {
   padding-top: 3%;
   color: #fff;
   font-size: 10px;
   text-align: center;
   line-height: 1.5;
+}
+
+.player-answer {
+  width: 100% !important;
 }
 
 .slide-hide-on-mobile { 
@@ -465,4 +483,391 @@ carousel-indicators .active {
   .arrow:hover {
     color: #fff;
   }
+
+  /* Gaming screen */
+  .app-container {
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    font-family: 'cursive';
+    background: linear-gradient(217deg, rgba(31, 16, 16, 0.95), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(70, 38, 16, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(25, 8, 6, 0.8), rgba(45, 13, 3, 0.42)70.71%);
+  }
+
+  .navbar1 {
+    width: 100%;
+    padding: 1% 3%;
+  }
+
+  .gameplay-container {
+    margin: 3% auto;
+    width: 100%;
+    height: 100%;
+    padding: 1% 1%;
+    border-radius: 7px;
+    border: 2px solid #bfbbbb;
+  }
+
+  .timer-container {
+    height: 100%;
+    width: 100%;
+    margin: 0 1%;
+    border-radius: 7px;
+    border: 3px solid #f47721;
+    color: black;
+    background-color: #fff
+  }
+
+  hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 3px solid #f47721;
+  }
+
+  .question-container-outer {
+    height: 100%;
+    margin: 0 1%;
+    width: 100%
+  }
+
+  .czar-card {
+    height: 100%;
+    width: 100%;
+    margin: 0 1%;
+    border-radius: 7px;
+    border: 2px solid black;
+  }
+
+  .czar-image {
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .social-bar-container {
+    height: 100%;
+  }
+
+  .player-answer {
+    width: 100%;
+    margin-top: 3%;
+    border-radius: 7px;
+    border: 2px solid black;
+    background-color: #fff;
+    color: black;
+    line-height: 2.8;
+    font-weight: bolder;
+    font-size: 18px
+  }
+
+  .main-player-container {
+    width: 100%;
+    background-color: #f47721;
+    padding: 2%;
+    border-radius: 5px;
+  } 
+
+  .player-container {
+    border-radius: 10px;
+    border: 2px solid transparent;
+    margin: 2%;
+    background-color: #FFF !important;
+    height: 30%;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .timer-status-round {
+    padding: 4px;
+    font-weight: bolder;
+    word-wrap: break-word;
+  }
+
+  .time {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 70px;
+  }
+
+.start-game {
+  height: 100%;
+  border: 2px solid #604839;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.btn-info {
+  background-color: #f47721!important;
+  color: #fff!important;
+}
+
+li {
+  cursor: pointer;
+}
+
+.component-wrapper {
+  height:100%;
+}
+
+.profile-icon {
+  background-color: #291c1f;
+  border-radius: 50%;
+}
+
+.lobby-how-to-play{
+  font-size: 25px;
+  font-weight: bolder
+}
+#notifications {
+  padding-top: 10px;
+  font-weight: bold 
+}
+
+#finding-players {
+  padding-top: 10px 
+}
+
+#user {
+  color: #f47721;
+  border-radius: 50%;
+  padding: 15px 17px;
+}
+
+.user-image {
+  width: 100%;
+  position: relative;
+  margin: 4% 0;  
+}
+
+.arrange-player {
+  display: flex;
+  font-size: 13px;
+  width: 100%;
+  /* border-radius: 4px;
+  border: 2px solid transparent */
+}
+#player-container-inner {
+  display: flex;
+  align-items: center;
+  margin: 3% 0;
+}
+
+#active-user {
+  color: green;
+}
+
+.question-block {
+  height: 100%;
+  text-align: center;
+  background-color: #fff;
+}
+
+#question-text {
+  padding-top: 10%;
+  font-weight: bolder
+}
+
+#player-name {
+  padding: 0 5px;
+  flex: 0 0 60%;
+}
+
+#player-score {
+  flex: 0 0 20%;
+}
+
+#avatar_ {
+  flex: 0 0 20%;
+}
+
+#question-container-inner {
+  height: 100%;
+}
+
+#czar-blank-container {
+  text-align: center;
+  line-height: 1.8;
+  padding:  5px 0;
+  font-weight: bold;
+}
+
+#charity-fact-container {
+  margin: 5%;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+}
+
+.game-end-question {
+  margin: 5%
+}
+.game-end-answer {
+  margin:  1% 5%;
+  line-height: 1.6;
+  padding: 2% 1%;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+}
+
+#inner-text-container {
+  display: flex;
+  justify-content: center;
+  margin: 5% 4%;
   
+}
+
+#join-new-game {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: green;
+  color: #fff;
+  padding: 2% 2px;
+  margin: 0 5px;
+}
+
+#exit-match {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: red;
+  color: #fff;
+  padding: 2% 2px;
+  margin: 0 5px;
+}
+
+/* #charity-widget-container {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+} */
+
+#people-left-game-top {
+  margin-top: 5%;
+  font-weight: bold;
+}
+
+#charity-widget-container {
+  margin-top: 20px; }
+  
+  @media (max-width: 520px) {
+  #charity-widget-container {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 20px; } }
+/* card-design */
+
+.oldcard {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 17.5%;
+  height: 215px;
+  padding: 1%;
+  border: 2px solid;
+  margin: 1%;
+  background: linear-gradient(217deg, rgba(31, 16, 16, 0.95), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(70, 38, 16, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(25, 8, 6, 0.8), rgba(45, 13, 3, 0.42)70.71%);
+  border-radius: 8px;
+  color: #fff;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: top; }
+  @media (max-width: 520px) {
+    .oldcard {
+      font-size: 14px;
+      height: 115px;
+      word-wrap: break-word; } }
+  .oldcard.how-to {
+    font-size: 1.4rem; }
+  .oldcard #selection-number {
+    position: absolute;
+    bottom: 1px;
+    left: 7px;
+    font-size: 18px; }
+  .oldcard.black {
+    background: linear-gradient(217deg, rgba(31, 16, 16, 0.95), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(70, 38, 16, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(25, 8, 6, 0.8), rgba(45, 13, 3, 0.42)70.71%);
+    border-color: #000;
+    color: #fff; }
+  .oldcard.longBlack {
+    background: linear-gradient(217deg, rgba(31, 16, 16, 0.95), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(70, 38, 16, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(25, 8, 6, 0.8), rgba(45, 13, 3, 0.42)70.71%);
+    border-color: #000;
+    color: #000;
+    height: 100%;
+    width: 35.5em;
+    padding-left: 2%;
+    padding-right: 2%; }
+  .oldcard.smallest {
+    font-size: 0.750em; }
+    @media (max-width: 520px) {
+      .oldcard.smallest {
+        font-size: 10px; } }
+  .oldcard u {
+    position: relative;
+    content: '';
+    display: inline-block;
+    width: 25%;
+    text-decoration: none;
+    height: 1em;
+    border-bottom: 0.125em solid white;
+    margin-bottom: -0.125em; }
+    .oldcard u .small {
+      width: 25%; }
+    .oldcard u .big {
+      width: 75%; }
+    .oldcard u .end:after {
+      position: absolute;
+      right: -0.357em;
+      display: inline-block;
+      content: '.'; }
+
+      .crDonateWidget {
+        -webkit-box-shadow: 0px 0px 0px 0px transparent !important;
+        -moz-box-shadow: 0px 0px 0px 0px transparent !important;
+        box-shadow: 0px 0px 0px 0px transparent !important;
+        -webkit-border-radius: 8px !important;
+        -moz-border-radius: 8px !important;
+        border-radius: 8px !important; }
+      
+      .crDonateWidgetOuter {
+        text-align: center;
+        background-color: transparent !important;
+        -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+        border: 0px solid #e6e6e6 !important;
+        margin: 0px 0px !important; }
+      
+      .crDonated {
+        margin-top: 2px !important; }
+      
+      .crImageAndTitle {
+        display: none; }
+      
+      .crImageAndTitleOuter {
+        display: none; }
+      
+      .startFundraiser {
+        display: none; }
+
+      #crDonateWidget_cfhio_cards4humanity {
+        width: 90% !important;
+        margin: 0 auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 1) !important;
+        margin-top: 67px !important; }
+        #crDonateWidget_cfhio_cards4humanity .crDonateTriangle {
+          right: 6px !important; }
+        #crDonateWidget_cfhio_cards4humanity h4 {
+          margin-bottom: 8px !important; }
+      
+      .gradientButton {
+        width: 80% !important;
+        margin-top: 8px !important;
+        background: #f4781f !important;
+        -webkit-border-radius: 8px !important;
+        -moz-border-radius: 8px !important;
+        border-radius: 8px !important;
+        text-transform: none !important; }
+        .gradientButton .donateNow {
+          border-top: 0px solid black !important; }
+      

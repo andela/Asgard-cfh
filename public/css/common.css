@@ -604,7 +604,7 @@ body {
         margin-top: 10px; }
         @media (max-width: 520px) {
           #main-container #app-container #gameplay-container #game-end-container {
-            height: 65%; } }
+            height: 65%; } } 
         #main-container #app-container #gameplay-container #game-end-container #charity-widget-container {
           width: 40%;
           float: left; }

@@ -121,8 +121,12 @@ angular.module('mean.system')
     };
 
     $scope.startGame = function() {
-      $http.post('/api/games/'+$scope.game.gameID+'/start')
-        .then((res) => game.startGame());
+      if ($scope.isCustomGame()) {
+        $http.post('/api/games/'+$scope.game.gameID+'/start')
+          .then((res) => game.startGame());
+      } else {
+        game.startGame();
+      }
     };
 
     $scope.abandonGame = function() {
