@@ -402,3 +402,69 @@ text-align: right;
   .arrow:hover {
     color: #fff;
   }
+
+  /* User Profile Style */
+  .col-1{
+    background-color: #291c1f;
+    height: 680px;
+}
+
+.col-2{
+    background-color: #897074;
+    height: 680px;
+}
+
+.col-3{
+    background-color: #291c1f;
+    height: 680px;
+}
+
+.profile-image{
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    height: 250px;
+    border-radius: 50px;
+    display: block;
+    padding: 20px;
+}
+
+.user-details-card{
+    background-color: #291c1f;
+}
+
+.center-text{
+    text-align: center;
+    color:white;
+}
+
+.profile-text{
+    color:white;
+}
+
+nav.navbar{
+    background-color:#897074!important;
+}
+
+.cards1{
+    background-color: #291c1f;
+    height: 40px;
+    margin: 20px;
+}
+
+#friends-text{
+    padding-top: 10px;
+}
+
+.pagination-btn-position{
+    position:absolute;
+    bottom: 0;
+    padding: 20px 20px 20px 40px;    
+}
+
+.paginate{
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+ /* User Profile Style End */
