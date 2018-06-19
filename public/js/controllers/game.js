@@ -15,6 +15,32 @@ angular.module('mean.system') //eslint-disable-line
       $scope.pickedCards = [];
       $scope.makeAWishFact = makeAWishFacts.pop();
 
+      // chat implementation
+      const initChatService = (gameID) => {
+        console.log('current game Id: ', gameID);
+        const firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
+          .child(`${gameID}`);
+        firebaseRef.remove();
+        $scope.chats = $firebaseArray(firebaseRef);
+        // const allChat = $scope.chats; //eslint-disable-line
+        $scope.$watch('$scope.chats', () => {
+          console.log('chat ref: ', $scope.chats);
+        }, true);
+      };
+      $scope.clearChatInput = () => {
+        $scope.message = '';
+      };
+      $scope.sendMessage = (message) => {
+        if (message) {
+          $scope.chats.$add({
+            avatar: game.players[game.playerIndex].avatar,
+            message: $scope.message,
+            date: Date.now(),
+            userName: game.players[game.playerIndex].username
+          });
+          $scope.clearChatInput();
+        }
+      };
       $scope.pickCard = function (card) { //eslint-disable-line
         if (!$scope.hasPickedCards) {
           if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -163,6 +189,9 @@ angular.module('mean.system') //eslint-disable-line
       });
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
+        if (game.gameID) {
+          initChatService(game.gameID);
+        }
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {
             // If the player didn't successfully enter the request room,
