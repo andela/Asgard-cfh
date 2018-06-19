@@ -17,23 +17,45 @@ angular.module('mean.system') //eslint-disable-line
 
       // chat implementation
       const initChatService = (gameID) => {
-        console.log('current game Id: ', gameID);
         const firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
           .child(`${gameID}`);
         firebaseRef.remove();
         $scope.chats = $firebaseArray(firebaseRef);
         // const allChat = $scope.chats; //eslint-disable-line
         $scope.$watch('$scope.chats', () => {
-          console.log('chat ref: ', $scope.chats);
         }, true);
       };
       $scope.clearChatInput = () => {
         $scope.message = '';
       };
+      $scope.togglePanel = () => {
+        console.log('toggle toggle..');
+        $('#chat-container').toggleClass('chat-panel-slide-up'); //eslint-disable-line
+        $('#chat-container').toggleClass('chat-panel-slide-down'); //eslint-disable-line
+        if ($('#chat-container').hasClass('chat-panel-slide-up')) { //eslint-disable-line
+          $('#chat-container').animate({ //eslint-disable-line
+            bottom: 0
+          });
+          // .css({ //eslint-disable-line
+          //   bottom: '0px'
+          // });
+          return $('#chat-up-down').text('down'); //eslint-disable-line
+        }
+        if ($('#chat-container').hasClass('chat-panel-slide-down')) { //eslint-disable-line
+          // const bottom = -($('#chat-container').height() - 20); //eslint-disable-line
+          $('#chat-container').animate({ //eslint-disable-line
+            bottom: -($('#chat-container').height() - 20) //eslint-disable-line
+          });
+          // .css({ //eslint-disable-line
+          //   bottom: 0
+          // });
+          return $('#chat-up-down').text('up'); //eslint-disable-line
+        }
+      };
       $scope.sendMessage = (message) => {
         if (message) {
           $scope.chats.$add({
-            avatar: game.players[game.playerIndex].avatar,
+            avatar: game.players[game.playerIndex].profileImage || game.players[game.playerIndex].avatar, //eslint-disable-line
             message: $scope.message,
             date: Date.now(),
             userName: game.players[game.playerIndex].username
@@ -190,7 +212,7 @@ angular.module('mean.system') //eslint-disable-line
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
         if (game.gameID) {
-          initChatService(game.gameID);
+          initChatService($scope.game.gameID);
         }
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {

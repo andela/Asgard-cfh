@@ -291,13 +291,72 @@ text-align: right;
   }
 }
 
+@keyframes slideChatPanelDown {
+  /* 15% {
+    transform: translateY(15%)
+    transform: translateY(100%);
+  } */
+  30% {
+    /* transform: translateY(30%) */
+    transform: translateY(75%)
+  }
+  /* 45% {
+    transform: translateY(45%)
+    transform: translateY(60%)
+  } */
+  60% {
+    /* transform: translateY(60%) */
+    /* transform: translateY(-45%) */
+  }
+  /* 75% {
+    transform: translateY(75%)
+    transform: translateY(30%)
+  } */
+  95% {
+    /* transform: translateY(100%); */
+    /* transform: translateY(-75%); */
+    /* bottom: unset !important; */
+    transform: translateY(30%);
+    bottom: -40px !important
+  }
+}
+@keyframes slideChatPanelUp{
+  15% {
+    transform: translateY(-15%)
+  }
+  30% {
+    transform: translateY(-30%)
+  }
+  45% {
+    transform: translateY(-45%)
+  }
+  60% {
+    transform: translateY(-60%)
+  }
+  75% {
+    transform: translateY(-75%)
+  }
+  95% {
+    transform: translateY(-95%);
+    bottom: 0;
+  }
+}
 .cfh-card:hover {
   animation-duration: 0.7s;
   animation-name: slideRightShow;
   animation-timing-function: ease-in-out;
 }
 
-
+.chat-panel-slide-up {
+  /* animation-duration: 0.7s; */
+  /* animation-name: slideChatPanelUp; */
+  animation-timing-function: ease-in-out;
+}
+.chat-panel-slide-down {
+  /* animation-duration: 0.7s; */
+  /* animation-name: slideChatPanelDown; */
+  animation-timing-function: ease-in-out;
+}
 
 
 .form-gradient .font-small {
@@ -405,6 +464,10 @@ text-align: right;
 /*
 chat styles
 */
+#chat-container {
+  display: flex;
+  flex-direction: column;
+}
 
 @media (max-width: 700px){
   #chat-container {
@@ -413,7 +476,6 @@ chat styles
     position: fixed;
     bottom: 0;
     right: 0;
-    background-color: purple;
   }
 }
 @media (min-width: 701px){
@@ -423,21 +485,19 @@ chat styles
     position: fixed;
     bottom: 0;
     right: 0;
-    background-color: purple;
   }
 }
 @media (min-width: 1300px){
   #chat-container {
     width: 20%;
-    height: 50%;
+    height: 60%;
     position: fixed;
     bottom: 0;
     right: 0;
-    background-color: #fff;
   }
 }
 #msg-container {
-  height: 90%;
+  height: 80%;
   width: 100%;
   background-color: #fff
 }
@@ -462,6 +522,11 @@ chat styles
 #chat-submit-btn {
   height: 100%;
   width: 20%;
+}
+#chat-up-down{
+  height: 20%;
+  width: 30%;
+  float: right;
 }
 #msg-list {
   height: 100%;

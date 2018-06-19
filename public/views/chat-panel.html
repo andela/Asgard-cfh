@@ -1,26 +1,29 @@
-<div id="chat-container">
-    <div id="msg-container">
-        <ul id="msg-list">
-            <li class="chat-item" ng-repeat="chat in chats">
-                <div class="chat-item-left">
-                    <img class="chat-avatar" ng-src="{{chat.avatar}}" />
-                </div>
-                <div class="chat-item-right">
-                    <div class="chat-item-right-top">
-                        <span class="chat-name"><b>{{chat.userName}}</b></span>
-                        <span class="chat-time">{{chat.date | date: 'hh:mm'}}</span>
+<!-- <div id="chat-wrapper"> class="chat-panel-slide-down"-->
+    <div id="chat-container" class="chat-panel-slide-down" >
+        <button id="chat-up-down" ng-click="togglePanel()">up/down</button>
+        <div id="msg-container">
+            <ul id="msg-list">
+                <li class="chat-item" ng-repeat="chat in chats">
+                    <div class="chat-item-left">
+                        <img class="chat-avatar" ng-src="{{chat.avatar}}" />
                     </div>
-                    <div class="chat-item-right-bottom">
-                        <div>{{chat.message}}</div>
-                    </div>
-                </div>  
-            </li>
-        </ul>
+                    <div class="chat-item-right">
+                        <div class="chat-item-right-top">
+                            <span class="chat-name"><b>{{chat.userName}}</b></span>
+                            <span class="chat-time">{{chat.date | date: 'hh:mm'}}</span>
+                        </div>
+                        <div class="chat-item-right-bottom">
+                            <div>{{chat.message}}</div>
+                        </div>
+                    </div>  
+                </li>
+            </ul>
+        </div>
+    <div id="input-container">
+        <form name="messageForm" id="chat-form">
+            <input type="text" class="" id="chat-input" ng-model="message" placeholder="Type a message"/>
+            <button type="submit" id="chat-submit-btn" ng-click="sendMessage(message)" class="">Send</button>
+        </form>
     </div>
-<div id="input-container">
-    <form name="messageForm" id="chat-form">
-        <input type="text" class="" id="chat-input" ng-model="message" placeholder="Type a message"/>
-        <button type="submit" id="chat-submit-btn" ng-click="sendMessage(message)" class="">Send</button>
-    </form>
-</div>
-</div>
+    </div>
+<!-- </div> -->
