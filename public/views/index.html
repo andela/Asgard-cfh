@@ -18,23 +18,28 @@
       <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
         <ul class="navbar-nav cfh-navbar">
           <li class="nav-item">
-            <a class="nav-link" href="#">HOW TO PLAY
+            <a class="nav-link" target="_self" href="#!/#howToPlay">HOW TO PLAY
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">CHARITY</a>
+            <a class="nav-link" target="_self" href="#!/#charitySect">CHARITY</a>
           </li>
         </ul>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="#!/">
           <img src="../img/landing/logo.png" width="100px" alt="logo" />
         </a>
         <ul class="navbar-nav">
+          <div class="auth" ng-show="showOptions">
           <li class="nav-item">
-            <a class="nav-link" href="#">SIGN UP</a>
+            <a class="nav-link" href="#!/signup">SIGN UP</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">SIGN IN</a>
+            <a class="nav-link" href="#!/signin">SIGN IN</a>
+          </li>
+        </div>
+          <li class="nav-item" ng-hide="showOptions">
+            <a class="nav-link" ng-click="logout()">SIGN OUT</a>
           </li>
         </ul>
       </div>
@@ -58,18 +63,62 @@
             </div>
           </div>
           <h3 class="brief-info">Cards for Humanity is a fast-paced online version of the popular card game,
-            <br/>Cards Against Humanity, that gives you the opportunity to donate to children in need -
+            <br/>Cards Against Humanity, that gives you the opportunity to donate to children in need 
             <br/>all while remaining as despicable and awkward as you naturally are.</h3>
-          <div class="button-wrapper">
+          <div class="button-wrapper" ng-show="showOptions">
             <button class="btn btn-signup">SIGNUP</button>
             <button class="btn btn-play-as-guest">PLAY AS GUEST</button>
           </div>
+          <div class="button-wrapper" ng-hide="showOptions">
+            <a data-toggle="modal" data-target="#playModal" class="playGame btn btn-signup">PLAY GAME WITH STRANGERS</a>
+            <a data-toggle="modal" data-target="#playWithFriendsModal" class="playGame btn btn-play-as-guest">PLAY GAME WITH FRIENDS</a>
+          </div>
         </div>
-
       </div>
     </section>
 
-    <section class="how-to-play overlay">
+     <div id="playWithFriendsModal" class="modal fade">
+           <div class="modal-dialog">
+             <!-- Modal content -->
+             <div class="modal-content">
+               <div class="modal-header">
+                 <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                 <h4 class= "modal-title">PLAY GAME</h4>
+               </div>
+               <div class= "modal-body">
+                 <p style="font-weight: bold">You are about to start a new game do you want to proceed?</p>
+               </div>
+               <div class= "modal-footer">
+                 <button type= "button" class= "btn btn-warning"><a class="playGame" href= "/play?custom">PLAY GAME</a></button>
+                 <button type= "button" class= "btn btn-warning" data-dismiss= "modal">CLOSE</button>
+               </div>
+             </div>
+           </div>
+         </div>
+         
+         <!-- Play With Guests Modal -->
+         <div id= "playModal" class= "modal fade">
+           <div class= "modal-dialog">
+         
+             <!-- Modal content-->
+             <div class= "modal-content">
+               <div class= "text-center modal-header">
+                 <!-- <button type= "button" class= "close" data-dismiss= "modal">&times;</button> -->
+                 <h4 class="modal-title text-center">PLAY GAME</h4>
+               </div>
+               <div class= "modal-body">
+                 <p style="font-weight: bold">You are about to start a new game do you want to proceed?</p>
+               </div>
+               <div class= "modal-footer">
+                 <button type= "button" class= "btn btn-warning"><a class="playGame" href= "/play">PLAY GAME</a></button>
+                 <button type= "button" class= "btn btn-warning" data-dismiss= "modal">CLOSE</button>
+               </div>
+             </div>
+           </div>
+         </div> 
+
+
+    <section id="howToPlay" class="how-to-play overlay">
       <div class="content overlay">
         <h2 class="text-center">HOW TO PLAY</h2>
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -135,7 +184,7 @@
 
       </div>
     </section>
-    <section class="charity">
+    <section id="charitySect" class="charity">
       <div class="content">
         <h2 class="text-center">CHARITY</h2>
         <div class="charity-content">

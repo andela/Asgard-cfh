@@ -48,7 +48,10 @@ angular.module('mean.system')
         return false;
       }
     };
-
+    $scope.closeModal = () => {
+      $('#gameModal').remove();
+      $('.modal-backdrop').hide();
+    }
     $scope.cardIsSecondSelected = function(card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[1];
@@ -185,7 +188,7 @@ angular.module('mean.system')
             setTimeout(function(){
               var link = document.URL;
               var txt = 'Give the following link to your friends so they can join your game: ';
-              $('#lobby-how-to-play').text(txt);
+              $('#lobby-how-to-play').css({'text-align': 'center', 'font-size':'22px', 'font-weight':'bold', 'background': 'white', 'color': 'black'}).text(txt);
               $('#oh-el').css({'text-align': 'center', 'font-size':'22px', 'background': 'white', 'color': 'black'}).text(link);
             }, 200);
             $scope.modalShown = true;

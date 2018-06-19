@@ -25,7 +25,7 @@
                   </div>
               </div>
               <div class="card-body mx-4 mt-4">
-                <div class= "alert alert-danger" style="color: red" ng-show= "hasSignupError">
+                <div class= "alert alert-danger" style="color: red; margin-bottom: 7% !important" ng-show= "hasSignupError">
                   <a class="close"></a>
                   <span>{{signupError}}</span>
                 </div>
@@ -42,6 +42,14 @@
                       <input type="password" id="Form-pass3" class="form-control" ng-model="user.password" required novalidate />
                       <label for="Form-pass3">Your password</label>
                   </div>
+                  <div class="control-group">
+                    <div class="controls choose-image">
+                        <!-- <label for="profile-pic">Select file</label> -->
+                    <input ng-change="readImage()" id="profile-pic" type="file" ng-model="user.image" name="image" accept=".jpg, .png, .jpeg" />
+
+                    </div>
+                </div>
+                <img ng-src="{{image_preview}}" class="image-preview" >
                   <div class="row d-flex align-items-center mb-4">
                       <div class="col-md-1 col-md-5 d-flex align-items-start">
                           <div class="text-center login-button">
@@ -57,5 +65,25 @@
       
           </div>
       </section>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button> -->
+                      <h4 class="modal-title" id="modelTitleId">Registration Successful</h4>
+                  </div>
+                  <div class="modal-body">
+                      You have Successfully Signed Up Check your Email for an Activation Link to Complete Registration
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
 </div>
 </div>

@@ -26,8 +26,10 @@ body{
 }
 
 .abandon-game {
-  color: #f42020 !important;
+  color: #fff !important;
   margin-right: 20px;
+  border-radius: 15px;
+  font-size: 13px;
 }
 
 .main-screen {
@@ -399,7 +401,7 @@ carousel-indicators .active {
   -webkit-box-shadow: 0 1px 0 0 #fd9267;
   box-shadow: 0 1px 0 0 #fd9267; }
 
-.form-gradient input[type=text]:focus:not([readonly]) + label {
+.form-gradient input[type=text]:focus:not([readonly])  label {
   color: #4f4f4f; }
 
 .form-gradient input[type=password]:focus:not([readonly]) {
@@ -407,7 +409,7 @@ carousel-indicators .active {
   -webkit-box-shadow: 0 1px 0 0 #fd9267;
   box-shadow: 0 1px 0 0 #fd9267; }
 
-.form-gradient input[type=password]:focus:not([readonly]) + label {
+.form-gradient input[type=password]:focus:not([readonly])  label {
   color: #4f4f4f; }
 
   .peach-gradient {
@@ -451,7 +453,8 @@ carousel-indicators .active {
   .parent-form {
       overflow: hidden;
       background-color: rgba(0,0,0,0.2);
-      height: 100vh
+      height: 100%;
+      min-height: 100vh
   }
   .authenticate-card {
       width: 100%;
@@ -463,7 +466,7 @@ carousel-indicators .active {
   .authenticate-signup-card {
       width: 100%;
       max-width: 28rem;
-      margin: 2% auto 0;
+      margin: 0 auto 0;
       box-shadow: 3px 4px 10px rgb(51, 30, 5);
   }
 
@@ -490,7 +493,7 @@ carousel-indicators .active {
     min-height: 100vh;
     width: 100%;
     height: 100%;
-    font-family: 'cursive';
+    font-family: -apple-system, BlinkMacSystemFont;
     background: linear-gradient(217deg, rgba(31, 16, 16, 0.95), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(70, 38, 16, 0.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(25, 8, 6, 0.8), rgba(45, 13, 3, 0.42)70.71%);
   }
 
@@ -619,6 +622,7 @@ li {
   font-size: 25px;
   font-weight: bolder
 }
+
 #notifications {
   padding-top: 10px;
   font-weight: bold 
@@ -871,4 +875,61 @@ li {
         text-transform: none !important; }
         .gradientButton .donateNow {
           border-top: 0px solid black !important; }
+
+      .auth {
+        display: flex;
+      }
       
+      .playGame {
+        color: white !important;
+        text-decoration: none !important;
+      }
+
+      .playGame:hover {
+        color: white;
+        text-decoration: none !important;
+      }
+      
+/* Image Styling */
+
+      .image-preview {
+          height: 170px;
+            width: 170px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin-bottom: 2px;
+            background-color: #999;
+         }
+        
+         #profile-pic {
+          display: flex;
+          margin: 0 0;
+          padding-top: 5px !important;
+          justify-content: center;
+          width: 319px;
+          object-fit: contain
+         }
+        
+         #profile-pic::after {
+           color: white;
+         }
+        
+         .choose-image {
+          display: flex;
+          justify-content: center;
+          padding: 2px 0
+         } 
+/* Activate Account Completion */
+         .verify-image{
+          background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/landing/scattered-cards.png"); 
+          height: 100%;
+          width: 100%; 
+          position: absolute;
+          border: 2px solid gray;
+       }
+      
+       .white-text a{
+      vertical-align: 350px;
+      /* margin: auto auto; */
+      
+       }

@@ -27,8 +27,8 @@
                     </div>
                 </div>
                 <div class="card-body mx-4 mt-4">
-                    <div class="sign-error" style="color: red" ng-show="showError">
-                        Please check your username/password and try again.
+                    <div class="alert alert-danger" style="color: red; margin-bottom: 7% !important" ng-show="showLoginError">
+                         {{loginError}}
                     </div>
                     <form class="signup form-horizontal" ng-submit="login()" method="post">
                         <!--Body-->

@@ -1,5 +1,5 @@
 <div class="app-container" id="heythere" ng-controller="GameController">
-  <nav class="navbar1 navbar-expand-lg navbar-light bg-light">
+  <nav landing class="navbar1 navbar-expand-lg navbar-light bg-light">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -10,14 +10,14 @@
       <ul class="game-nav navbar-nav mr-auto">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
         <li class="nav-item" data-step="1" data-intro="Welcome to Card for Humanity a Game for horrible people 😄, I will be taking you on a brief tour on how to play the game click next to continue">
-          <img src="../img/landing/logo.png" alt="logo" width="80px">
+          <a href="#!/"><img src="../img/landing/logo.png" alt="logo" width="80px"></a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-          <a href="javascript:void(0);" class="btn btn-info" ng-show="showTour" data-step="13" data-intro="Did you miss anything? Click the back button or click here to start again 🧐" onclick="javascript:introJs().start();">Take a tour</a>
+          <a href="javascript:void(0);" class="auth nav-link" ng-show="showTour" data-step="13" data-intro="Did you miss anything? Click the back button or click here to start again 🧐" onclick="javascript:introJs().start();">TAKE A TOUR</a>
         <!-- trings-->
         <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-info" ng-show="isCustomGame() && game.state === 'awaiting players'" data-step="11" data-intro="You can invite your friends to join your game. Just search for a friend and click the invite button next to his name" data-toggle="modal" data-target="#myModal">Invite friends </button>
+        <a class="auth nav-link" ng-show="isCustomGame() && game.state === 'awaiting players'" data-step="11" data-intro="You can invite your friends to join your game. Just search for a friend and click the invite button next to his name" data-toggle="modal" data-target="#myModal">INVITE FRIENDS </a>
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -61,8 +61,27 @@
           </div>
         </div>
         <ul class="navbar-nav">
+          <div class="auth" ng-show="showOptions">
           <li class="nav-item">
-            <div class="nav-link abandon-game" data-step="12" data-intro="Click to leave the game and go back to the Home Page. You wont be able to join the game again if it has already started." ng-click="abandonGame()">
+            <div class="nav-link auth">
+              SIGN UP
+            </div>
+          </li>
+          <li class="nav-item">
+            <div class="nav-link auth">
+              SIGN IN
+            </div>
+          </li>
+          </div>
+          <div class="auth" ng-hide="showOptions">
+          <li class="nav-item">
+            <div ng-controller="IndexController" ng-click="logout()" class="nav-link auth">
+              SIGN OUT
+            </div>
+          </li>
+          </div>
+        <li class="nav-item">
+            <div class="nav-link btn btn-danger abandon-game" data-step="12" data-intro="Click to leave the game and go back to the Home Page. You wont be able to join the game again if it has already started." ng-click="abandonGame()">
               Abandon Game
             </div>
           </li>
@@ -84,11 +103,11 @@
           </button> -->
         </div>
         <div class="modal-body">
-          <p>Would you like to Take a Tour on How To Play Before the Game begins?</p>
+          <p style="font-weight: bold">Would you like to Take a Tour on How To Play Before the Game begins?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="javascript:void(0);" class="btn btn-primary" data-dismiss="modal" onclick="javascript:introJs().start();">Take Tour</a>
+          <button type="button" class="btn btn-danger" ng-click="closeModal()">Close</button>
+          <a href="javascript:void(0);" class="btn btn-warning" data-dismiss="modal" onclick="javascript:introJs().start();">Take Tour</a>
         </div>
       </div>
     </div>

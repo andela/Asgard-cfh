@@ -57,7 +57,8 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
-                $location.path('/confirmaccount');
+                $('#signUpModal').modal('show');
+                // $location.path('/confirmaccount');
               }, (error) => {
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
@@ -70,12 +71,17 @@ angular.module('mean.system').controller('IndexController', [
         $http.post('/api/auth/signup', $scope.user)
           .then(
             () => {
-              $location.path('/confirmaccount');
+              // $location.path('/confirmaccount');
+              $('#signUpModal').modal('show');
             },
             (error) => {
               if (error.data.errors) {
                 $scope.hasSignupError = true;
-                $scope.signupError = error.data.errors[0].msg || error.data.msg;
+                $scope.signupError = error.data.errors[0].msg || error.data.message;
+              }
+              if (error.data.message) {
+                $scope.hasSignupError = true;
+                $scope.signupError = error.data.message;
               }
             }
           );
