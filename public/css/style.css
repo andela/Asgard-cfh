@@ -284,6 +284,10 @@ carousel-indicators .active {
   padding-right: 15%;
 }
 
+.signup-btn {
+  display: flex;
+}
+
 .authenticate-card {
   margin: 2%;
 }
@@ -422,7 +426,7 @@ carousel-indicators .active {
       color: black !important;
       border: 2px solid #fd9267 !important;
       border-radius: 30px;
-      margin: 2%;
+      margin: 1% 2%;
       font-size: 20px;
       padding: 15px;
       transition: 1.5s;
@@ -440,6 +444,7 @@ carousel-indicators .active {
   .btn-rounded {
       -webkit-border-radius: 10em;
       border-radius: 10em;
+      padding: 15px;
       background-color: #271c1fd3 !important;
   }
 
@@ -447,35 +452,41 @@ carousel-indicators .active {
       margin-bottom: 15%;
   }
 
+  .signup-password {
+    margin-bottom: 1%
+  }
   .Fullname {
       margin-top: 1% !important;
   }
   .parent-form {
-      overflow: hidden;
       background-color: rgba(0,0,0,0.2);
-      height: 100%;
-      min-height: 100vh
+      min-height: 105vh;
+      height: 100%      
   }
+
   .authenticate-card {
       width: 100%;
       max-width: 28rem;
-      margin: 2% auto 0;
+      margin: 1% auto 0;
       box-shadow: 3px 4px 10px rgb(51, 30, 5);
   }
 
   .authenticate-signup-card {
       width: 100%;
       max-width: 28rem;
-      margin: 0 auto 0;
+      margin: 0% auto 0;
       box-shadow: 3px 4px 10px rgb(51, 30, 5);
+  }
+  .align-signup {
+    margin-top: 3%;
   }
 
   .background {
       background-image: url("../img/landing//htp-background.png");
       background-attachment: fixed;
       background-position: center;
-      
-      height: 100vh;
+      height: 100%;
+      min-height: 100vh;
       background-size: cover;
        
   }
@@ -742,11 +753,10 @@ li {
   margin: 0 5px;
 }
 
-/* #charity-widget-container {
-  border: 2px solid transparent;
-  border-radius: 4px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
-} */
+a:hover {
+  text-decoration: none;
+  color: #fff
+} 
 
 #people-left-game-top {
   margin-top: 5%;
@@ -893,12 +903,14 @@ li {
 /* Image Styling */
 
       .image-preview {
-          height: 170px;
+            height: 170px;
             width: 170px;
-            border-radius: 50%;
+            border-radius: 10%;
             border: 5px solid white;
             margin-bottom: 2px;
             background-color: #999;
+            object-fit: cover
+            /* margin: auto auto; */
          }
         
          #profile-pic {
@@ -907,7 +919,11 @@ li {
           padding-top: 5px !important;
           justify-content: center;
           width: 319px;
-          object-fit: contain
+          object-fit: contain;
+          border-bottom: 2px solid orange;
+          border-radius: 4px;
+          margin-right: 11%;
+          outline: none !important 
          }
         
          #profile-pic::after {
