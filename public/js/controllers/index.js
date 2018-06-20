@@ -59,7 +59,6 @@ angular.module('mean.system').controller('IndexController', [
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
                 $('#signUpModal').modal('show');
-                // $location.path('/confirmaccount');
               }, (error) => {
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
@@ -72,7 +71,6 @@ angular.module('mean.system').controller('IndexController', [
         $http.post('/api/auth/signup', $scope.user)
           .then(
             () => {
-              // $location.path('/confirmaccount');
               $('#signUpModal').modal('show');
             },
             (error) => {
