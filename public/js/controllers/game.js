@@ -21,35 +21,31 @@ angular.module('mean.system') //eslint-disable-line
           .child(`${gameID}`);
         firebaseRef.remove();
         $scope.chats = $firebaseArray(firebaseRef);
-        // const allChat = $scope.chats; //eslint-disable-line
-        $scope.$watch('$scope.chats', () => {
-        }, true);
       };
       $scope.clearChatInput = () => {
         $scope.message = '';
       };
       $scope.togglePanel = () => {
-        console.log('toggle toggle..');
         $('#chat-container').toggleClass('chat-panel-slide-up'); //eslint-disable-line
         $('#chat-container').toggleClass('chat-panel-slide-down'); //eslint-disable-line
         if ($('#chat-container').hasClass('chat-panel-slide-up')) { //eslint-disable-line
           $('#chat-container').animate({ //eslint-disable-line
             bottom: 0
           });
-          // .css({ //eslint-disable-line
-          //   bottom: '0px'
-          // });
-          return $('#chat-up-down').text('down'); //eslint-disable-line
+          if ($('#up-down-icon').hasClass('fa-rotate-0')) { //eslint-disable-line
+            $('#up-down-icon').removeClass('fa-rotate-0'); //eslint-disable-line
+          }
+          $('#up-down-icon').addClass('fa-rotate-180'); //eslint-disable-line
+          return;
         }
         if ($('#chat-container').hasClass('chat-panel-slide-down')) { //eslint-disable-line
-          // const bottom = -($('#chat-container').height() - 20); //eslint-disable-line
           $('#chat-container').animate({ //eslint-disable-line
-            bottom: -($('#chat-container').height() - 20) //eslint-disable-line
+            bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
           });
-          // .css({ //eslint-disable-line
-          //   bottom: 0
-          // });
-          return $('#chat-up-down').text('up'); //eslint-disable-line
+          if ($('#up-down-icon').hasClass('fa-rotate-180')) { //eslint-disable-line
+            $('#up-down-icon').removeClass('fa-rotate-180'); //eslint-disable-line
+          }
+          $('#up-down-icon').toggleClass('.fa-rotate-0'); //eslint-disable-line
         }
       };
       $scope.sendMessage = (message) => {

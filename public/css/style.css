@@ -525,8 +525,16 @@ chat styles
 }
 #chat-up-down{
   height: 20%;
-  width: 30%;
+  width: 100%;
+  /* float: right; */
+  background-color: #f47820;
+  color: #fff;
+  border: 0;
+  outline: none
+}
+#chat-up-down i {
   float: right;
+  margin-top: 8px;
 }
 #msg-list {
   height: 100%;
@@ -564,4 +572,36 @@ chat styles
 }
 .chat-item-right-bottom div{
   font-size: 0.9rem;
+}
+.fa-rotate-180 {
+  animation-duration: 0.3s;
+  animation-name: turn180;
+  animation-timing-function: ease-in-out;
+}
+.fa-rotate-0 {
+  animation-duration: 0.3s;
+  animation-name: turn0;
+  animation-timing-function: ease-in-out;
+}
+@keyframes turn180{
+  0% {
+    transform: rotate(0deg)
+  }
+  50% {
+    transform: rotate(90deg)
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes turn0{
+  0% {
+    transform: rotate(-180deg)
+  }
+  50% {
+    transform: rotate(-90deg)
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

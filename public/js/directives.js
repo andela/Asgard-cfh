@@ -84,6 +84,10 @@ angular.module('mean.directives', []) //eslint-disable-line
     return {
       restrict: 'EA',
       templateUrl: '/views/chat-panel.html',
-      link(scope, elem, attr) {} //eslint-disable-line
+      link(scope, elem, attr) { //eslint-disable-line
+        $('#chat-container').css({ //eslint-disable-line
+          bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
+        });
+      }
     };
   });
