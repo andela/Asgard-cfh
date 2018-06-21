@@ -13,29 +13,32 @@
                     </div>
                     <div class="row mt-2 mb-3 d-flex justify-content-center">
                         <a href="/auth/facebook" class="fa-lg p-2 m-2 fb-ic">
-                            <i class="fa fa-facebook white-text fa-lg"> </i>
+                            <i class="fa fa-facebook white-text fa-lg" style="color: #3b5998 !important"> </i>
                         </a>
                         <a href="/auth/twitter" class="fa-lg p-2 m-2 tw-ic">
-                            <i class="fa fa-twitter white-text fa-lg"> </i>
+                            <i class="fa fa-twitter white-text fa-lg" style="color: #00aced !important"> </i>
+                        </a>
+                        <a href="/auth/google" class="fa-lg p-2 m-2 gplus-ic">
+                            <i class="fa fa-google-plus white-text fa-lg" style="color: #dd4b39 !important"> </i>
                         </a>
                         <a href="/auth/github" class="fa-lg p-2 m-2 gh-ic">
-                            <i class="fa fa-github white-text fa-lg"> </i>
+                            <i class="fa fa-github white-text fa-lg" style="color: #767676 !important"> </i>
                         </a>
                     </div>
                 </div>
                 <div class="card-body mx-4 mt-4">
-                    <div class="sign-error" style="color: red" ng-show="showError">
-                        Please check your username/password and try again.
+                    <div class="alert alert-danger" style="color: red; margin-bottom: 7% !important" ng-show="showLoginError">
+                         {{loginError}}
                     </div>
                     <form class="signup form-horizontal" ng-submit="login()" method="post">
                         <!--Body-->
                         <div class="md-form">
-                            <input type="text" id="Form-email3" class="form-control" ng-model="user.email" required novalidate />
+                            <input type="text" id="Form-email3" placeholder="clint@example.com" class="form-control" ng-model="user.email" required novalidate />
                             <label for="Form-email3">Your email</label>
                         </div>
 
                         <div class="md-form pb-1 pb-md-3 password">
-                            <input type="password" id="Form-pass3" class="form-control" ng-model="user.password" required novalidate />
+                            <input type="password" id="Form-pass3" class="form-control" ng-model="user.password" placeholder="xxxxx84" required novalidate />
                             <label for="Form-pass3">Your password</label>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
