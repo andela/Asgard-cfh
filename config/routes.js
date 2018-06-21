@@ -29,6 +29,7 @@ module.exports = (app, passport) => {
 
   // Donation Routes
   app.post('/donations', users.addDonation);
+  app.get('/api/donations', middleWare.isLoggedIn, users.getDonations);
 
   app.post(
     '/api/auth/login',
@@ -98,6 +99,8 @@ module.exports = (app, passport) => {
   // Game Routes
   app.post('/api/game/save', games.saveGame);
   app.post('/api/games/:id/start', games.startGame);
+  app.get('/api/gameHistory', middleWare.isLoggedIn, games.gameHistory);
+  app.get('/api/leaderboard', middleWare.isLoggedIn, games.leaderBoard);
 
   // Avatar Routes
   app.get('/avatars', avatars.allJSON);

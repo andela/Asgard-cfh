@@ -7,6 +7,7 @@ const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const sendgridMail = require('@sendgrid/mail');
+const userHelpers = require('../helpers/userHelpers');
 require('dotenv').config();
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -443,5 +444,29 @@ exports.searchUser = (req, res) => {
         message: 'Users Found',
         foundUser
       });
+    });
+};
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/donations
+   */
+exports.getDonations = (req, res) => {
+  let donationsInfo;
+  User.find()
+    .exec((err, users) => {
+      if (err) return err;
+      if (!users) {
+        return res.status(404).json({ message: 'Users not found' });
+      }
+      donationsInfo = userHelpers.getDonations(users);
+      return res.status(200).json(donationsInfo);
     });
 };
