@@ -447,8 +447,10 @@ exports.searchUser = (req, res) => {
     });
 };
 
+
 exports.profile = (req, res) => {
   const { id } = req.params;
+  const details = {};
   User.findById({ _id: id }).then((user) => {
     if (!user) {
       return res.status(404).json({
@@ -456,15 +458,28 @@ exports.profile = (req, res) => {
       });
     }
     Game.find({ gameWinner: user.username })
-      .exec((err, games) => {
-        if (err) return err;
-        return res.status(200).json({
-          id: user._id,
-          email: user.email,
-          name: user.name,
-          username: user.username,
-          image: user.profileImage,
-          gamesWon: games.length
+      .then((games) => {
+        details.id = user._id;
+        details.email = user.email;
+        details.name = user.name;
+        details.username = user.username;
+        details.image = user.profileImage;
+        details.gamesWon = games.length;
+        Game.find().exec((err, games) => {
+          if (err) {
+            return res.status(400).json({
+              message: 'Error Occured'
+            });
+          }
+          const userGameLog = games.map(game => ({
+            gameId: game.gameId,
+            playedAt: game.played,
+            log: game.players
+              .filter(player => player.username === user.username),
+            gameWinner: game.gameWinner === user.username ? 'WON' : 'LOST'
+          }));
+          details.userGame = userGameLog.filter(y => y.log.length !== 0);
+          return res.status(200).json(details);
         });
       });
   }).catch(() => res.status(500).json({ message: 'Server Error' }));

@@ -468,3 +468,12 @@ nav.navbar{
 }
 
  /* User Profile Style End */
+
+ .user-details img{
+    height: 200px;
+    width: 200px
+}
+
+.bg-grey {
+  background: #BDBDBD;
+}

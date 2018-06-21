@@ -1,5 +1,5 @@
 <div ng-controller="IndexController">
-    <nav class="navbar  nav-decor navbar-expand-lg navbar-light bg-light">
+    <!-- <nav class="navbar  nav-decor navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -29,10 +29,43 @@
                 <button class="btn btn-outline-success my-2 my-sm-0 fa fa-search search-button" type="submit"></button>
             </form>
         </div>
-    </nav>
+    </nav> -->
+
+    <div class="jumbotron bg-grey">
+          <div class="text-center user-details">
+              <img src="img/Blank-profile.png" alt="">
+              <p class="lead">Name:  {{user.name}}</p>
+              <p class="lead">Email:  {{user.email}} </p>
+              <p class="lead">Game won: {{user.gamesWon}} </p>
+          </div>
+      </div>
+
+      <div class="container text-center">
+            <h2 class=" my-4 ">Game Log</h2>
+            <div>
+                <table class="table">
+                    <thead class="t">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Games Played</th>
+                            <th scope="col">Points</th>
+                            <th scope="col">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        <tr ng-repeat="game in user.userGame">
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{ game.gameId }}</td>
+                            <td ng-repeat="log in game.log">{{ log.points }}</td>
+                            <td>{{ game.gameWinner}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+      </div>
 
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-sm-3 col-1">
             <a class="cat-form profile-image">
                 <img class="img img-fluid profile-image" ng-src = "{{ user.image ? user.image : 'img/profile.png' }}" alt="Card image cap" width="537.5">
@@ -57,41 +90,23 @@
 
         </div>
 
-        <div class="col-sm-5 col-2">
+        <div class="col-sm-5 col-2 m">
 
             <table class="table">
-                <thead class="profile-text">
+                <thead class="">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Games Played</th>
                         <th scope="col">Points</th>
-                        <th scope="col">Win</th>
+                        <th scope="col">Result</th>
                     </tr>
                 </thead>
-                <tbody class="profile-text">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Game ID</td>
-                        <td>234</td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Game ID</td>
-                        <td>114</td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Game ID</td>
-                        <td>134</td>
-                        <td>NO</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Game ID</td>
-                        <td>034</td>
-                        <td>NO</td>
+                <tbody class="">
+                    <tr ng-repeat="game in user.userGame">
+                        <th scope="row">{{ $index + 1 }}</th>
+                        <td>{{ game.gameId }}</td>
+                        <td ng-repeat="log in game.log">{{ log.points }}</td>
+                        <td>{{ game.gameWinner}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -158,4 +173,4 @@
 </form>
         </div>
     </div>
-</div>
+</div> -->
