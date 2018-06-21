@@ -1,99 +1,71 @@
-<div ng-controller="IndexController">
-    <!-- <nav class="navbar  nav-decor navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div ng-controller="IndexController">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link profile-text" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
+              <ul class="navbar-nav cfh-navbar">
+                <li class="nav-item">
+                  <a class="nav-link" target="_self" href="#!/#howToPlay">HOW TO PLAY
+                    <span class="sr-only">(current)</span>
+                  </a>
                 </li>
-
-
-                <li class="nav-item link-item profile-text">
-                    <a class="nav-link" href="#">Link</a>
+                <li class="nav-item">
+                  <a class="nav-link" target="_self" href="#!/#charitySect">CHARITY</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" target="_self" href="#" id="navbarDropdown" data-toggle="dropdown">PLAY GAME</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Play with strangers</a>
+                        <a class="dropdown-item" href="#">Play with friends</a>
+                    </div>
+                </li>             
 
-                <li class="nav-item link-item profile-text">
-                    <a class="nav-link" href="#">Link</a>
+              </ul>
+              <a class="navbar-brand" href="#!/">
+                <img src="../img/landing/logo.png" width="100px" alt="logo" />
+              </a>
+              <ul class="navbar-nav">
+                <div class="auth" ng-show="showOptions">
+                <li class="nav-item">
+                  <a class="nav-link" href="#!/signup">SIGN UP</a>
                 </li>
-
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 fa fa-search search-button" type="submit"></button>
-            </form>
-        </div>
-    </nav> -->
-
-    <div class="jumbotron bg-grey">
-          <div class="text-center user-details">
-              <img src="img/Blank-profile.png" alt="">
-              <p class="lead">Name:  {{user.name}}</p>
-              <p class="lead">Email:  {{user.email}} </p>
-              <p class="lead">Game won: {{user.gamesWon}} </p>
-          </div>
-      </div>
-
-      <div class="container text-center">
-            <h2 class=" my-4 ">Game Log</h2>
-            <div>
-                <table class="table">
-                    <thead class="t">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Games Played</th>
-                            <th scope="col">Points</th>
-                            <th scope="col">Result</th>
-                        </tr>
-                    </thead>
-                    <tbody class="">
-                        <tr ng-repeat="game in user.userGame">
-                            <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{ game.gameId }}</td>
-                            <td ng-repeat="log in game.log">{{ log.points }}</td>
-                            <td>{{ game.gameWinner}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-      </div>
-
-
-    <!-- <div class="row">
-        <div class="col-sm-3 col-1">
-            <a class="cat-form profile-image">
-                <img class="img img-fluid profile-image" ng-src = "{{ user.image ? user.image : 'img/profile.png' }}" alt="Card image cap" width="537.5">
-            </a>
-
-            <div class="col-sm user-details-card">
-
-                <div class="text-position profile-text center-text">
-                    <strong>Profile Details</strong>
+                <li class="nav-item">
+                  <a class="nav-link" href="#!/signin">SIGN IN</a>
+                </li>
+              </div>
+                <li class="nav-item">
+                    <a class="nav-link" target="_self" href="#!/#charitySect">DASHBOARD</a>
+                </li>
+                <li class="nav-item" ng-hide="showOptions">
+                  <a class="nav-link" ng-click="logout()">SIGN OUT</a>
+                </li>
+                <div class="profile-icon ml-5">
+                  <li class="nav-item"> 
+                     <a href="#!/profile"> <i id="user" class="nav-link fa fa-user"></i> </a> 
+                  </li>
                 </div>
-                <p class="text-space profile-text center-text mt-3">
-                    {{user.name}}
-                </p>
-                <p class="text-space profile-text center-text">
-                    {{user.email}}
-                </p>
-                <p class="text-space profile-text center-text">
-                   Games won:  {{user.gamesWon}}
-                </p>
-
+              </ul>
             </div>
+        </nav>
 
+
+        <div class="jumbotron bg-grey">
+            <div class="text-center user-details">
+                <img ng-src = "{{ user.image ? user.image : 'img/profile.png' }}"  alt="">
+                <p class="lead mt-3">Name:  {{user.name}}</p>
+                <p class="lead">Email:  {{user.email}} </p>
+                <p class="lead">Game won: {{user.gamesWon}} </p>
+            </div>
         </div>
 
-        <div class="col-sm-5 col-2 m">
-
+    <div class="container text-center game-log">
+        <h2 class=" my-4 ">Game Log</h2>
+        <div>
             <table class="table">
-                <thead class="">
+                <thead class="t">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Games Played</th>
@@ -112,65 +84,19 @@
             </table>
         </div>
 
-        <div class="col-sm-4 col-3">
-
-            <div class="col-sm card-height">
-                <div class="text-position center-text " id="friends-text">
-                    Friends
-                </div>
-                <div class="card p-3 cards1">
-                    <small class="text-muted">
-                        <div class="text-position">
-                            Douglas
-                        </div>
-                    </small>
-                </div>
-
-                <div class="card p-3 cards1">
-                    <small class="text-muted">
-                        <div class="text-position">
-                            Daramola
-                        </div>
-                    </small>
-                </div>
-
-                <div class="card p-3 cards1">
-                    <small class="text-muted">
-                        <div class="text-position">
-                            Rotimi
-                        </div>
-                    </small>
-                </div>
-
-                <div class="card p-3 cards1">
-                    <small class="text-muted">
-                        <div class="text-position">
-                            Clinton
-                        </div>
-                    </small>
-                </div>
-
-                <div class="card p-3 cards1">
-                    <small class="text-muted">
-                        <div class="text-position">
-                            Olatunji
-                        </div>
-                    </small>
-                </div>
-
-                <div class="card p-3 cards1">
-                    <small class="text-muted">
-                        <div class="text-position">
-                            Sa'eed
-                        </div>
-                    </small>
-                </div>
-
-            </div>
-            <form action="" class="pagination-btn-position">
-<button class="btn-primary paginate" >Next</button>
-<button class="btn-primary paginate">Previous</button>
-</form>
-        </div>
     </div>
-</div> -->
+
+    <footer >
+        <div class="business-footer">
+            <div class="text-center">
+            <p class="footer">
+                Legal stuff: This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA).
+                <br/> Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license
+                of the Cards Against Humanity card game,
+                <br /> all proceeds from donations go directly to charity, as managed by crowdrise.
+            </p>
+            <span class="asgard"> created By: Team Asgard</span>
+            </div>
+        </div>
+    </footer>
+</div>
