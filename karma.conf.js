@@ -18,11 +18,11 @@ module.exports = (config) => {
       'node_modules/angular/angular.js',
       'node_modules/angular-ui-router/release/angular-ui-router.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/socket.io-client/dist/socket.io.js',
       'public/js/app.js',
       'public/js/***/*.js',
       'public/js/services/*.js',
       'public/test/***/*.js',
-      'node_modules/socket.io-client/dist/socket.io.js'
     ],
 
 
