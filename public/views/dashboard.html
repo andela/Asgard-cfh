@@ -1,39 +1,30 @@
 <div class="app-container" style="color: #fff" ng-controller="DashboardController">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav landing class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
-      <!-- <ul class="navbar-nav game-nav"> -->
           <div class="dropdown">
-              <button type="button" class="game-btn btn dropdown-toggle" data-toggle="dropdown">
-                Dropdown button
+              <button type="button" ng-click="openDropdown()"id="dropdownMenuButton" class="game-btn btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                PLAY GAME
               </button>
-              <div class="dropdown-menu" id="dropdown-style" style="margin: 0 18%;">
-                <a class="dropdown-item dropdown-play" href="#!/play">PLAY WITH FRIENDS</a>
-                <a class="dropdown-item dropdown-play" href="#!/play?custom">PLAY WITH STRANGERS</a>
-                <!-- <a class="dropdown-item" href="#">Link 3</a> -->
+              <div class="dropdown-menu" id="dropdown-style" aria-labelledby="dropdownMenuButton" style="margin: 0 18%;">
+                <a class="dropdown-item dropdown-play" href="/play?custom">PLAY WITH FRIENDS</a>
+                <a class="dropdown-item dropdown-play" href="/play">PLAY WITH STRANGERS</a>
               </div>
             </div>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="#!/play">PLAY WITH FRIENDS</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#!/play">PLAY WITH STRANGERS</a>
-        </li> -->
-      <!-- </ul> -->
       <a class="navbar-brand img-center"  href="#!/">
         <img src="../img/landing/logo.png" width="100px" alt="logo" />
       </a>
       <ul class="navbar-nav">
-        <div ng-hide="showOptions">
+        <div ng-controller="IndexController" ng-hide="showOptions">
           <li class="nav-item">
             <a class="nav-link" ng-click="logout()">SIGN OUT</a>
           </li>
         </div>
         <div class="profile-icon ml-6">
-            <i id="user" class="fa fa-user"></i>
+            <a href="#!/profile"><i id="user" class="fa fa-user"></i></a>
           </div>
       </ul>
     </div>

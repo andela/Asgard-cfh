@@ -14,7 +14,7 @@ angular.module('mean.system')
     $scope.getGameLog = () => {
       $http({
         method: 'GET',
-        url: '/api/gameHistory',
+        url: '/api/games/history',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `${token}`,
@@ -33,6 +33,10 @@ angular.module('mean.system')
     });
     };
 
+    $scope.openDropdown = () => {
+      $('.dropdown-toggle').dropdown()
+    }
+
     $scope.getLeaderBoard = () => {
       $http({
         method: 'GET',
@@ -43,7 +47,6 @@ angular.module('mean.system')
         }
       }).then((res) => {
         $scope.leaderBoard = res.data;
-        console.log(res);
       },
     (err) => {
       if (err.status === 404) {

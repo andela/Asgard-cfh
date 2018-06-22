@@ -99,7 +99,7 @@ module.exports = (app, passport) => {
   // Game Routes
   app.post('/api/game/save', games.saveGame);
   app.post('/api/games/:id/start', games.startGame);
-  app.get('/api/gameHistory', middleWare.isLoggedIn, games.gameHistory);
+  app.get('/api/games/history', middleWare.isLoggedIn, games.gameHistory);
   app.get('/api/leaderboard', middleWare.isLoggedIn, games.leaderBoard);
 
   // Avatar Routes
