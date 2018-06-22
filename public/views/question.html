@@ -1,7 +1,7 @@
 <div id="question-container-inner">
   <div class="card question-block">
     <div id="question-text" ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></div>
-
+    <!-- <div ng-show="isCzar() === false && game.state === 'czar pick card'" style="text-align:center">CZAR is Selecting Card. Please Wait...</div> -->
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
     <div class="start-game text-center"  ng-show="game.state === 'awaiting players'">
@@ -19,6 +19,7 @@
         </div>
       </div>
     </div>
+    <h5>{{waitingForCzar}}</h5>
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">

@@ -577,6 +577,60 @@
    height: 100%;
    width: 100%;
    cursor: pointer;
+   object-fit: cover;
+   border-radius: 7px;
+ }
+
+ /* card flip effect */
+
+ /* entire container, keeps perspective */
+
+ .flip-container {
+   perspective: 1000px;
+   height: 100%;
+   width: 100%
+ }
+
+ /* flip the pane when hovered */
+
+ .flip-container .flipper,
+ .flip-container.hover .flipper {
+   transform: rotateY(180deg);
+ }
+
+ /* flip speed goes here */
+
+ .flipper {
+   height: 100%;
+   width: 100%;
+   transition: 0.6s;
+   transform-style: preserve-3d;
+   position: relative;
+ }
+
+ /* hide back of pane during swap */
+
+ .front,
+ .back {
+   backface-visibility: hidden;
+   position: absolute;
+   top: 0;
+   left: 0
+ }
+
+ /* front pane, placed above back */
+
+ .front {
+   z-index: 2;
+   transform: rotateY(0deg);
+   height: 100%;
+ }
+
+ /* back, initially hidden pane */
+
+ .back {
+   transform: rotateY(180deg);
+   height: 100%;
  }
 
  .social-bar-container {
@@ -1064,3 +1118,9 @@
 .dropdown-play:hover {
   background-color: rgba(199, 169, 169, 0.726) !important;
 }
+
+u {
+  border-bottom: 1px solid black;
+  display: inline-block;
+  width: 25%;
+  }
