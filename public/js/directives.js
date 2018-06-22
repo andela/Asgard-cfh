@@ -98,7 +98,7 @@ angular.module('mean.directives', []) //eslint-disable-line
             hidePickerOnBlur: false,
             events: {
               keydown(editor, event) {
-                // catches everything but enter
+                // catches nothing but enter
                 if (event.which === 13) {
                   scope.message = $('#chat-input').emojioneArea().data('emojioneArea').getText(); //eslint-disable-line
                   scope.sendMessage(scope.message);

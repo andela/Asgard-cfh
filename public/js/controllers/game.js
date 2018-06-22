@@ -17,8 +17,6 @@ angular.module('mean.system') //eslint-disable-line
       $scope.chatIsClosed = true;
       $scope.info = null;
 
-
-
       // chat implementation
       const initChatService = (gameID) => {
         const firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
