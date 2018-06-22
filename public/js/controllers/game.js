@@ -1,11 +1,10 @@
-
 angular.module('mean.system') //eslint-disable-line
   .controller('GameController', [
     '$scope', 'game', '$http', '$timeout', '$location',
-    'MakeAWishFactsService', '$dialog', '$firebaseArray',
+    'MakeAWishFactsService', '$dialog', '$firebaseArray', '$window', '$document',
     function ( //eslint-disable-line
       $scope, game, $http, $timeout, $location,
-      MakeAWishFactsService, $dialog, $firebaseArray) { //eslint-disable-line
+      MakeAWishFactsService, $dialog, $firebaseArray, $window, $document) { //eslint-disable-line
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
@@ -24,6 +23,9 @@ angular.module('mean.system') //eslint-disable-line
       };
       $scope.clearChatInput = () => {
         $scope.message = '';
+      };
+      $scope.resetForm = () => {
+        $('#chat-input').emojioneArea().data('emojioneArea').setText('player noi'); //eslint-disable-line
       };
       $scope.togglePanel = () => {
         $('#chat-container').toggleClass('chat-panel-slide-up'); //eslint-disable-line
@@ -48,6 +50,14 @@ angular.module('mean.system') //eslint-disable-line
           $('#up-down-icon').toggleClass('.fa-rotate-0'); //eslint-disable-line
         }
       };
+
+      // This method controls chat slider to scroll down to the latest messages
+      $scope.downScrollPane = () => {
+        $('#msg-container').stop().animate({ //eslint-disable-line
+          scrollTop: $('#msg-container')[0].scrollHeight //eslint-disable-line
+        }, 1000);
+      };
+
       $scope.sendMessage = (message) => {
         if (message) {
           $scope.chats.$add({
@@ -57,8 +67,11 @@ angular.module('mean.system') //eslint-disable-line
             userName: game.players[game.playerIndex].username
           });
           $scope.clearChatInput();
+          $scope.resetForm();
+          $scope.downScrollPane();
         }
       };
+
       $scope.pickCard = function (card) { //eslint-disable-line
         if (!$scope.hasPickedCards) {
           if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -208,6 +221,15 @@ angular.module('mean.system') //eslint-disable-line
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
         if (game.gameID) {
+          $('#chat-input').emojioneArea({ //eslint-disable-line
+            events: {
+              keydown: (editor, event) => {
+                if (event.keyCode === 13) {
+                  console.log('message');
+                }
+              }
+            }
+          });
           initChatService($scope.game.gameID);
         }
         if (game.gameID && game.state === 'awaiting players') {

@@ -88,6 +88,25 @@ angular.module('mean.directives', []) //eslint-disable-line
         $('#chat-container').css({ //eslint-disable-line
           bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
         });
+        $(function() { //eslint-disable-line
+          $("#chat-input").emojioneArea({ //eslint-disable-line
+            pickerPosition: 'top',
+            filtersPosition: 'bottom',
+            tones: false,
+            autocomplete: false,
+            inline: true,
+            hidePickerOnBlur: false,
+            events: {
+              keydown(editor, event) {
+                // catches everything but enter
+                if (event.which === 13) {
+                  scope.message = $('#chat-input').emojioneArea().data('emojioneArea').getText(); //eslint-disable-line
+                  scope.sendMessage(scope.message);
+                }
+              }
+            }
+          });
+        });
       }
     };
   });
