@@ -13,6 +13,11 @@ angular.module('mean.system') //eslint-disable-line
       $scope.game = game;
       $scope.pickedCards = [];
       $scope.makeAWishFact = makeAWishFacts.pop();
+      $scope.newMessages = 0;
+      $scope.chatIsClosed = true;
+      $scope.info = null;
+
+
 
       // chat implementation
       const initChatService = (gameID) => {
@@ -20,12 +25,19 @@ angular.module('mean.system') //eslint-disable-line
           .child(`${gameID}`);
         firebaseRef.remove();
         $scope.chats = $firebaseArray(firebaseRef);
+        // At here we check for new unread messages...
+        $scope.chats.$watch((e) => {
+          if (e.event === 'child_added' && $scope.chatIsClosed) {
+            $scope.newMessages += 1;
+            $scope.info = 'new !';
+          }
+        });
       };
       $scope.clearChatInput = () => {
         $scope.message = '';
       };
       $scope.resetForm = () => {
-        $('#chat-input').emojioneArea().data('emojioneArea').setText('player noi'); //eslint-disable-line
+        $('#chat-input').emojioneArea().data('emojioneArea').setText(''); //eslint-disable-line
       };
       $scope.togglePanel = () => {
         $('#chat-container').toggleClass('chat-panel-slide-up'); //eslint-disable-line
@@ -34,6 +46,9 @@ angular.module('mean.system') //eslint-disable-line
           $('#chat-container').animate({ //eslint-disable-line
             bottom: 0
           });
+          $scope.chatIsClosed = false;
+          $scope.newMessages = 0;
+          $scope.info = null;
           if ($('#up-down-icon').hasClass('fa-rotate-0')) { //eslint-disable-line
             $('#up-down-icon').removeClass('fa-rotate-0'); //eslint-disable-line
           }
@@ -44,6 +59,7 @@ angular.module('mean.system') //eslint-disable-line
           $('#chat-container').animate({ //eslint-disable-line
             bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
           });
+          $scope.chatIsClosed = true;
           if ($('#up-down-icon').hasClass('fa-rotate-180')) { //eslint-disable-line
             $('#up-down-icon').removeClass('fa-rotate-180'); //eslint-disable-line
           }

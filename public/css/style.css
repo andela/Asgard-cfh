@@ -464,6 +464,12 @@ text-align: right;
 /*
 chat styles
 */
+
+.notify-info{
+  color: yellow;
+  font-size: 11px;
+  margin-right: 5px
+}
 #chat-container {
   display: flex;
   flex-direction: column;

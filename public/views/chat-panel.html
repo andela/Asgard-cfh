@@ -1,5 +1,8 @@
 <div ng-controller="GameController" id="chat-container" class="chat-panel-slide-down" >
-    <button id="chat-up-down" ng-click="togglePanel()">CHAT <i id="up-down-icon" class="fas fa-sort-up"></i> </button>
+    <button id="chat-up-down" ng-click="togglePanel()">
+            <span class = "notify-info"> {{ newMessages >0 ? newMessages : null }}  {{ info }}</span>
+        CHAT
+         <i id="up-down-icon" class="fas fa-sort-up"></i> </button>
     <div id="msg-container">
         <ul id="msg-list">
             <li class="chat-item" ng-repeat="chat in chats">
