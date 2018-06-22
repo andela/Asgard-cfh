@@ -7,7 +7,6 @@ describe('Games factory', () => {
 
   beforeEach(inject((_game_) => {
     Games = _game_;
-    console.log(Games);
   }));
 
 
