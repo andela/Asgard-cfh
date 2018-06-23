@@ -22,9 +22,9 @@ const env = process.env.NODE_ENV || 'development',
 
 // Bootstrap db connection
 if (env !== 'test') {
-  const db = mongoose.connect(config.db);
+  mongoose.connect(config.db);
 } else {
-  const db = mongoose.connect(process.env.CFH_TESTDB);
+  mongoose.connect(process.env.CFH_TESTDB);
 }
 
 
@@ -36,7 +36,7 @@ const walk = (path) => {
     const stat = fs.statSync(newPath);
     if (stat.isFile()) {
       if (/(.*)\.(js|coffee)/.test(file)) {
-        require(newPath);
+        require(newPath); //eslint-disable-line
       }
     } else if (stat.isDirectory()) {
       walk(newPath);
