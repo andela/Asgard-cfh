@@ -141,6 +141,23 @@ angular.module('mean.system')
       $location.path('/');
     };
 
+    // resume game after czar pick card
+    $scope.resumeGame = () => {
+      if($scope.isCzar()) {
+        game.beginGame();
+      }
+    };
+
+    // czar shuffle cards and selct card 
+    $scope.czarSelectBlackCard = () => {
+      if($scope.isCzar() && game.state === 'czar pick black card') {
+        document.getElementById("myCard").classList.toggle('flip-container');
+        $timeout(() => {
+          document.getElementById("myCard").classList.toggle('flip-container');
+          $scope.resumeGame();
+        }, 2000);
+      }
+    };
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
     $scope.$watch('game.round', function() {
@@ -176,6 +193,15 @@ angular.module('mean.system')
           .then((res) => console.log(res));
       }
     });
+
+    $scope.$watch('game.state', () => {
+      if(!$scope.isCzar() && game.state === 'czar pick black card') {
+        $scope.waitingForCzar = 'wait, the czar is picking a card';
+      }
+      else {
+        $scope.waitingForCzar = ''
+      }
+    })
 
     $scope.$watch('game.gameID', function() {
       if (game.gameID && game.state === 'awaiting players') {

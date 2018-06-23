@@ -29,6 +29,8 @@ module.exports = function(io) {
       }
     });
 
+  
+
     socket.on('pickWinning', function(data) {
       if (allGames[socket.gameID]) {
         allGames[socket.gameID].pickWinning(data.card,socket.id);
@@ -47,6 +49,10 @@ module.exports = function(io) {
       exitGame(socket);
       joinGame(socket,data);
     });
+
+    socket.on('czarPickCard', () => {
+      allGames[socket.gameID].beginGame(allGames[socket.gameID]);
+    })
 
     socket.on('startGame', function() {
       if (allGames[socket.gameID]) {

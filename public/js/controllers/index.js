@@ -119,4 +119,7 @@ angular.module('mean.system').controller('IndexController', [
           $location.path('/#!');
         });
     };
+    $scope.openDropdown = () => {
+      $('.dropdown-toggle').dropdown();
+    };
   }]);
