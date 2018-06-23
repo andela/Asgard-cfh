@@ -111,4 +111,10 @@ module.exports = (app, passport) => {
 
   // Search User
   app.post('/api/search', users.searchUser);
+
+  // send friends invitation
+  app.post('/api/invite-friend', middleWare.isLoggedIn, users.friendInvite);
+
+  // accept friends invitation
+  app.post('/api/accept-friend-invite', middleWare.isLoggedIn, users.acceptFriend);
 };

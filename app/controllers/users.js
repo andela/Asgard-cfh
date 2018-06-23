@@ -445,3 +445,23 @@ exports.searchUser = (req, res) => {
       });
     });
 };
+
+exports.friendInvite = ((req, res) => {
+  const { email, name } = req.body;
+  const senderName = req.name; // the name coming from the token
+  const senderEmail = req.email;
+
+  User.findOneAndUpdate(
+    senderEmail,
+    { $push: { outgoingInvitation: { email, name } } }
+  ).then(() => {
+    console.log('successfull');
+  }).catch((error) => {
+    console.log(error);
+  });
+});
+
+exports.acceptFriend = ((req, res) => {
+
+});
+
