@@ -61,7 +61,7 @@ exports.signup = (req, res) => {
  */
 exports.signout = (req, res) => {
   req.logout();
-  res.send('loggedOut');
+  res.redirect('/');
 };
 
 /**

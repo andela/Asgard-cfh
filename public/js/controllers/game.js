@@ -110,26 +110,27 @@ angular.module('mean.system') //eslint-disable-line
         }
         return {};
       };
-
-      $scope.sendPickedCards = function () { //eslint-disable-line
+    $scope.sendPickedCards = function() { //eslint-disable-line
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
       };
-
-      $scope.cardIsFirstSelected = function (card) { //eslint-disable-line
+      $window.onload = $('#gameModal').modal('show'); //eslint-disable-line
+      $scope.cardIsFirstSelected = function(card) { //eslint-disable-line
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[0];
         }
         return false;
       };
-
-      $scope.cardIsSecondSelected = function (card) { //eslint-disable-line
+      $scope.closeModal = () => {
+        $('#gameModal').remove(); //eslint-disable-line
+        $('.modal-backdrop').hide(); //eslint-disable-line
+      };
+      $scope.cardIsSecondSelected = function(card) { //eslint-disable-line
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[1];
         }
         return false;
       };
-
       $scope.firstAnswer = function ($index) { //eslint-disable-line
         if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
           return true;
@@ -191,15 +192,39 @@ angular.module('mean.system') //eslint-disable-line
       };
 
       $scope.startGame = function () { //eslint-disable-line
-        $http.post(`/api/games/${$scope.game.gameID}/start`)
-          .then(() => game.startGame());
+        if ($scope.isCustomGame()) {
+          $http.post(`/api/games/${$scope.game.gameID}/start`)
+            .then(() => {
+              $scope.showTour = false;
+              return game.startGame();
+            });
+        } else {
+          $scope.showTour = false;
+          game.startGame();
+        }
       };
-
-      $scope.abandonGame = function () { //eslint-disable-line
+    $scope.abandonGame = function () { //eslint-disable-line
         game.leaveGame();
         $location.path('/');
       };
 
+      // resume game after czar pick card
+      $scope.resumeGame = () => {
+        if ($scope.isCzar()) {
+          game.beginGame();
+        }
+      };
+
+      // czar shuffle cards and selct card
+      $scope.czarSelectBlackCard = () => {
+        if ($scope.isCzar() && game.state === 'czar pick black card') {
+          document.getElementById('myCard').classList.toggle('flip-container'); //eslint-disable-line
+          $timeout(() => {
+            document.getElementById('myCard').classList.toggle('flip-container'); //eslint-disable-line
+            $scope.resumeGame();
+          }, 2000);
+        }
+      };
       // Catches changes to round to update when no players pick card
       // (because game.state remains the same)
       $scope.$watch('game.round', function () { //eslint-disable-line
@@ -232,6 +257,15 @@ angular.module('mean.system') //eslint-disable-line
             .then(res => console.log(res));
         }
       });
+
+      // $scope.$watch('game.state', () => {
+      //   if(!$scope.isCzar() && game.state === 'czar pick black card') {
+      //     $scope.waitingForCzar = 'wait, the czar is picking a card';
+      //   }
+      //   else {
+      //     $scope.waitingForCzar = ''
+      //   }
+      // })
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
         if (game.gameID) {
@@ -281,4 +315,5 @@ angular.module('mean.system') //eslint-disable-line
       } else {
         game.joinGame();
       }
+      // };
     }]);

@@ -131,9 +131,17 @@ angular.module('mean.system') //eslint-disable-line
       if (game.state !== 'waiting for players to pick' || game.players.length !== data.players.length) {
         game.players = data.players;
       }
-
       if (newState || game.curQuestion !== data.curQuestion) {
         game.state = data.state;
+      }
+      if (data.state === 'czar pick black card') {
+        game.czar = data.czar;
+        if (game.czar === game.playerIndex) {
+          addToNotificationQueue(`You are now a Czar, 
+          select black to show new question`);
+        } else {
+          addToNotificationQueue('Waiting for Czar to pick card');
+        }
       }
 
       if (data.state === 'waiting for players to pick') {
@@ -197,6 +205,10 @@ angular.module('mean.system') //eslint-disable-line
       socket.emit('pickCards', { cards });
     };
 
+    game.beginGame = () => {
+      socket.emit('czarPickCard');
+    };
+
     game.pickWinning = function(card) { //eslint-disable-line
       socket.emit('pickWinning', { card: card.id });
     };
@@ -205,3 +217,4 @@ angular.module('mean.system') //eslint-disable-line
 
     return game;
   }]);
+
