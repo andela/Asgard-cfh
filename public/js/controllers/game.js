@@ -1,3 +1,4 @@
+/* eslint-disable*/
 angular.module('mean.system') //eslint-disable-line
   .controller('GameController', [
     '$scope', 'game', '$http', '$timeout', '$location',

@@ -88,6 +88,9 @@ angular.module('mean.directives', []) //eslint-disable-line
         $('#chat-container').css({ //eslint-disable-line
           bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
         });
+        $('#chat-submit-btn').css({ //eslint-disable-line
+          height: `${32}px`
+        });
         $(function() { //eslint-disable-line
           $("#chat-input").emojioneArea({ //eslint-disable-line
             pickerPosition: 'top',
