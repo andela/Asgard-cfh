@@ -32,6 +32,7 @@ function Game(gameID, io) {
   this.pointLimit = 5;
   this.state = 'awaiting players';
   this.round = 0;
+  this.regionId = null;
   this.questions = null;
   this.answers = null;
   this.curQuestion = null;
@@ -116,14 +117,14 @@ Game.prototype.prepareGame = function () {
       playerMinLimit: this.playerMinLimit,
       playerMaxLimit: this.playerMaxLimit,
       pointLimit: this.pointLimit,
-      timeLimits: this.timeLimits
+      timeLimits: this.timeLimits,
     }
 );
 
   let self = this;
   async.parallel(
 [
-    this.getQuestions,
+    this.getQuestions.bind(this),
     this.getAnswers
   ],
   (err, results) => {
@@ -241,7 +242,7 @@ Game.prototype.stateDissolveGame = function () {
 };
 
 Game.prototype.getQuestions = function (cb) {
-  questions.allQuestionsForGame((data) => {
+  questions.allQuestionsForGame(this.regionId, (data) => {
     cb(null,data);
   });
 };

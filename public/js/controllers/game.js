@@ -6,6 +6,7 @@ angular.module('mean.system')
     $scope.showTable = false;
     $scope.modalShown = false;
     $scope.game = game;
+    $scope.regionId = "1";
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
@@ -132,7 +133,7 @@ angular.module('mean.system')
           });
       } else {
         $scope.showTour = false;
-        game.startGame();
+        game.startGame($scope.regionId);
       }
     };
 
