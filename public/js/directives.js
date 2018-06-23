@@ -13,14 +13,14 @@ angular.module('mean.directives', []) //eslint-disable-line
       templateUrl: '/views/answers.html',
       link(scope, elem, attr) { //eslint-disable-line
 
-        scope.$watch('game.state', () => {
+        scope.$watch('game.state', function () { //eslint-disable-line
           if (scope.game.state === 'winner has been chosen') {
             let shouldRemoveQuestionPunctuation = false;
             const curQ = scope.game.curQuestion;
             const curQuestionArr = curQ.text.split('_');
             const startStyle = `<span style=color:'${scope.colors[scope.game.players[scope.game.winningCardPlayer].color]}'>`;
             const endStyle = '</span>';
-            const removePunctuation = (cardIndex) => {
+            const removePunctuation = function (cardIndex) { //eslint-disable-line
               let cardText = scope.game.table[scope.game.winningCard].card[cardIndex].text;
               if (cardText.indexOf('.', cardText.length - 2) === cardText.length - 1) {
                 cardText = cardText.slice(0, cardText.length - 1);

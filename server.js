@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-const express = require('express'),
+var express = require('express'), //eslint-disable-line
   fs = require('fs'),
   passport = require('passport'),
   logger = require('mean-logger'),
@@ -15,7 +15,7 @@ require('dotenv').config();
 
 // Load configurations
 // if test env, load example file
-const env = process.env.NODE_ENV || 'development',
+var env = process.env.NODE_ENV || 'development', //eslint-disable-line
   config = require('./config/config'),
   auth = require('./config/middlewares/authorization'),
   mongoose = require('mongoose');
@@ -29,11 +29,11 @@ if (env !== 'test') {
 
 
 // Bootstrap models
-const modelsPath = `${__dirname}/app/models`;
-const walk = (path) => {
+var modelsPath = `${__dirname}/app/models`; //eslint-disable-line
+var walk = function (path) { //eslint-disable-line
   fs.readdirSync(path).forEach((file) => {
-    const newPath = `${path}/${file}`;
-    const stat = fs.statSync(newPath);
+    var newPath = `${path}/${file}`; //eslint-disable-line
+    var stat = fs.statSync(newPath); //eslint-disable-line
     if (stat.isFile()) {
       if (/(.*)\.(js|coffee)/.test(file)) {
         require(newPath); //eslint-disable-line
@@ -48,7 +48,7 @@ walk(modelsPath);
 // bootstrap passport config
 require('./config/passport')(passport);
 
-const app = express();
+var app = express(); //eslint-disable-line
 
 // express settings
 require('./config/express')(app, passport, mongoose);
@@ -57,14 +57,14 @@ require('./config/express')(app, passport, mongoose);
 require('./config/routes')(app, passport, auth);
 
 // Start the app by listening on <port>
-const port = process.env.PORT || 3000;
-const server = app.listen(port);
-const ioObj = io.listen(server, { log: false });
+var port = process.env.PORT || 3000; //eslint-disable-line
+var server = app.listen(port); //eslint-disable-line
+var ioObj = io.listen(server, { log: false }); //eslint-disable-line
 
 // game logic handled here
 require('./config/socket/socket')(ioObj);
 
-console.log(`Express app started on port ${port}`);
+console.log(`Express app started on port ${port}`); //eslint-disable-line
 
 // Initializing logger
 logger.init(app, passport, mongoose);

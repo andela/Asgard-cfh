@@ -5,39 +5,39 @@ angular.module('mean.system') //eslint-disable-line
     function ( //eslint-disable-line
       $scope, game, $http, $timeout, $location,
       MakeAWishFactsService, $dialog, $firebaseArray, $window, $document) { //eslint-disable-line
-      let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
       $scope.modalShown = false;
       $scope.game = game;
       $scope.pickedCards = [];
+      var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts(); //eslint-disable-line
       $scope.makeAWishFact = makeAWishFacts.pop();
       $scope.newMessages = 0;
       $scope.chatIsClosed = true;
       $scope.info = null;
 
       // chat implementation
-      const initChatService = (gameID) => {
-        const firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
+      var initChatService = function (gameID) { //eslint-disable-line
+        var firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
           .child(`${gameID}`);
         firebaseRef.remove();
         $scope.chats = $firebaseArray(firebaseRef);
-        // At here we check for new unread messages...
-        $scope.chats.$watch((e) => {
+        // Here we check for new unread messages...
+        $scope.chats.$watch(function (e) {  //eslint-disable-line
           if (e.event === 'child_added' && $scope.chatIsClosed) {
             $scope.newMessages += 1;
             $scope.info = 'new !';
           }
         });
       };
-      $scope.clearChatInput = () => {
+      $scope.clearChatInput = function () { //eslint-disable-line
         $scope.message = '';
       };
-      $scope.resetForm = () => {
+      $scope.resetForm = function () { //eslint-disable-line
         $('#chat-input').emojioneArea().data('emojioneArea').setText(''); //eslint-disable-line
       };
-      $scope.togglePanel = () => {
+      $scope.togglePanel = function () { //eslint-disable-line
         $('#chat-container').toggleClass('chat-panel-slide-up'); //eslint-disable-line
         $('#chat-container').toggleClass('chat-panel-slide-down'); //eslint-disable-line
         if ($('#chat-container').hasClass('chat-panel-slide-up')) { //eslint-disable-line
@@ -66,13 +66,13 @@ angular.module('mean.system') //eslint-disable-line
       };
 
       // This method controls chat slider to scroll down to the latest messages
-      $scope.downScrollPane = () => {
+      $scope.downScrollPane = function () { //eslint-disable-line
         $('#msg-container').stop().animate({ //eslint-disable-line
           scrollTop: $('#msg-container')[0].scrollHeight //eslint-disable-line
         }, 1000);
       };
 
-      $scope.sendMessage = (message) => {
+      $scope.sendMessage = function (message) { //eslint-disable-line
         if (message) {
           $scope.chats.$add({
             avatar: game.players[game.playerIndex].profileImage || game.players[game.playerIndex].avatar, //eslint-disable-line
@@ -121,7 +121,7 @@ angular.module('mean.system') //eslint-disable-line
         }
         return false;
       };
-      $scope.closeModal = () => {
+      $scope.closeModal = function () { //eslint-disable-line
         $('#gameModal').remove(); //eslint-disable-line
         $('.modal-backdrop').hide(); //eslint-disable-line
       };
@@ -194,7 +194,7 @@ angular.module('mean.system') //eslint-disable-line
       $scope.startGame = function () { //eslint-disable-line
         if ($scope.isCustomGame()) {
           $http.post(`/api/games/${$scope.game.gameID}/start`)
-            .then(() => {
+            .then(function () { //eslint-disable-line
               $scope.showTour = false;
               return game.startGame();
             });
@@ -209,17 +209,17 @@ angular.module('mean.system') //eslint-disable-line
       };
 
       // resume game after czar pick card
-      $scope.resumeGame = () => {
+      $scope.resumeGame = function () { //eslint-disable-line
         if ($scope.isCzar()) {
           game.beginGame();
         }
       };
 
       // czar shuffle cards and selct card
-      $scope.czarSelectBlackCard = () => {
+      $scope.czarSelectBlackCard = function () { //eslint-disable-line
         if ($scope.isCzar() && game.state === 'czar pick black card') {
           document.getElementById('myCard').classList.toggle('flip-container'); //eslint-disable-line
-          $timeout(() => {
+          $timeout(function () { //eslint-disable-line
             document.getElementById('myCard').classList.toggle('flip-container'); //eslint-disable-line
             $scope.resumeGame();
           }, 2000);
@@ -243,18 +243,18 @@ angular.module('mean.system') //eslint-disable-line
         if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
           $scope.showTable = true;
         }
-        const gamePlayers = [];
-        $scope.game.players.forEach((player) => {
+        var gamePlayers = []; //eslint-disable-line
+        $scope.game.players.forEach( function (player) { //eslint-disable-line
           gamePlayers.push(player.username);
         });
         if (game.state === 'game ended') {
-          const saveGame = {
+          var saveGame = { //eslint-disable-line
             gameId: $scope.game.gameID,
             gameWinner: $scope.game.players[$scope.game.gameWinner].username,
             players: gamePlayers
           };
           $http.post('/api/game/save', saveGame)
-            .then(res => console.log(res));
+            .then(function (res) { console.log(res) }); //eslint-disable-line
         }
       });
 
@@ -269,15 +269,6 @@ angular.module('mean.system') //eslint-disable-line
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
         if (game.gameID) {
-          $('#chat-input').emojioneArea({ //eslint-disable-line
-            events: {
-              keydown: (editor, event) => {
-                if (event.keyCode === 13) {
-                  console.log('message');
-                }
-              }
-            }
-          });
           initChatService($scope.game.gameID);
         }
         if (game.gameID && game.state === 'awaiting players') {
@@ -291,8 +282,8 @@ angular.module('mean.system') //eslint-disable-line
             $location.search({ game: game.gameID });
             if (!$scope.modalShown) {
               setTimeout(function (){ //eslint-disable-line
-                const link = document.URL; //eslint-disable-line
-                const txt = 'Give the following link to your friends so they can join your game: ';
+                var link = document.URL; //eslint-disable-line
+                var txt = 'Give the following link to your friends so they can join your game: '; //eslint-disable-line
                 $('#lobby-how-to-play').text(txt); //eslint-disable-line
                 $('#oh-el').css({ //eslint-disable-line
                   'text-align': 'center',

@@ -1,6 +1,6 @@
 angular.module('mean.system') //eslint-disable-line
   .factory('game', ['socket', '$timeout', function (socket, $timeout) { //eslint-disable-line
-    const game = {
+    var game = { //eslint-disable-line
       id: null, // This player's socket ID, so we know who this player is
       gameID: null,
       players: [],
@@ -22,12 +22,12 @@ angular.module('mean.system') //eslint-disable-line
       joinOverride: false
     };
 
-    const notificationQueue = [];
-    let timeout = false;
-    const self = this; //eslint-disable-line
-    let joinOverrideTimeout = 0; //eslint-disable-line
+    var notificationQueue = []; //eslint-disable-line
+    var timeout = false; //eslint-disable-line
+    var self = this; //eslint-disable-line
+    var joinOverrideTimeout = 0; //eslint-disable-line
 
-    const setNotification = function() { //eslint-disable-line
+    var setNotification = function() { //eslint-disable-line
       if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
         clearInterval(timeout);
         timeout = false;
@@ -39,15 +39,15 @@ angular.module('mean.system') //eslint-disable-line
       }
     };
 
-    const addToNotificationQueue = function(msg) { //eslint-disable-line
+    var addToNotificationQueue = function(msg) { //eslint-disable-line
       notificationQueue.push(msg);
       if (!timeout) { // Start a cycle if there isn't one
         setNotification();
       }
     };
 
-    let timeSetViaUpdate = false;
-    const decrementTime = function() { //eslint-disable-line
+    var timeSetViaUpdate = false; //eslint-disable-line
+    var decrementTime = function() { //eslint-disable-line
       if (game.time > 0 && !timeSetViaUpdate) {
         game.time--;
       } else {
@@ -75,15 +75,15 @@ angular.module('mean.system') //eslint-disable-line
       }
       game.joinOverride = false;
       clearTimeout(game.joinOverrideTimeout);
-      let i;
 
+      var i; //eslint-disable-line
       // Cache the index of the player in the players array
       for (i = 0; i < data.players.length; i++) {
         if (game.id === data.players[i].socketID) {
           game.playerIndex = i;
         }
       }
-      const newState = (data.state !== game.state);
+      var newState = (data.state !== game.state); //eslint-disable-line
 
       // Handle updating game.time
       if (data.round !== game.round && data.state !== 'awaiting players' &&
@@ -110,17 +110,17 @@ angular.module('mean.system') //eslint-disable-line
       if (data.table.length === 0) {
         game.table = [];
       } else {
-        const added = _.difference(_.pluck(data.table,'player'), _.pluck(game.table,'player')); //eslint-disable-line
-        const removed = _.difference(_.pluck(game.table,'player'), _.pluck(data.table,'player')); //eslint-disable-line
+        var added = _.difference(_.pluck(data.table,'player'), _.pluck(game.table,'player')); //eslint-disable-line
+        var removed = _.difference(_.pluck(game.table,'player'), _.pluck(data.table,'player')); //eslint-disable-line
         for (i = 0; i < added.length; i++) {
-          for (let j = 0; j < data.table.length; j++) {
+          for (var j = 0; j < data.table.length; j++) { //eslint-disable-line
             if (added[i] === data.table[j].player) {
               game.table.push(data.table[j], 1);
             }
           }
         }
         for (i = 0; i < removed.length; i++) {
-          for (let k = 0; k < game.table.length; k++) {
+          for (var k = 0; k < game.table.length; k++) { //eslint-disable-line
             if (removed[i] === game.table[k].player) {
               game.table.splice(k, 1);
             }
@@ -187,7 +187,7 @@ angular.module('mean.system') //eslint-disable-line
       mode = mode || 'joinGame';
       room = room || '';
       createPrivate = createPrivate || false;
-      const userID = !!window.user ? user._id : 'unauthenticated'; //eslint-disable-line
+      var userID = !!window.user ? user._id : 'unauthenticated'; //eslint-disable-line
       socket.emit(mode, { userID, room, createPrivate });
     };
 

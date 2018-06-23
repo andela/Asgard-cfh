@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('IndexController', [
+angular.module('mean.system').controller('IndexController', [ //eslint-disable-line
   '$scope',
   'Global',
   '$http',
@@ -8,10 +8,10 @@ angular.module('mean.system').controller('IndexController', [
   'socket',
   'game',
   'AvatarService',
-  ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
+  function ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) { //eslint-disable-line
     $scope.global = Global;
 
-    $scope.playAsGuest = () => {
+    $scope.playAsGuest = function () { //eslint-disable-line
       game.joinGame();
       $location.path('/app');
     };
@@ -24,31 +24,31 @@ angular.module('mean.system').controller('IndexController', [
     $scope.avatars = [];
 
     AvatarService.getAvatars()
-      .then((data) => {
+      .then(function (data) { //eslint-disable-line
         $scope.avatars = data;
       });
 
     $scope.image = '';
     $scope.image_preview = '';
-    $scope.readImage = () => {
-      const file = event.target.files[0];
+    $scope.readImage = function () { //eslint-disable-line
+      var file = event.target.files[0]; //eslint-disable-line
       if (file) {
-        const fileReader = new FileReader();
+        var fileReader = new FileReader(); //eslint-disable-line
         fileReader.readAsDataURL(file);
-        fileReader.onload = (event) => {
+        fileReader.onload = function (event) { //eslint-disable-line
           $scope.image_preview = event.target.result;
           $scope.image = file;
         };
       }
     };
 
-    $scope.signUp = () => {
+    $scope.signUp = function () { //eslint-disable-line
       if ($scope.image) {
-        const imageData = new FormData();
+        var imageData = new FormData(); //eslint-disable-line
         imageData.append('file', $scope.image);
         imageData.append('upload_preset', 'zyu1ajoa');
         imageData.append('api_key', '126852175969548');
-        $.ajax({
+        $.ajax({ //eslint-disable-line
           url: 'https://api.cloudinary.com/v1_1/clintfidel/image/upload',
           data: imageData,
           method: 'POST',
@@ -58,7 +58,7 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
-                $('#signUpModal').modal('show');
+                $('#signUpModal').modal('show'); //eslint-disable-line
               }, (error) => {
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
@@ -71,7 +71,7 @@ angular.module('mean.system').controller('IndexController', [
         $http.post('/api/auth/signup', $scope.user)
           .then(
             () => {
-              $('#signUpModal').modal('show');
+              $('#signUpModal').modal('show'); //eslint-disable-line
             },
             (error) => {
               if (error.data.errors) {
@@ -87,10 +87,10 @@ angular.module('mean.system').controller('IndexController', [
       }
     };
 
-    $scope.login = () => {
+    $scope.login = function () { //eslint-disable-line
       $http.post('/api/auth/login', $scope.user)
         .then((response) => {
-          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('token', response.data.token); //eslint-disable-line
           $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
         }, (error) => {
@@ -99,10 +99,10 @@ angular.module('mean.system').controller('IndexController', [
         });
     };
 
-    $scope.logout = () => {
+    $scope.logout = function () { //eslint-disable-line
       $http.get('/signout')
         .then(() => {
-          localStorage.removeItem('token');
+          localStorage.removeItem('token'); //eslint-disable-line
           $location.path('/#!');
         });
     };
