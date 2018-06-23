@@ -478,7 +478,7 @@ exports.profile = (req, res) => {
               .filter(player => player.username === user.username),
             gameWinner: game.gameWinner === user.username ? 'WON' : 'LOST'
           }));
-          details.userGame = userGameLog.filter(y => y.log.length !== 0);
+          details.userGame = userGameLog.filter(eachUserLog => eachUserLog.log.length !== 0);
           return res.status(200).json(details);
         });
       });
