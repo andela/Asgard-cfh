@@ -205,7 +205,7 @@ angular.module('mean.system') //eslint-disable-line
       socket.emit('pickCards', { cards });
     };
 
-    game.beginGame = () => {
+    game.beginGame = function() { //eslint-disable-line
       socket.emit('czarPickCard');
     };
 
