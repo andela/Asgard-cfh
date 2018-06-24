@@ -1,6 +1,7 @@
 /* eslint-disable */
-if (window.location.hash == '#_=_') window.location.hash = '#!';
-
+if (window.location.hash == '#_=_') {
+  window.location.hash = '#!';
+} 
 // Decode token to determine if user is logged in and token hasn't expired
 const userToken = localStorage.getItem('token');
 const checkAuthenticationStatus = (token) => {
@@ -17,4 +18,5 @@ const checkAuthenticationStatus = (token) => {
   }
   window.user = decoded;
 };
-checkAuthenticationStatus(userToken);
+
+if (userToken) checkAuthenticationStatus(userToken);

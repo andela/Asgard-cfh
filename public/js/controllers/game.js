@@ -42,7 +42,7 @@ angular.module('mean.system') //eslint-disable-line
           bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
         });
       };
-      $(window).resize(()=> {
+      $(window).resize(() => {
         $scope.snapChatPanelToBottom();
       });
       $scope.clearChatInput = function () { //eslint-disable-line
@@ -114,7 +114,7 @@ angular.module('mean.system') //eslint-disable-line
               $timeout($scope.sendPickedCards, 300);
             }
           } else {
-            $scope.pickedCards.pop();
+          $scope.pickedCards.pop();
           }
         }
       };
@@ -124,7 +124,7 @@ angular.module('mean.system') //eslint-disable-line
         }
         return {};
       };
-    $scope.sendPickedCards = function() { //eslint-disable-line
+      $scope.sendPickedCards = function() { //eslint-disable-line
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
       };
@@ -272,16 +272,12 @@ angular.module('mean.system') //eslint-disable-line
           $http.post('/api/game/save', saveGame)
             .then(function (res) { console.log(res) }); //eslint-disable-line
         }
-      });
-
-      $scope.$watch('game.state', () => {
         if(!$scope.isCzar() && game.state === 'czar pick black card') {
           $scope.waitingForCzar = 'wait, the czar is picking a card';
-        }
-        else {
+        } else {
           $scope.waitingForCzar = ''
         }
-      })
+      });
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
         if (game.gameID) {
@@ -317,5 +313,4 @@ angular.module('mean.system') //eslint-disable-line
       } else {
         game.joinGame();
       }
-      // };
     }]);

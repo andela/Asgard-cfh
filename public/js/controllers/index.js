@@ -33,14 +33,6 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
         $scope.avatars = data;
       });
 
-    if (window.user) {
-      $window.onload = $http.get(`/api/profile/${userId}`)
-        .then((res) => {
-          $scope.user = res.data;
-        });
-    } else {
-      $location.path('/');
-    }
     $scope.image = '';
     $scope.image_preview = '';
     $scope.readImage = () => { //eslint-disable-line
