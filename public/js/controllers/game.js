@@ -27,7 +27,7 @@ angular.module('mean.system') //eslint-disable-line
       var initChatService = function (gameID) { //eslint-disable-line
         var firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
           .child(`${gameID}`);
-        firebaseRef.remove();
+        // firebaseRef.remove();
         $scope.chats = $firebaseArray(firebaseRef);
         // Here we check for new unread messages...
         $scope.chats.$watch(function (e) {  //eslint-disable-line
