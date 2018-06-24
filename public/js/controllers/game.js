@@ -20,9 +20,9 @@ angular.module('mean.system') //eslint-disable-line
       $scope.chatIsClosed = true;
       $scope.info = null;
 
-      $scope.trustAsHtml = function(html) {
+      $scope.trustAsHtml = function (html) {
         return $sce.trustAsHtml(html);
-      }
+      };
       // chat implementation
       var initChatService = function (gameID) { //eslint-disable-line
         var firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
@@ -37,6 +37,14 @@ angular.module('mean.system') //eslint-disable-line
           }
         });
       };
+      $scope.snapChatPanelToBottom = function () {
+        $('#chat-container').css({ //eslint-disable-line
+          bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
+        });
+      };
+      $(window).resize(()=> {
+        $scope.snapChatPanelToBottom();
+      });
       $scope.clearChatInput = function () { //eslint-disable-line
         $scope.message = '';
       };

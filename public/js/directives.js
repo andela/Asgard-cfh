@@ -85,9 +85,7 @@ angular.module('mean.directives', []) //eslint-disable-line
       restrict: 'EA',
       templateUrl: '/views/chat-panel.html',
       link(scope, elem, attr) { //eslint-disable-line
-        $('#chat-container').css({ //eslint-disable-line
-          bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
-        });
+        scope.snapChatPanelToBottom();
         $('#chat-submit-btn').css({ //eslint-disable-line
           height: `${32}px`
         });
