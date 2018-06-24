@@ -217,11 +217,10 @@ angular.module('mean.system') //eslint-disable-line
           game.startGame();
         }
       };
-    $scope.abandonGame = function () { //eslint-disable-line
-        game.leaveGame();
-        $location.path('/');
+      $scope.abandonGame = function () { //eslint-disable-line
+          game.leaveGame();
+          $location.path('/');
       };
-
       // resume game after czar pick card
       $scope.resumeGame = function () { //eslint-disable-line
         if ($scope.isCzar()) {
@@ -259,7 +258,10 @@ angular.module('mean.system') //eslint-disable-line
         }
         var gamePlayers = []; //eslint-disable-line
         $scope.game.players.forEach( function (player) { //eslint-disable-line
-          gamePlayers.push(player.username);
+          gamePlayers.push({
+            username: player.username,
+            points: player.points
+          });
         });
         if (game.state === 'game ended') {
           var saveGame = { //eslint-disable-line

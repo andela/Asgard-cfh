@@ -22,12 +22,25 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
     $scope.loginError = null;
     $scope.dontShow = false;
     $scope.avatars = [];
+    let userId = null;
+    if (window.user) {
+      userId = window.user._id;
+    }
+    $scope.user = {};
 
     AvatarService.getAvatars()
       .then(function (data) { //eslint-disable-line
         $scope.avatars = data;
       });
 
+    if (window.user) {
+      $window.onload = $http.get(`/api/profile/${userId}`)
+        .then((res) => {
+          $scope.user = res.data;
+        });
+    } else {
+      $location.path('/');
+    }
     $scope.image = '';
     $scope.image_preview = '';
     $scope.readImage = () => { //eslint-disable-line
@@ -105,5 +118,8 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
           localStorage.removeItem('token'); //eslint-disable-line
           $location.path('/#!');
         });
+    };
+    $scope.openDropdown = () => {
+      $('.dropdown-toggle').dropdown();
     };
   }]);

@@ -109,6 +109,9 @@ module.exports = function (app, passport) { //eslint-disable-line
   // Invitation
   app.post('/api/invite', middleWare.isLoggedIn, users.invite);
 
-  // Search User
+  //  User Profile
+  app.get('/api/profile/:id', users.profile);
+
+  // Search
   app.post('/api/search', users.searchUser);
 };

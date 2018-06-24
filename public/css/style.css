@@ -1064,7 +1064,7 @@
  .white-text a {
    vertical-align: 350px;
  }
-
+ 
  /*
   chat styles
   */
@@ -1221,4 +1221,19 @@
   100% {
     transform: rotate(0deg);
   }
+}
+
+ /* profile page */
+ .user-details img{
+  margin-top: 50px;
+  height: 200px;
+  width: 200px
+}
+
+.bg-grey {
+background-color: rgba(245, 155, 91, 0.281);
+}
+.game-log {
+margin-top: 5rem;
+margin-bottom: 10rem;
 }
