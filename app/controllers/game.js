@@ -20,8 +20,8 @@ exports.saveGame = (req, res) => {
     Game.findOne({ gameId: req.body.gameId })
       .exec((err, game) => {
         if (err) return res.status(500).json({ message: 'An error occured' });
-        if (!game && req.body.players.length < 6) return res.status(404).json({ message: 'Game not found' });
-        if (!game && req.body.players.length === 6) {
+        if (!game && req.body.players.length < 12) return res.status(404).json({ message: 'Game not found' });
+        if (!game && req.body.players.length === 12) {
           const newGame = new Game(req.body);
           newGame.save((err) => {
             if (err) return err;

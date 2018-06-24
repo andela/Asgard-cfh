@@ -26,6 +26,12 @@ const gameData2 = {
     'Rotimi Isaiah',
     'Fortune Ekeruo',
     'Douglas',
+    'Olatunji',
+    'Ajiboye Daramola',
+    'Clinton Fidelis',
+    'Rotimi Isaiah',
+    'Fortune Ekeruo',
+    'Douglas',
     'Olatunji'
   ],
   gameWinner: 'Rotimi Isaiah'
@@ -76,7 +82,7 @@ describe('Game', () => {
       });
   });
 
-  it('Should create and save game if it has 6 players', (done) => {
+  it('Should create and save game if it has 12 players', (done) => {
     request.post('/api/game/save')
       .send(gameData2)
       .expect(200)
