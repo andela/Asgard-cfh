@@ -1,4 +1,4 @@
-angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', 'ngRoute', 'firebase', 'mean.system', 'mean.directives']) //eslint-disable-line
+angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', 'ngSanitize', 'ngRoute', 'firebase', 'mean.system', 'mean.directives']) //eslint-disable-line
   .config(['$routeProvider',
       function($routeProvider) { //eslint-disable-line
       $routeProvider

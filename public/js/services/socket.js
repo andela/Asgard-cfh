@@ -2,7 +2,7 @@ angular.module('mean.system') //eslint-disable-line
   .factory('socket', ['$rootScope', function ($rootScope) { //eslint-disable-line
     var socket = io.connect(); //eslint-disable-line
     return {
-      on(eventName, callback) {
+      on: function(eventName, callback) { //eslint-disable-line
       socket.on(eventName, function() { //eslint-disable-line
         var args = arguments; //eslint-disable-line
         $rootScope.safeApply(function() { //eslint-disable-line
@@ -10,7 +10,7 @@ angular.module('mean.system') //eslint-disable-line
           });
         });
       },
-      emit(eventName, data, callback) {
+      emit: function(eventName, data, callback) { //eslint-disable-line
         socket.emit(eventName, data, function () { //eslint-disable-line
           var args = arguments; //eslint-disable-line
         });
@@ -20,9 +20,9 @@ angular.module('mean.system') //eslint-disable-line
           }
         });
       },
-      removeAllListeners(eventName, callback) {
+      removeAllListeners: function(eventName, callback) { //eslint-disable-line
         socket.removeAllListeners(eventName, function () { //eslint-disable-line
-          const args = arguments; //eslint-disable-line
+          var args = arguments; //eslint-disable-line
           $rootScope.safeApply(function () { //eslint-disable-line
             if (callback) {
               callback.apply(socket, args);

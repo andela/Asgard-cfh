@@ -30,10 +30,10 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
 
     $scope.image = '';
     $scope.image_preview = '';
-    $scope.readImage = function () { //eslint-disable-line
-      var file = event.target.files[0]; //eslint-disable-line
+    $scope.readImage = () => { //eslint-disable-line
+      const file = event.target.files[0]; //eslint-disable-line
       if (file) {
-        var fileReader = new FileReader(); //eslint-disable-line
+        const fileReader = new FileReader(); //eslint-disable-line
         fileReader.readAsDataURL(file);
         fileReader.onload = function (event) { //eslint-disable-line
           $scope.image_preview = event.target.result;

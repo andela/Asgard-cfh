@@ -1,10 +1,10 @@
 /* eslint-disable*/
 angular.module('mean.system') //eslint-disable-line
   .controller('GameController', [
-    '$scope', 'game', '$http', '$timeout', '$location',
+    '$scope', '$sce', 'game', '$http', '$timeout', '$location',
     'MakeAWishFactsService', '$dialog', '$firebaseArray', '$window', '$document',
     function ( //eslint-disable-line
-      $scope, game, $http, $timeout, $location,
+      $scope, $sce, game, $http, $timeout, $location,
       MakeAWishFactsService, $dialog, $firebaseArray, $window, $document) { //eslint-disable-line
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
@@ -14,10 +14,15 @@ angular.module('mean.system') //eslint-disable-line
       $scope.pickedCards = [];
       var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts(); //eslint-disable-line
       $scope.makeAWishFact = makeAWishFacts.pop();
+      $scope.showTour = true;
+      $scope.gameModal = true;
       $scope.newMessages = 0;
       $scope.chatIsClosed = true;
       $scope.info = null;
 
+      $scope.trustAsHtml = function(html) {
+        return $sce.trustAsHtml(html);
+      }
       // chat implementation
       var initChatService = function (gameID) { //eslint-disable-line
         var firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
@@ -194,7 +199,7 @@ angular.module('mean.system') //eslint-disable-line
 
       $scope.startGame = function () { //eslint-disable-line
         if ($scope.isCustomGame()) {
-          $http.post(`/api/games/${$scope.game.gameID}/start`)
+          $http.post('/api/games/'+$scope.game.gameID+'/start')
             .then(function () { //eslint-disable-line
               $scope.showTour = false;
               return game.startGame();
@@ -259,14 +264,14 @@ angular.module('mean.system') //eslint-disable-line
         }
       });
 
-      // $scope.$watch('game.state', () => {
-      //   if(!$scope.isCzar() && game.state === 'czar pick black card') {
-      //     $scope.waitingForCzar = 'wait, the czar is picking a card';
-      //   }
-      //   else {
-      //     $scope.waitingForCzar = ''
-      //   }
-      // })
+      $scope.$watch('game.state', () => {
+        if(!$scope.isCzar() && game.state === 'czar pick black card') {
+          $scope.waitingForCzar = 'wait, the czar is picking a card';
+        }
+        else {
+          $scope.waitingForCzar = ''
+        }
+      })
 
       $scope.$watch('game.gameID', function () { //eslint-disable-line
         if (game.gameID) {
@@ -285,13 +290,8 @@ angular.module('mean.system') //eslint-disable-line
               setTimeout(function (){ //eslint-disable-line
                 var link = document.URL; //eslint-disable-line
                 var txt = 'Give the following link to your friends so they can join your game: '; //eslint-disable-line
-                $('#lobby-how-to-play').text(txt); //eslint-disable-line
-                $('#oh-el').css({ //eslint-disable-line
-                  'text-align': 'center',
-                  'font-size': '22px',
-                  background: 'white',
-                  color: 'black'
-                }).text(link);
+                $('#lobby-how-to-play').css({'text-align': 'center', 'font-size':'22px', 'font-weight':'bold', 'background': 'white', 'color': 'black'}).text(txt); //eslint-disable-line 
+                $('#oh-el').css({'text-align': 'center', 'font-size': '22px', 'background': 'white', 'color': 'black'}).text(link);
               }, 200);
               $scope.modalShown = true;
             }

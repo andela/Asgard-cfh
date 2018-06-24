@@ -11,7 +11,7 @@ angular.module('mean.system') //eslint-disable-line
       table: [],
       czar: null,
       playerMinLimit: 3,
-      playerMaxLimit: 6,
+      playerMaxLimit: 12,
       pointLimit: null,
       state: null,
       round: 0,
@@ -27,6 +27,13 @@ angular.module('mean.system') //eslint-disable-line
     var self = this; //eslint-disable-line
     var joinOverrideTimeout = 0; //eslint-disable-line
 
+    var addToNotificationQueue = function(msg) { //eslint-disable-line
+      notificationQueue.push(msg);
+      if (!timeout) { // Start a cycle if there isn't one
+        setNotification();
+      }
+    };
+
     var setNotification = function() { //eslint-disable-line
       if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
         clearInterval(timeout);
@@ -36,13 +43,6 @@ angular.module('mean.system') //eslint-disable-line
         // Show a notification and check again in a bit
         game.notification = notificationQueue.shift();
         timeout = $timeout(setNotification, 1300);
-      }
-    };
-
-    var addToNotificationQueue = function(msg) { //eslint-disable-line
-      notificationQueue.push(msg);
-      if (!timeout) { // Start a cycle if there isn't one
-        setNotification();
       }
     };
 
@@ -188,7 +188,7 @@ angular.module('mean.system') //eslint-disable-line
       room = room || '';
       createPrivate = createPrivate || false;
       var userID = !!window.user ? user._id : 'unauthenticated'; //eslint-disable-line
-      socket.emit(mode, { userID, room, createPrivate });
+      socket.emit(mode, { userID: userID, room: room, createPrivate: createPrivate }); //eslint-disable-line
     };
 
     game.startGame = function() { //eslint-disable-line
@@ -202,7 +202,7 @@ angular.module('mean.system') //eslint-disable-line
     };
 
     game.pickCards = function(cards) { //eslint-disable-line
-      socket.emit('pickCards', { cards });
+      socket.emit('pickCards', { cards: cards }); //eslint-disable-line
     };
 
     game.beginGame = function() { //eslint-disable-line

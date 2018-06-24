@@ -15,13 +15,13 @@ angular.module('mean.directives', []) //eslint-disable-line
 
         scope.$watch('game.state', function () { //eslint-disable-line
           if (scope.game.state === 'winner has been chosen') {
-            let shouldRemoveQuestionPunctuation = false;
-            const curQ = scope.game.curQuestion;
-            const curQuestionArr = curQ.text.split('_');
-            const startStyle = `<span style=color:'${scope.colors[scope.game.players[scope.game.winningCardPlayer].color]}'>`;
-            const endStyle = '</span>';
-            const removePunctuation = function (cardIndex) { //eslint-disable-line
-              let cardText = scope.game.table[scope.game.winningCard].card[cardIndex].text;
+            var curQ = scope.game.curQuestion; //eslint-disable-line
+            var curQuestionArr = curQ.text.split('_'); //eslint-disable-line
+            var startStyle = "<span style='color: "+scope.colors[scope.game.players[scope.game.winningCardPlayer].color]+"'>"; //eslint-disable-line
+            var endStyle = '</span>'; //eslint-disable-line
+            var shouldRemoveQuestionPunctuation = false; //eslint-disable-line
+            var removePunctuation = function (cardIndex) { //eslint-disable-line
+              var cardText = scope.game.table[scope.game.winningCard].card[cardIndex].text; //eslint-disable-line
               if (cardText.indexOf('.', cardText.length - 2) === cardText.length - 1) {
                 cardText = cardText.slice(0, cardText.length - 1);
               } else if ((cardText.indexOf('!', cardText.length - 2) === cardText.length - 1 ||
@@ -32,7 +32,7 @@ angular.module('mean.directives', []) //eslint-disable-line
               return cardText;
             };
             if (curQuestionArr.length > 1) {
-              let cardText = removePunctuation(0);
+              var cardText = removePunctuation(0); //eslint-disable-line
               curQuestionArr.splice(1, 0, startStyle + cardText + endStyle);
               if (curQ.numAnswers === 2) {
                 cardText = removePunctuation(1);
@@ -47,7 +47,7 @@ angular.module('mean.directives', []) //eslint-disable-line
                 }
               }
             } else {
-              curQ.text += `${startStyle}${scope.game.table[scope.game.winningCard].card[0].text}${endStyle}`;
+              curQ.text += ' '+startStyle+scope.game.table[scope.game.winningCard].card[0].text+endStyle; //eslint-disable-line
             }
           }
         });

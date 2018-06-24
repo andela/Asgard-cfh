@@ -1,6 +1,6 @@
 angular.module('mean.system') //eslint-disable-line
   .factory('Global', [function() { //eslint-disable-line
-    const _this = this;
+    var _this = this; //eslint-disable-line
     _this._data = {
       user: window.user, //eslint-disable-line
       authenticated: !!window.user //eslint-disable-line
@@ -10,7 +10,7 @@ angular.module('mean.system') //eslint-disable-line
   }])
   .factory('AvatarService', ['$http', '$q', function ($http, $q) { //eslint-disable-line
     return {
-      getAvatars() {
+      getAvatars: function() { //eslint-disable-line
         return $q.all([
           $http.get('/avatars')
         ])
@@ -22,7 +22,7 @@ angular.module('mean.system') //eslint-disable-line
   }])
   .factory('DonationService', ['$http', '$q', function ($http, $q) { //eslint-disable-line
     return {
-      userDonated(donationObject) {
+      userDonated: function(donationObject) { //eslint-disable-line
         return $q.all([
           $http.post('/donations', donationObject)
         ])
@@ -34,7 +34,7 @@ angular.module('mean.system') //eslint-disable-line
   }])
   .factory('MakeAWishFactsService', [function () { //eslint-disable-line
     return {
-      getMakeAWishFacts() {
+      getMakeAWishFacts: function() { //eslint-disable-line
         var facts = ['Health professionals who treat wish kids, including nurses and doctors, overwhelmingly believe that the wish experience can improve a wish kids’ physical health.', //eslint-disable-line
           'Most health professionals say a wish come true has the potential to be a positive turning point in the child’s battle for health.',
           'Parents and volunteers observe that a wish come true makes kids feel stronger and more energetic.',
