@@ -8,6 +8,7 @@ const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const sendgridMail = require('@sendgrid/mail');
+const userHelpers = require('../helpers/userHelpers');
 require('dotenv').config();
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -512,6 +513,29 @@ exports.acceptFriend = ((req, res) => {
   });
 });
 
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/donations
+   */
+exports.getDonations = (req, res) => {
+  let donationsInfo;
+  User.find()
+    .exec((err, users) => {
+      if (err) return err;
+      if (!users) {
+        return res.status(404).json({ message: 'Users not found' });
+      }
+      donationsInfo = userHelpers.getDonations(users);
+      return res.status(200).json(donationsInfo);
+    });
+};
 
 exports.profile = (req, res) => {
   const { id } = req.params;
@@ -522,28 +546,40 @@ exports.profile = (req, res) => {
         message: 'User Not Found',
       });
     }
-    Game.find({ gameWinner: user.username })
-      .then((games) => {
+    Game.find({ gameWinner: user.name })
+      .then((gamesWon) => {
         details.id = user._id;
         details.email = user.email;
         details.name = user.name;
         details.username = user.username;
+        details.incomingInvitation = user.incomingInvitation;
+        details.outgoingInvitation = user.outgoingInvitation;
+        details.friends = user.friends;
         details.image = user.profileImage;
-        details.gamesWon = games.length;
+        details.gamesWon = gamesWon.length;
         Game.find().exec((err, games) => {
           if (err) {
             return res.status(400).json({
               message: 'Error Occured'
             });
           }
-          const userGameLog = games.map(game => ({
+          let roundsWon;
+          const gamesLog = games.map(game => ({
             gameId: game.gameId,
-            playedAt: game.played,
-            log: game.players
-              .filter(player => player.username === user.username),
-            gameWinner: game.gameWinner === user.username ? 'WON' : 'LOST'
+            playedAt: game.played || game.playedAt,
+            playerNames: game.players.map(player => player.username),
+            players: game.players,
+            playerPoints: game.players.map((player) => {
+              if (player.username === user.name) {
+                roundsWon = player.points;
+              }
+              return player.points;
+            }),
+            roundsWon,
+            gameWinner: game.gameWinner === user.name ? 'WON' : 'LOST'
           }));
-          details.userGame = userGameLog.filter(eachUserLog => eachUserLog.log.length !== 0);
+          details.userGame = gamesLog.filter(game => game.playerNames.includes(user.name));
+          console.log(details);
           return res.status(200).json(details);
         });
       });

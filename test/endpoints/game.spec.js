@@ -37,11 +37,26 @@ const gameData2 = {
   gameWinner: 'Rotimi Isaiah'
 };
 
+let user;
+const userEmail = `daramola${Math.random() * 100}@andela.com`;
+
 describe('Game', () => {
   before((done) => {
     const game = new Game({ gameId: 'E5TGR43' });
     game.save();
-    done();
+    request
+      .post('/api/auth/signup')
+      .send({
+        name: 'Rotimi Yemitan',
+        email: userEmail,
+        password: 'password1234'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        user = res.body;
+        user.active = true;
+        done();
+      });
   });
 
 
@@ -105,6 +120,45 @@ describe('Game', () => {
           return done(err);
         }
         (res.body.message).should.be.eql('Please enter a gameId');
+        done();
+      });
+  });
+
+  it('should return a list of previous games played', (done) => {
+    request.get('/api/games/history')
+      .set('authorization', user.token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        (Array.isArray(res.body)).should.be.eql(true);
+        done();
+      });
+  });
+
+  it('should return a list of players and the amount of games they have won', (done) => {
+    request.get('/api/leaderboard')
+      .set('authorization', user.token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        (Array.isArray(res.body)).should.be.eql(true);
+        done();
+      });
+  });
+
+  it('should return a list of players and the amount they have donated', (done) => {
+    request.get('/api/donations')
+      .set('authorization', user.token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        (Array.isArray(res.body)).should.be.eql(true);
         done();
       });
   });

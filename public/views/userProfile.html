@@ -77,7 +77,7 @@
                     <tr ng-repeat="game in user.userGame">
                         <th scope="row">{{ $index + 1 }}</th>
                         <td>{{ game.gameId }}</td>
-                        <td ng-repeat="log in game.log">{{ log.points }}</td>
+                        <td>{{ game.roundsWon }}</td>
                         <td>{{ game.gameWinner}}</td>
                     </tr>
                 </tbody>
@@ -85,6 +85,34 @@
         </div>
 
     </div>
+
+    <div class="container text-center">
+        <h2>Friends</h2>
+        <div class="my-4">
+            <ul ng-repeat="friend in user.friends">
+                <li>{{friend.acceptName}} - {{friend.acceptEmail}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <h2>Friend Requests</h2>
+        <div class="my-4">
+            <ul ng-repeat="incomingUser in user.incomingInvitation">
+                <li>{{incomingUser.senderName}} - {{incomingUser.senderEmail}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <h2>Pending Friend Invitation</h2>
+        <div class="my-4">
+            <ul ng-repeat="User in user.outgoingInvitation">
+                <li>{{User.name}} - {{User.email}}</li>
+            </ul>
+        </div>
+    </div>
+    
 
     <footer >
         <div class="business-footer">
