@@ -6,12 +6,14 @@ angular.module('mean.system')
     $scope.showTable = false;
     $scope.modalShown = false;
     $scope.game = game;
-    $scope.regionId = "1";
+    $scope.regionId = ($scope.selectedRegion === "Africa") ? "1" : "2";
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
     $scope.showTour = true;
     $scope.gameModal = true;
+    $scope.selectedRegion = "Africa"
+    $scope.regions = [ "Africa", "Europe", "Asia", "Americas", "others" ];
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -52,6 +54,13 @@ angular.module('mean.system')
     $scope.closeModal = () => {
       $('#gameModal').remove();
       $('.modal-backdrop').hide();
+    }
+    $scope.closeRegionModal = () => {
+      $('#regionModal').remove();
+      $('.modal-backdrop').hide();
+    }
+    $scope.openRegionModal = () => {
+      $('#regionModal').modal('show');
     }
     $scope.cardIsSecondSelected = function(card) {
       if (game.curQuestion.numAnswers > 1) {
@@ -129,10 +138,12 @@ angular.module('mean.system')
         $http.post('/api/games/'+$scope.game.gameID+'/start')
           .then(() => {
             $scope.showTour = false;
+            $scope.closeRegionModal();
             return game.startGame();
           });
       } else {
         $scope.showTour = false;
+        $scope.closeRegionModal();
         game.startGame($scope.regionId);
       }
     };
