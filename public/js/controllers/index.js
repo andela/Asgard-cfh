@@ -122,4 +122,52 @@ angular.module('mean.system').controller('IndexController', [
     $scope.openDropdown = () => {
       $('.dropdown-toggle').dropdown();
     };
+
+    $scope.acceptFriendInvites = function (user) {
+      const token = localStorage.token;
+
+      $http({
+        method: 'POST',
+        url: '/api/accept-friend-invite',
+        data: {
+          acceptEmail: user.senderEmail,
+          acceptName: user.senderName,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`
+        }
+      }).then(
+        (response) => {
+          toastr.success('Friend Invitation accepted successfully');
+        },
+        (error) => {
+          toastr.error('Error: Could not add friend');
+        }
+      );
+    };
+
+    $scope.rejectFriendInvites = function (user) {
+      const token = localStorage.token;
+
+      $http({
+        method: 'POST',
+        url: '/api/reject-friend-invite',
+        data: {
+          rejectEmail: user.senderEmail,
+          rejectName: user.senderName,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`
+        }
+      }).then(
+        (response) => {
+          toastr.success('Friend Invitation accepted successfully');
+        },
+        (error) => {
+          toastr.error('Error: Could not reject friend');
+        }
+      );
+    };
   }]);

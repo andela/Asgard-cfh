@@ -58,6 +58,7 @@
                 <p class="lead mt-3">Name:  {{user.name}}</p>
                 <p class="lead">Email:  {{user.email}} </p>
                 <p class="lead">Game won: {{user.gamesWon}} </p>
+                <p class="lead">Friends: {{user.friends.length}} </p>
             </div>
         </div>
 
@@ -90,12 +91,7 @@
         <h2>Friends</h2>
         <div class="my-4">
             <ul ng-repeat="friend in user.friends">
-                <li>{{friend.acceptName}} - {{friend.acceptEmail}} 
-
-                    <button> Accept </button>
-                    <button> Reject </button>
-                
-                </li> 
+                <li>{{friend.acceptName || friend.name}} - {{friend.acceptEmail || friend.email}}</li> 
             </ul>
         </div>
     </div>
@@ -104,7 +100,12 @@
         <h2>Friend Requests</h2>
         <div class="my-4">
             <ul ng-repeat="incomingUser in user.incomingInvitation">
-                <li>{{incomingUser.senderName}} - {{incomingUser.senderEmail}}</li>
+                <li>{{incomingUser.senderName}} - {{incomingUser.senderEmail}}
+
+                    <button ng-click="acceptFriendInvites(incomingUser)"> Accept </button>
+                    <button ng-click="rejectFriendInvites(incomingUser)"> Reject </button>
+                
+                </li>
             </ul>
         </div>
     </div>

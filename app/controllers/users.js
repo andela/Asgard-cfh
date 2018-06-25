@@ -480,16 +480,16 @@ exports.friendInvite = ((req, res) => {
     { $push: { outgoingInvitation: { email, name } } }
   ).then(() => {
   }).catch(() => res.status(400).json({
-      message: 'could not send request'
-    }));
+    message: 'could not send request'
+  }));
 
   User.findOneAndUpdate(
     { email },
     { $push: { incomingInvitation: { senderEmail, senderName } } }
   ).then(() => {
-  }).catch((error) => res.status(400).json({
-      message: 'could not send request'
-    }));
+  }).catch(error => res.status(400).json({
+    message: 'could not send request'
+  }));
 
   return res.status(200).json({
     message: 'Friend Invite sent successfully'
