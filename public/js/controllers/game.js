@@ -187,7 +187,8 @@ angular.module('mean.system')
         const saveGame = {
           gameId: $scope.game.gameID,
           gameWinner: $scope.game.players[$scope.game.gameWinner].username,
-          players: gamePlayers
+          players: gamePlayers,
+          roundsPlayed: $scope.game.round
         };
         $http.post('/api/game/save', saveGame)
           .then((res) => console.log(res));

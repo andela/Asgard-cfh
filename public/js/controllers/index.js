@@ -38,7 +38,7 @@ angular.module('mean.system').controller('IndexController', [
         .then((res) => {
           $scope.user = res.data;
         });
-    } else {
+    } else if ($location.path === '/profile') {
       $location.path('/');
     }
     $scope.image = '';

@@ -20,9 +20,12 @@ const GameSchema = new Schema({
   gameWinner: {
     type: String
   },
-  played: {
+  playedAt: {
     type: Date,
     default: Date.now()
+  },
+  roundsPlayed: {
+    type: Number
   }
 });
 
