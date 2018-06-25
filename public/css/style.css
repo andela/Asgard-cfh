@@ -9,13 +9,17 @@
  }
 
  .navbar {
-   position: fixed;
+   position: static;
    width: 100%;
    z-index: 2;
  }
 
  .cfh-navbar {
    display: flex;
+ }
+
+ .game-nav {
+  display: inline-block;
  }
 
  .nav-link {
@@ -302,6 +306,11 @@
    }
    .slide-hide-on-mobile {
      display: none !important;
+   }
+   .profile-icon {
+    border-radius: 50% !important;
+    width: 15%;
+    margin: auto;
    }
  }
 
@@ -845,6 +854,8 @@
    }
  }
 
+ /* card-design */
+
  .oldcard {
    position: relative;
    display: inline-block;
@@ -1218,7 +1229,65 @@
   }
 }
 
- /* profile page */
+ /* dashboard-styling */
+.dashboard-log {
+ display: flex;
+ justify-content: space-around;
+ background: #fff;
+ padding: 1% 0;
+ border-radius: 5px;
+}
+ 
+.logs.active {
+  background-color: #f47721 !important;
+  color: #fff !important;
+  padding: 10px 100px;
+}
+
+.table-content {
+  background: #fff;
+  color: #000;
+  font-size: 15px;
+  overflow: scroll;
+}
+
+.line-right {
+  border-right: 1px solid;
+}
+
+#pills-gamelog tr, td, th {
+  font-weight: bold !important;
+}
+#pills-gamelog, #pills-leaderboard,#pills-donations  th {
+  text-align: center !important;
+}
+#no-dot {
+  list-style: none !important;
+}
+
+.game-btn {
+  background: #f47721;
+  outline: none !important;
+}
+
+.game-btn:hover, .game-btn:focus {
+  background: #f47721 !important;
+  outline: none !important;
+  
+}
+
+#dropdown-style a {
+  font-weight: bold !important;
+}
+.dropdown-play:hover {
+  background-color: rgba(199, 169, 169, 0.726) !important;
+}
+
+u {
+  border-bottom: 1px solid black;
+  display: inline-block;
+  width: 25%;
+  }
  .user-details img{
   margin-top: 50px;
   height: 200px;

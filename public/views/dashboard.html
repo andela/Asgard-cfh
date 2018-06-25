@@ -1,0 +1,123 @@
+<div class="app-container" style="color: #fff" ng-controller="DashboardController">
+  <nav landing class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
+          <div class="dropdown">
+              <button type="button" ng-click="openDropdown()"id="dropdownMenuButton" class="game-btn btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                PLAY GAME
+              </button>
+              <div class="dropdown-menu" id="dropdown-style" aria-labelledby="dropdownMenuButton" style="margin: 0 18%;">
+                <a class="dropdown-item dropdown-play" href="/play?custom">PLAY WITH FRIENDS</a>
+                <a class="dropdown-item dropdown-play" href="/play">PLAY WITH STRANGERS</a>
+              </div>
+            </div>
+      <a class="navbar-brand img-center"  href="#!/">
+        <img src="../img/landing/logo.png" width="100px" alt="logo" />
+      </a>
+      <ul class="navbar-nav">
+        <div ng-controller="IndexController" ng-hide="showOptions">
+          <li class="nav-item">
+            <a class="nav-link" ng-click="logout()">SIGN OUT</a>
+          </li>
+        </div>
+        <div class="profile-icon ml-6">
+            <a href="#!/profile"><i id="user" class="fa fa-user"></i></a>
+          </div>
+      </ul>
+    </div>
+  </nav>
+  <div class="container gameplay-container" style="background: transparent !important; border: none; width: 100%">
+    <div class="row">
+      <div class="col-lg-12 col-md-9 col-sm-12 col-xs-12">
+        <div class="table-responsive">
+          <ul class="nav nav-pills dashboard-log" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link logs active" id="pills-gamelog-tab" data-toggle="pill" href="#pills-gamelog" role="tab" aria-controls="pills-gamelog"
+                aria-selected="true">Game Log</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link logs" id="pills-leaderboard-tab" data-toggle="pill" href="#pills-leaderboard" role="tab" aria-controls="pills-leaderboard"
+                aria-selected="false">LeaderBoard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link logs" id="pills-donations-tab" data-toggle="pill" href="#pills-donations" role="tab" aria-controls="pills-donations"
+                aria-selected="false">Donations</a>
+            </li>
+          </ul>
+          <div class="tab-content container table-content container-fluid gameplay-container" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-gamelog" role="tabpanel" aria-labelledby="pills-gamelog-tab">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">GameID</th>
+                    <th scope="col">RoundsPlayed</th>
+                    <th scope="col">Winner</th>
+                    <th scope="col">Players</th>
+                    <th scope="col">Date Played</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="game in gameLog">
+                    <th class="line-right" scope="row">{{$index + 1}}</th>
+                    <td class="line-right">{{game.gameId}}</td>
+                    <td class="line-right">{{game.roundsPlayed}}</td>
+                    <td class="line-right">{{game.gameWinner}}</td>
+                    <td class="line-right">
+                      <ul>
+                        <li id="no-dot" ng-repeat="player in game.players">
+                          {{player.username}}
+                        </li>
+                      </ul>
+                    </td>
+                    <td>{{game.played || game.playedAt | date : "fullDate"}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="pills-leaderboard" role="tabpanel" aria-labelledby="pills-leaderboard-tab">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col">Player</th>
+                    <th scope="col">Games Won</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in leaderBoard">
+                    <th class="line-right" scope="row">{{$index + 1}}</th>
+                    <td class="line-right">{{user.user}}</td>
+                    <td>{{user.gamesWon}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="pills-donations" role="tabpanel" aria-labelledby="pills-donations-tab">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Amount Donated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="donor in donations">
+                    <th class="line-right" scope="row">{{$index + 1}}</th>
+                    <td class="line-right">{{donor.user}}</td>
+                    <td>{{donor.amountDonated}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
