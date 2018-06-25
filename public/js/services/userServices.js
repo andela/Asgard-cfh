@@ -1,9 +1,9 @@
-angular.module('userServices', []) //eslint-disable-line
-.factory('User', function($http) { //eslint-disable-line
-    var userFactory = {}; //eslint-disable-line
+angular.module('userServices', [])
+.factory('User', function($http) {
+    var userFactory = {};
     // User.activeAccount(token);
-    userFactory.activeAccount = function (token) { //eslint-disable-line
-      return $http.put('/api/' + token); //eslint-disable-line
+    userFactory.activeAccount = function (token) {
+      return $http.put('/api/' + token);
     };
     return userFactory;
   });

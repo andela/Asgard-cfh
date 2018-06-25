@@ -1,41 +1,41 @@
-angular.module('mean.system') //eslint-disable-line
-  .factory('Global', [function() { //eslint-disable-line
-    var _this = this; //eslint-disable-line
+angular.module('mean.system')
+  .factory('Global', [function() {
+    var _this = this;
     _this._data = {
-      user: window.user, //eslint-disable-line
-      authenticated: !!window.user //eslint-disable-line
+      user: window.user,
+      authenticated: !!window.user
     };
 
     return _this._data;
   }])
-  .factory('AvatarService', ['$http', '$q', function ($http, $q) { //eslint-disable-line
+  .factory('AvatarService', ['$http', '$q', function ($http, $q) {
     return {
-      getAvatars: function() { //eslint-disable-line
+      getAvatars: function() {
         return $q.all([
           $http.get('/avatars')
         ])
-        .then(function(results) { //eslint-disable-line
+        .then(function(results) {
             return results[0].data;
           });
       }
     };
   }])
-  .factory('DonationService', ['$http', '$q', function ($http, $q) { //eslint-disable-line
+  .factory('DonationService', ['$http', '$q', function ($http, $q) {
     return {
-      userDonated: function(donationObject) { //eslint-disable-line
+      userDonated: function(donationObject) {
         return $q.all([
           $http.post('/donations', donationObject)
         ])
-        .then(function(results) { //eslint-disable-line
+        .then(function(results) {
             console.log('userDonated success', results);
           });
       }
     };
   }])
-  .factory('MakeAWishFactsService', [function () { //eslint-disable-line
+  .factory('MakeAWishFactsService', [function () {
     return {
-      getMakeAWishFacts: function() { //eslint-disable-line
-        var facts = ['Health professionals who treat wish kids, including nurses and doctors, overwhelmingly believe that the wish experience can improve a wish kids’ physical health.', //eslint-disable-line
+      getMakeAWishFacts: function() {
+        var facts = ['Health professionals who treat wish kids, including nurses and doctors, overwhelmingly believe that the wish experience can improve a wish kids’ physical health.',
           'Most health professionals say a wish come true has the potential to be a positive turning point in the child’s battle for health.',
           'Parents and volunteers observe that a wish come true makes kids feel stronger and more energetic.',
           'Wish kids are more willing to comply with difficult, but vital, treatment regimens.',
@@ -59,9 +59,9 @@ angular.module('mean.system') //eslint-disable-line
           'Nearly 75 percent of wish experiences involve travel.',
           'The Walt Disney Company is involved in 40 percent of the wishes Make-A-Wish grants.',
           'As of August 2012, the average cost of a wish was $8,141.'];
-        var shuffleIndex = facts.length; //eslint-disable-line
-        var temp; //eslint-disable-line
-        var randNum; //eslint-disable-line
+        var shuffleIndex = facts.length;
+        var temp;
+        var randNum;
 
         while (shuffleIndex) {
           randNum = Math.floor(Math.random() * shuffleIndex--);

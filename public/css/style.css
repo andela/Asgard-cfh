@@ -394,13 +394,9 @@
  }
 
  .chat-panel-slide-up {
-  /* animation-duration: 0.7s; */
-  /* animation-name: slideChatPanelUp; */
   animation-timing-function: ease-in-out;
 }
 .chat-panel-slide-down {
-  /* animation-duration: 0.7s; */
-  /* animation-name: slideChatPanelDown; */
   animation-timing-function: ease-in-out;
 }
 
@@ -1025,7 +1021,6 @@
    margin-bottom: 2px;
    background-color: #999;
    object-fit: cover
-   /* margin: auto auto; */
  }
 
  #profile-pic {

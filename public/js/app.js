@@ -1,6 +1,6 @@
 angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', 'ngSanitize', 'ngRoute', 'firebase', 'mean.system', 'mean.directives']) //eslint-disable-line
   .config(['$routeProvider',
-      function($routeProvider) { //eslint-disable-line
+      function($routeProvider) {
       $routeProvider
         .when('/', {
           templateUrl: 'views/index.html',
@@ -34,13 +34,13 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
         });
     }
   ]).config(['$locationProvider',
-    function($locationProvider) { //eslint-disable-line
+    function($locationProvider) {
       $locationProvider.hashPrefix('!');
     }
-  ]).run(['$rootScope', function($rootScope) { //eslint-disable-line
-    $rootScope.safeApply = function(fn) { //eslint-disable-line
-      var phase = this.$root.$$phase; //eslint-disable-line
-      if (phase == '$apply' || phase == '$digest') { //eslint-disable-line
+  ]).run(['$rootScope', function($rootScope) {
+    $rootScope.safeApply = function(fn) {
+      var phase = this.$root.$$phase;
+      if (phase == '$apply' || phase == '$digest') {
         if (fn && (typeof (fn) === 'function')) {
           fn();
         }
@@ -49,11 +49,11 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
       }
     };
   }])
-  .run(['DonationService', function (DonationService) { //eslint-disable-line
-    window.userDonationCb = function (donationObject) { //eslint-disable-line
+  .run(['DonationService', function (DonationService) {
+    window.userDonationCb = function (donationObject) {
       DonationService.userDonated(donationObject);
     };
   }]);
 
-angular.module('mean.system', []); //eslint-disable-line
-angular.module('mean.directives', []); //eslint-disable-line
+angular.module('mean.system', []);
+angular.module('mean.directives', []);

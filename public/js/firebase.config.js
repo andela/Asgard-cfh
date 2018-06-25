@@ -7,4 +7,4 @@ const config = {
   storageBucket: 'asgard-cfh-chat.appspot.com',
   messagingSenderId: '787661176839'
 };
- firebase.initializeApp(config); //eslint-disable-line
+ firebase.initializeApp(config);

@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('IndexController', [ //eslint-disable-line
+angular.module('mean.system').controller('IndexController', [
   '$scope',
   'Global',
   '$http',
@@ -8,10 +8,10 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
   'socket',
   'game',
   'AvatarService',
-  function ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) { //eslint-disable-line
+  function ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) {
     $scope.global = Global;
 
-    $scope.playAsGuest = function () { //eslint-disable-line
+    $scope.playAsGuest = function () {
       game.joinGame();
       $location.path('/app');
     };
@@ -29,31 +29,31 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
     $scope.user = {};
 
     AvatarService.getAvatars()
-      .then(function (data) { //eslint-disable-line
+      .then(function (data) {
         $scope.avatars = data;
       });
 
     $scope.image = '';
     $scope.image_preview = '';
-    $scope.readImage = () => { //eslint-disable-line
-      const file = event.target.files[0]; //eslint-disable-line
+    $scope.readImage = () => {
+      const file = event.target.files[0];
       if (file) {
-        const fileReader = new FileReader(); //eslint-disable-line
+        const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
-        fileReader.onload = function (event) { //eslint-disable-line
+        fileReader.onload = function (event) {
           $scope.image_preview = event.target.result;
           $scope.image = file;
         };
       }
     };
 
-    $scope.signUp = function () { //eslint-disable-line
+    $scope.signUp = function () {
       if ($scope.image) {
-        var imageData = new FormData(); //eslint-disable-line
+        var imageData = new FormData();
         imageData.append('file', $scope.image);
         imageData.append('upload_preset', 'zyu1ajoa');
         imageData.append('api_key', '126852175969548');
-        $.ajax({ //eslint-disable-line
+        $.ajax({
           url: 'https://api.cloudinary.com/v1_1/clintfidel/image/upload',
           data: imageData,
           method: 'POST',
@@ -63,7 +63,7 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
-                $('#signUpModal').modal('show'); //eslint-disable-line
+                $('#signUpModal').modal('show');
               }, (error) => {
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
@@ -76,7 +76,7 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
         $http.post('/api/auth/signup', $scope.user)
           .then(
             () => {
-              $('#signUpModal').modal('show'); //eslint-disable-line
+              $('#signUpModal').modal('show');
             },
             (error) => {
               if (error.data.errors) {
@@ -92,10 +92,10 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
       }
     };
 
-    $scope.login = function () { //eslint-disable-line
+    $scope.login = function () {
       $http.post('/api/auth/login', $scope.user)
         .then((response) => {
-          localStorage.setItem('token', response.data.token); //eslint-disable-line
+          localStorage.setItem('token', response.data.token);
           $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
         }, (error) => {
@@ -104,10 +104,10 @@ angular.module('mean.system').controller('IndexController', [ //eslint-disable-l
         });
     };
 
-    $scope.logout = function () { //eslint-disable-line
+    $scope.logout = function () {
       $http.get('/signout')
         .then(() => {
-          localStorage.removeItem('token'); //eslint-disable-line
+          localStorage.removeItem('token');
           $location.path('/#!');
         });
     };

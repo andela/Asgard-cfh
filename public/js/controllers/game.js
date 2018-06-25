@@ -1,18 +1,17 @@
-/* eslint-disable*/
-angular.module('mean.system') //eslint-disable-line
+angular.module('mean.system')
   .controller('GameController', [
     '$scope', '$sce', 'game', '$http', '$timeout', '$location',
     'MakeAWishFactsService', '$dialog', '$firebaseArray', '$window', '$document',
-    function ( //eslint-disable-line
+    function (
       $scope, $sce, game, $http, $timeout, $location,
-      MakeAWishFactsService, $dialog, $firebaseArray, $window, $document) { //eslint-disable-line
+      MakeAWishFactsService, $dialog, $firebaseArray, $window, $document) {
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
       $scope.modalShown = false;
       $scope.game = game;
       $scope.pickedCards = [];
-      var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts(); //eslint-disable-line
+      var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
       $scope.showTour = true;
       $scope.gameModal = true;
@@ -24,13 +23,13 @@ angular.module('mean.system') //eslint-disable-line
         return $sce.trustAsHtml(html);
       };
       // chat implementation
-      var initChatService = function (gameID) { //eslint-disable-line
-        var firebaseRef = firebase.database().ref().child('entries') //eslint-disable-line
+      var initChatService = function (gameID) {
+        var firebaseRef = firebase.database().ref().child('entries')
           .child(`${gameID}`);
         // firebaseRef.remove();
         $scope.chats = $firebaseArray(firebaseRef);
         // Here we check for new unread messages...
-        $scope.chats.$watch(function (e) {  //eslint-disable-line
+        $scope.chats.$watch(function (e) {
           if (e.event === 'child_added' && $scope.chatIsClosed) {
             $scope.newMessages += 1;
             $scope.info = 'new !';
@@ -38,58 +37,58 @@ angular.module('mean.system') //eslint-disable-line
         });
       };
       $scope.snapChatPanelToBottom = function () {
-        $('#chat-container').css({ //eslint-disable-line
-          bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
+        $('#chat-container').css({
+          bottom: -($('#msg-container').height() + $('#input-container').height())
         });
       };
       $(window).resize(() => {
         $scope.snapChatPanelToBottom();
       });
-      $scope.clearChatInput = function () { //eslint-disable-line
+      $scope.clearChatInput = function () {
         $scope.message = '';
       };
-      $scope.resetForm = function () { //eslint-disable-line
-        $('#chat-input').emojioneArea().data('emojioneArea').setText(''); //eslint-disable-line
+      $scope.resetForm = function () {
+        $('#chat-input').emojioneArea().data('emojioneArea').setText('');
       };
-      $scope.togglePanel = function () { //eslint-disable-line
-        $('#chat-container').toggleClass('chat-panel-slide-up'); //eslint-disable-line
-        $('#chat-container').toggleClass('chat-panel-slide-down'); //eslint-disable-line
-        if ($('#chat-container').hasClass('chat-panel-slide-up')) { //eslint-disable-line
-          $('#chat-container').animate({ //eslint-disable-line
+      $scope.togglePanel = function () {
+        $('#chat-container').toggleClass('chat-panel-slide-up');
+        $('#chat-container').toggleClass('chat-panel-slide-down');
+        if ($('#chat-container').hasClass('chat-panel-slide-up')) {
+          $('#chat-container').animate({
             bottom: 0
           });
           $scope.chatIsClosed = false;
           $scope.newMessages = 0;
           $scope.info = null;
-          if ($('#up-down-icon').hasClass('fa-rotate-0')) { //eslint-disable-line
-            $('#up-down-icon').removeClass('fa-rotate-0'); //eslint-disable-line
+          if ($('#up-down-icon').hasClass('fa-rotate-0')) {
+            $('#up-down-icon').removeClass('fa-rotate-0');
           }
-          $('#up-down-icon').addClass('fa-rotate-180'); //eslint-disable-line
+          $('#up-down-icon').addClass('fa-rotate-180');
           return;
         }
-        if ($('#chat-container').hasClass('chat-panel-slide-down')) { //eslint-disable-line
-          $('#chat-container').animate({ //eslint-disable-line
-            bottom: -($('#msg-container').height() + $('#input-container').height()) //eslint-disable-line
+        if ($('#chat-container').hasClass('chat-panel-slide-down')) {
+          $('#chat-container').animate({
+            bottom: -($('#msg-container').height() + $('#input-container').height())
           });
           $scope.chatIsClosed = true;
-          if ($('#up-down-icon').hasClass('fa-rotate-180')) { //eslint-disable-line
-            $('#up-down-icon').removeClass('fa-rotate-180'); //eslint-disable-line
+          if ($('#up-down-icon').hasClass('fa-rotate-180')) {
+            $('#up-down-icon').removeClass('fa-rotate-180');
           }
-          $('#up-down-icon').toggleClass('.fa-rotate-0'); //eslint-disable-line
+          $('#up-down-icon').toggleClass('.fa-rotate-0');
         }
       };
 
       // This method controls chat slider to scroll down to the latest messages
-      $scope.downScrollPane = function () { //eslint-disable-line
-        $('#msg-container').stop().animate({ //eslint-disable-line
-          scrollTop: $('#msg-container')[0].scrollHeight //eslint-disable-line
+      $scope.downScrollPane = function () {
+        $('#msg-container').stop().animate({
+          scrollTop: $('#msg-container')[0].scrollHeight
         }, 1000);
       };
 
-      $scope.sendMessage = function (message) { //eslint-disable-line
+      $scope.sendMessage = function (message) {
         if (message) {
           $scope.chats.$add({
-            avatar: game.players[game.playerIndex].profileImage || game.players[game.playerIndex].avatar, //eslint-disable-line
+            avatar: game.players[game.playerIndex].profileImage || game.players[game.playerIndex].avatar,
             message: $scope.message,
             date: Date.now(),
             userName: game.players[game.playerIndex].username
@@ -100,7 +99,7 @@ angular.module('mean.system') //eslint-disable-line
         }
       };
 
-      $scope.pickCard = function (card) { //eslint-disable-line
+      $scope.pickCard = function (card) {
         if (!$scope.hasPickedCards) {
           if ($scope.pickedCards.indexOf(card.id) < 0) {
             $scope.pickedCards.push(card.id);
@@ -118,97 +117,97 @@ angular.module('mean.system') //eslint-disable-line
           }
         }
       };
-      $scope.pointerCursorStyle = function () { //eslint-disable-line
+      $scope.pointerCursorStyle = function () {
         if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
           return { cursor: 'pointer' };
         }
         return {};
       };
-      $scope.sendPickedCards = function() { //eslint-disable-line
+      $scope.sendPickedCards = function() {
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
       };
-      $window.onload = $('#gameModal').modal('show'); //eslint-disable-line
-      $scope.cardIsFirstSelected = function(card) { //eslint-disable-line
+      $window.onload = $('#gameModal').modal('show');
+      $scope.cardIsFirstSelected = function(card) {
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[0];
         }
         return false;
       };
-      $scope.closeModal = function () { //eslint-disable-line
-        $('#gameModal').remove(); //eslint-disable-line
-        $('.modal-backdrop').hide(); //eslint-disable-line
+      $scope.closeModal = function () {
+        $('#gameModal').remove();
+        $('.modal-backdrop').hide();
       };
-      $scope.cardIsSecondSelected = function(card) { //eslint-disable-line
+      $scope.cardIsSecondSelected = function(card) {
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[1];
         }
         return false;
       };
-      $scope.firstAnswer = function ($index) { //eslint-disable-line
+      $scope.firstAnswer = function ($index) {
         if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
           return true;
         }
         return false;
       };
 
-      $scope.secondAnswer = function ($index) { //eslint-disable-line
+      $scope.secondAnswer = function ($index) {
         if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
           return true;
         }
         return false;
       };
 
-      $scope.showFirst = function (card) { //eslint-disable-line
+      $scope.showFirst = function (card) {
         return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
       };
 
-      $scope.showSecond = function (card) { //eslint-disable-line
+      $scope.showSecond = function (card) {
         return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
       };
 
-      $scope.isCzar = function () { //eslint-disable-line
+      $scope.isCzar = function () {
         return game.czar === game.playerIndex;
       };
 
-      $scope.isPlayer = function ($index) { //eslint-disable-line
+      $scope.isPlayer = function ($index) {
         return $index === game.playerIndex;
       };
 
-      $scope.isCustomGame = function () { //eslint-disable-line
+      $scope.isCustomGame = function () {
         return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
       };
 
-      $scope.isPremium = function ($index) { //eslint-disable-line
+      $scope.isPremium = function ($index) {
         return game.players[$index].premium;
       };
 
-      $scope.currentCzar = function ($index) { //eslint-disable-line
+      $scope.currentCzar = function ($index) {
         return $index === game.czar;
       };
 
-      $scope.winningColor = function ($index) { //eslint-disable-line
+      $scope.winningColor = function ($index) {
         if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
           return $scope.colors[game.players[game.winningCardPlayer].color];
         }
         return '#f9f9f9';
       };
 
-      $scope.pickWinning = function (winningSet) { //eslint-disable-line
+      $scope.pickWinning = function (winningSet) {
         if ($scope.isCzar()) {
           game.pickWinning(winningSet.card[0]);
           $scope.winningCardPicked = true;
         }
       };
 
-      $scope.winnerPicked = function () { //eslint-disable-line
+      $scope.winnerPicked = function () {
         return game.winningCard !== -1;
       };
 
-      $scope.startGame = function () { //eslint-disable-line
+      $scope.startGame = function () {
         if ($scope.isCustomGame()) {
           $http.post('/api/games/'+$scope.game.gameID+'/start')
-            .then(function () { //eslint-disable-line
+            .then(function () {
               $scope.showTour = false;
               return game.startGame();
             });
@@ -217,30 +216,30 @@ angular.module('mean.system') //eslint-disable-line
           game.startGame();
         }
       };
-      $scope.abandonGame = function () { //eslint-disable-line
+      $scope.abandonGame = function () {
           game.leaveGame();
           $location.path('/');
       };
       // resume game after czar pick card
-      $scope.resumeGame = function () { //eslint-disable-line
+      $scope.resumeGame = function () {
         if ($scope.isCzar()) {
           game.beginGame();
         }
       };
 
       // czar shuffle cards and selct card
-      $scope.czarSelectBlackCard = function () { //eslint-disable-line
+      $scope.czarSelectBlackCard = function () {
         if ($scope.isCzar() && game.state === 'czar pick black card') {
-          document.getElementById('myCard').classList.toggle('flip-container'); //eslint-disable-line
-          $timeout(function () { //eslint-disable-line
-            document.getElementById('myCard').classList.toggle('flip-container'); //eslint-disable-line
+          document.getElementById('myCard').classList.toggle('flip-container');
+          $timeout(function () {
+            document.getElementById('myCard').classList.toggle('flip-container');
             $scope.resumeGame();
           }, 2000);
         }
       };
       // Catches changes to round to update when no players pick card
       // (because game.state remains the same)
-      $scope.$watch('game.round', function () { //eslint-disable-line
+      $scope.$watch('game.round', function () {
         $scope.hasPickedCards = false;
         $scope.showTable = false;
         $scope.winningCardPicked = false;
@@ -252,25 +251,25 @@ angular.module('mean.system') //eslint-disable-line
       });
 
       // In case player doesn't pick a card in time, show the table
-      $scope.$watch('game.state', function () { //eslint-disable-line
+      $scope.$watch('game.state', function () {
         if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
           $scope.showTable = true;
         }
-        var gamePlayers = []; //eslint-disable-line
-        $scope.game.players.forEach( function (player) { //eslint-disable-line
+        var gamePlayers = [];
+        $scope.game.players.forEach( function (player) {
           gamePlayers.push({
             username: player.username,
             points: player.points
           });
         });
         if (game.state === 'game ended') {
-          var saveGame = { //eslint-disable-line
+          var saveGame = {
             gameId: $scope.game.gameID,
             gameWinner: $scope.game.players[$scope.game.gameWinner].username,
             players: gamePlayers
           };
           $http.post('/api/game/save', saveGame)
-            .then(function (res) { console.log(res) }); //eslint-disable-line
+            .then(function (res) { console.log(res) });
         }
         if(!$scope.isCzar() && game.state === 'czar pick black card') {
           $scope.waitingForCzar = 'wait, the czar is picking a card';
@@ -279,7 +278,7 @@ angular.module('mean.system') //eslint-disable-line
         }
       });
 
-      $scope.$watch('game.gameID', function () { //eslint-disable-line
+      $scope.$watch('game.gameID', function () {
         if (game.gameID) {
           initChatService($scope.game.gameID);
         }
@@ -293,10 +292,10 @@ angular.module('mean.system') //eslint-disable-line
             // where the link is meant to be shared.
             $location.search({ game: game.gameID });
             if (!$scope.modalShown) {
-              setTimeout(function (){ //eslint-disable-line
-                var link = document.URL; //eslint-disable-line
-                var txt = 'Give the following link to your friends so they can join your game: '; //eslint-disable-line
-                $('#lobby-how-to-play').css({'text-align': 'center', 'font-size':'22px', 'font-weight':'bold', 'background': 'white', 'color': 'black'}).text(txt); //eslint-disable-line 
+              setTimeout(function (){
+                var link = document.URL;
+                var txt = 'Give the following link to your friends so they can join your game: ';
+                $('#lobby-how-to-play').css({'text-align': 'center', 'font-size':'22px', 'font-weight':'bold', 'background': 'white', 'color': 'black'}).text(txt); 
                 $('#oh-el').css({'text-align': 'center', 'font-size': '22px', 'background': 'white', 'color': 'black'}).text(link);
               }, 200);
               $scope.modalShown = true;
@@ -304,7 +303,6 @@ angular.module('mean.system') //eslint-disable-line
           }
         }
       });
-
       if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
         console.log('joining custom game');
         game.joinGame('joinGame', $location.search().game);

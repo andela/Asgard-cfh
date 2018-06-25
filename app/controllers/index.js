@@ -1,13 +1,13 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'), //eslint-disable-line
-    async = require('async'), //eslint-disable-line
-    _ = require('underscore'); //eslint-disable-line
+const mongoose = require('mongoose'),
+  async = require('async'),
+  _ = require('underscore');
 
 
 // Redirect users to /#!/app (forcing Angular to reload the page)
-exports.play = function(req, res) { //eslint-disable-line
+exports.play = (req, res) => {
   if (Object.keys(req.query)[0] === 'custom') {
     res.redirect('/#!/app?custom');
   } else {
@@ -15,8 +15,8 @@ exports.play = function(req, res) { //eslint-disable-line
   }
 };
 
-exports.render = function(req, res) { //eslint-disable-line
+exports.render = (req, res) => {
   res.render('index', {
-    user: req.user ? JSON.stringify(req.user) : 'null'
+    user: req.user ? JSON.stringify(req.user) : null
   });
 };

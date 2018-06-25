@@ -1,29 +1,29 @@
-angular.module('mean.system') //eslint-disable-line
-  .factory('socket', ['$rootScope', function ($rootScope) { //eslint-disable-line
-    var socket = io.connect(); //eslint-disable-line
+angular.module('mean.system')
+  .factory('socket', ['$rootScope', function ($rootScope) {
+    var socket = io.connect();
     return {
-      on: function(eventName, callback) { //eslint-disable-line
-      socket.on(eventName, function() { //eslint-disable-line
-        var args = arguments; //eslint-disable-line
-        $rootScope.safeApply(function() { //eslint-disable-line
+      on: function(eventName, callback) {
+      socket.on(eventName, function() {
+        var args = arguments;
+        $rootScope.safeApply(function() {
             callback.apply(socket, args);
           });
         });
       },
-      emit: function(eventName, data, callback) { //eslint-disable-line
-        socket.emit(eventName, data, function () { //eslint-disable-line
-          var args = arguments; //eslint-disable-line
+      emit: function(eventName, data, callback) {
+        socket.emit(eventName, data, function () {
+          var args = arguments;
         });
-        $rootScope.safeApply(function () { //eslint-disable-line
+        $rootScope.safeApply(function () {
           if (callback) {
-            callback.apply(socket, args); //eslint-disable-line
+            callback.apply(socket, args);
           }
         });
       },
-      removeAllListeners: function(eventName, callback) { //eslint-disable-line
-        socket.removeAllListeners(eventName, function () { //eslint-disable-line
-          var args = arguments; //eslint-disable-line
-          $rootScope.safeApply(function () { //eslint-disable-line
+      removeAllListeners: function(eventName, callback) {
+        socket.removeAllListeners(eventName, function () {
+          var args = arguments;
+          $rootScope.safeApply(function () {
             if (callback) {
               callback.apply(socket, args);
             }
