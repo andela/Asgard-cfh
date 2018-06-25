@@ -133,6 +133,7 @@ describe('Game', () => {
           return done(err);
         }
         (Array.isArray(res.body)).should.be.eql(true);
+        (res.body.length).should.not.be.eql(0);
         done();
       });
   });
@@ -146,6 +147,7 @@ describe('Game', () => {
           return done(err);
         }
         (Array.isArray(res.body)).should.be.eql(true);
+        (res.body.length).should.not.be.eql(0);
         done();
       });
   });
@@ -159,6 +161,7 @@ describe('Game', () => {
           return done(err);
         }
         (Array.isArray(res.body)).should.be.eql(true);
+        (res.body.length).should.not.be.eql(0);
         done();
       });
   });
