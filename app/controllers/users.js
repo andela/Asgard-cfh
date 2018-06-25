@@ -414,7 +414,7 @@ exports.invite = (req, res) => {
   });
 };
 
-  /**
+/**
    * @description - Generate Donations info for users
    *
    * @param  {object} req - request
@@ -459,7 +459,7 @@ exports.searchUser = (req, res) => {
     });
 };
 
-  /**
+/**
    * @description - Generate Donations info for users
    *
    * @param  {object} req - request
@@ -468,7 +468,7 @@ exports.searchUser = (req, res) => {
    *
    * @return {Object} - Success message
    *
-   * ROUTE: POST: /api/invite-friend
+   * ROUTE: POST: /invite-friend
    */
 exports.friendInvite = ((req, res) => {
   const { email, name } = req.body;
@@ -479,26 +479,24 @@ exports.friendInvite = ((req, res) => {
     { email: senderEmail },
     { $push: { outgoingInvitation: { email, name } } }
   ).then(() => {
-    console.log('successfull sent to outgoing');
-  }).catch((error) => {
-    console.log(error);
-  });
+  }).catch(() => res.status(400).json({
+      message: 'could not send request'
+    }));
 
   User.findOneAndUpdate(
     { email },
     { $push: { incomingInvitation: { senderEmail, senderName } } }
   ).then(() => {
-    console.log('successfull sent to incoming. ');
-  }).catch((error) => {
-    console.log(error);
-  });
+  }).catch((error) => res.status(400).json({
+      message: 'could not send request'
+    }));
 
   return res.status(200).json({
     message: 'Friend Invite sent successfully'
   });
 });
 
-  /**
+/**
    * @description - Generate Donations info for users
    *
    * @param  {object} req - request
@@ -507,7 +505,7 @@ exports.friendInvite = ((req, res) => {
    *
    * @return {Object} - Success message
    *
-   * ROUTE: POST: /api/accept-friend-invite
+   * ROUTE: POST: /accept-friend-invite
    */
 exports.acceptFriend = ((req, res) => {
   const { acceptEmail, acceptName } = req.body;
@@ -528,7 +526,26 @@ exports.acceptFriend = ((req, res) => {
     message: 'could not send friend invite'
   }));
 
-  /**
+  // remove from the ooutgoing array too in the other users array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email: acceptEmail },
+    {
+      $pull: { outgoingInvitation: { email, name } },
+      $push: { friends: { email, name } }
+    },
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  return res.status(200).json({
+    message: `${acceptEmail} has been added to your friends list. `
+  });
+});
+
+
+/**
    * @description - Generate Donations info for users
    *
    * @param  {object} req - request
@@ -537,25 +554,25 @@ exports.acceptFriend = ((req, res) => {
    *
    * @return {Object} - Success message
    *
-   * ROUTE: POST: /api/reject-friend-invite
+   * ROUTE: POST: /accept-friend-invite
    */
-  exports.rejectFriend = ((req, res) => {
-    const { rejectEmail, rejectName } = req.body;
-    const { email, name } = req;
-  
-    // check if user email exists in the incoming array.
-    // remove user from the incoming array
-    // add user to the friends array from both sides.
-    User.findOneAndUpdate(
-      { email },
-      {
-        $pull: { incomingInvitation: { senderEmail: rejectEmail, senderName: rejectName } },
-      },
-  
-    ).then(() => {
-    }).catch(() => res.status(400).json({
-      message: 'could not send friend invite'
-    }));
+exports.rejectFriend = ((req, res) => {
+  const { rejectEmail, rejectName } = req.body;
+  const { email, name } = req;
+
+  // check if user email exists in the incoming array.
+  // remove user from the incoming array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email },
+    {
+      $pull: { incomingInvitation: { senderEmail: rejectEmail, senderName: rejectName } },
+    },
+
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
 
   // remove from the ooutgoing array too in the other users array
   // add user to the friends array from both sides.
@@ -570,9 +587,10 @@ exports.acceptFriend = ((req, res) => {
   }));
 
   return res.status(200).json({
-    message: `${rejectName}'s friend request has been declined. `
+    message: `${rejectEmail}'s friend request has been rejected. `
   });
 });
+
 
 /**
    * @description - Generate Donations info for users
@@ -598,6 +616,17 @@ exports.getDonations = (req, res) => {
     });
 };
 
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/profile/:id
+   */
 exports.profile = (req, res) => {
   const { id } = req.params;
   const details = {};
@@ -640,7 +669,6 @@ exports.profile = (req, res) => {
             gameWinner: game.gameWinner === user.name ? 'WON' : 'LOST'
           }));
           details.userGame = gamesLog.filter(game => game.playerNames.includes(user.name));
-          console.log(details);
           return res.status(200).json(details);
         });
       });
