@@ -24,11 +24,12 @@ angular.module('mean.system')
       },
     (err) => {
         if (err.status === 404){
-          console.log('No Games have been played')
+          $scope.gameLogError = "No Games Played";
         } else if (err.status === 401) {
-          console.log('You need to be logged in to view this page Redirecting to home page')
+          $scope.gameLogError = "You need to be logged in to view this page"
+          $location.path('/')
         } else {
-          console.log(err);
+          return err;
         }
     });
     };
