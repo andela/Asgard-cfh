@@ -123,4 +123,7 @@ module.exports = (app, passport) => {
 
   // accept friends invitation
   app.post('/api/accept-friend-invite', middleWare.isLoggedIn, users.acceptFriend);
+
+  // reject friends invitation
+  app.post('/api/reject-friend-invite', middleWare.isLoggedIn, users.rejectFriend);
 };

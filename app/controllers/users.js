@@ -414,6 +414,17 @@ exports.invite = (req, res) => {
   });
 };
 
+  /**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/search
+   */
 exports.searchUser = (req, res) => {
   const { term } = req.body;
   const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -448,6 +459,17 @@ exports.searchUser = (req, res) => {
     });
 };
 
+  /**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/invite-friend
+   */
 exports.friendInvite = ((req, res) => {
   const { email, name } = req.body;
   const senderName = req.name; // the name coming from the token
@@ -476,6 +498,17 @@ exports.friendInvite = ((req, res) => {
   });
 });
 
+  /**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/accept-friend-invite
+   */
 exports.acceptFriend = ((req, res) => {
   const { acceptEmail, acceptName } = req.body;
   const { email, name } = req;
@@ -495,13 +528,41 @@ exports.acceptFriend = ((req, res) => {
     message: 'could not send friend invite'
   }));
 
+  /**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/reject-friend-invite
+   */
+  exports.rejectFriend = ((req, res) => {
+    const { rejectEmail, rejectName } = req.body;
+    const { email, name } = req;
+  
+    // check if user email exists in the incoming array.
+    // remove user from the incoming array
+    // add user to the friends array from both sides.
+    User.findOneAndUpdate(
+      { email },
+      {
+        $pull: { incomingInvitation: { senderEmail: rejectEmail, senderName: rejectName } },
+      },
+  
+    ).then(() => {
+    }).catch(() => res.status(400).json({
+      message: 'could not send friend invite'
+    }));
+
   // remove from the ooutgoing array too in the other users array
   // add user to the friends array from both sides.
   User.findOneAndUpdate(
-    { email: acceptEmail },
+    { email: rejectEmail },
     {
       $pull: { outgoingInvitation: { email, name } },
-      $push: { friends: { email, name } }
     },
   ).then(() => {
   }).catch(() => res.status(400).json({
@@ -509,7 +570,7 @@ exports.acceptFriend = ((req, res) => {
   }));
 
   return res.status(200).json({
-    message: `${acceptEmail} has been added to your friends list. `
+    message: `${rejectName}'s friend request has been declined. `
   });
 });
 
