@@ -263,6 +263,15 @@
    .center-link {
      text-align: center;
    }
+   .nav-contents {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+  }
+  .align-button {
+    margin: 5% auto;
+  }
    .game-text {
      padding-top: 15%;
      color: #fff;
@@ -408,9 +417,9 @@
  }
 
  .form-gradient input[type=text]:focus:not([readonly]) {
-   border-bottom: 1px solid #fd9267;
-   -webkit-box-shadow: 0 1px 0 0 #fd9267;
-   box-shadow: 0 1px 0 0 #fd9267;
+   border-bottom: 1px solid #fd9267 !important;
+   -webkit-box-shadow: 0 1px 0 0 #fd9267 !important;
+   box-shadow: 0 1px 0 0 #fd9267 !important;
  }
 
  .form-gradient input[type=text]:focus:not([readonly]) label {
@@ -418,9 +427,9 @@
  }
 
  .form-gradient input[type=password]:focus:not([readonly]) {
-   border-bottom: 1px solid #fd9267;
-   -webkit-box-shadow: 0 1px 0 0 #fd9267;
-   box-shadow: 0 1px 0 0 #fd9267;
+   border-bottom: 1px solid #fd9267 !important;
+   -webkit-box-shadow: 0 1px 0 0 #fd9267 !important;
+   box-shadow: 0 1px 0 0 #fd9267 !important;
  }
 
  .form-gradient input[type=password]:focus:not([readonly]) label {
@@ -428,9 +437,9 @@
  }
 
  .peach-gradient {
-   background: -webkit-linear-gradient(50deg, #ffd86f, #fc6262) !important;
-   background: -o-linear-gradient(50deg, #ffd86f, #fc6262) !important;
-   background: linear-gradient(40deg, #ffd86f, #fc6262) !important;
+   background: -webkit-linear-gradient(50deg,#f98532d1,#f98532d1) !important;
+   background: -o-linear-gradient(15deg,#f98532d1,#f98532d1) !important;
+   background: linear-gradient(50deg,#f98532d1,#f98532d1) !important;
  }
 
  .back-home {
@@ -566,6 +575,7 @@
    margin: 0 1%;
    border-radius: 7px;
    border: 2px solid black;
+   position: relative;
  }
 
  .czar-image {
@@ -904,7 +914,10 @@
 
  @media (max-width: 520px) {
    .oldcard.smallest {
-     font-size: 10px;
+      font-size: 20px;
+      overflow: scroll;
+      width: 40%;
+      margin-left: 5%; 
    }
  }
 
@@ -1033,7 +1046,10 @@
    border-bottom: 2px solid orange;
    border-radius: 4px;
    margin-right: 11%;
-   outline: none !important
+   outline: none !important;
+   cursor: pointer;
+   background: -webkit-linear-gradient(50deg,#f98532d1,#f98532d1) !important;
+   color: #fff
  }
 
  #profile-pic::after {
