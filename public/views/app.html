@@ -20,39 +20,39 @@
         <a class="auth nav-link" ng-show="isCustomGame() && game.state === 'awaiting players'" data-step="11" data-intro="You can invite your friends to join your game. Just search for a friend and click the invite button next to his name" data-toggle="modal" data-target="#myModal">INVITE FRIENDS </a>
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-body">
-                <div ng-controller="searchController" class="text-primary">
-                  <h4>
-                    <label for="friendEmail" class="text-danger"> Input friend's email and send an invite! </label>
-                  </h4>
-                  <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here" />
-                  <table class="table" ng-show="foundUsers && inputValue">
-                    <thead>
-                      <tr>
-                        <th style="text-align: center">Name</th>
-                        <th style="text-align: center">Email</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="user in foundUsers">
-                        <td> {{user.name}}</td>
-                        <td>{{user.email}}</td>
-                        <td>
-                          <button type="button" ng-click="sendFriendInvites(user)"><i class="fa fa-user-plus"></i> Add Friend </button>
-                        </td>
-                        <td>
-                          <button type="button" ng-click="sendInvites(user)"> Invite </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  </br>
-                  <div class="error" ng-show="userNotFound && inputValue">
-                    <h5 style="color: red"> No such user found </h5>
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div ng-controller="searchController" class="text-primary">
+                    <h4>
+                      <label for="friendEmail" class="text-danger" style="color: #fd9267"> Input friend's email and send an invite! </label>
+                    </h4>
+                    <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here" />
+                    <table class="table text-dark" ng-show="foundUsers && inputValue">
+                      <thead>
+                        <tr>
+                          <th style="">Name</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="user in foundUsers">
+                          <td> {{user.name}}</td>
+                          <td>
+                            <button type="button" ng-click="sendInvites(user)"> Invite </button>
+                          </td>
+                          <td>
+                            <button type=“button” ng-click=“sendFriendInvites(user)“> <i class=“fa fa-user-plus”></i> Add Friend </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </br>
+                    <div class="error" ng-show="userNotFound && inputValue">
+                      <h5 style="color: #fd9267"> No such user found </h5>
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer">
