@@ -1,14 +1,14 @@
-const validation = require('../config/middlewares/validations');
-const middleWare = require('../config/middlewares/isLoggedIn');
+var validation = require('../config/middlewares/validations'); //eslint-disable-line
+var middleWare = require('../config/middlewares/isLoggedIn'); //eslint-disable-line
 
-const users = require('../app/controllers/users');
-const answers = require('../app/controllers/answers');
-const questions = require('../app/controllers/questions');
-const games = require('../app/controllers/game');
-const avatars = require('../app/controllers/avatars');
-const index = require('../app/controllers/index');
+var users = require('../app/controllers/users'); //eslint-disable-line
+var answers = require('../app/controllers/answers'); //eslint-disable-line
+var questions = require('../app/controllers/questions'); //eslint-disable-line
+var games = require('../app/controllers/game'); //eslint-disable-line
+var avatars = require('../app/controllers/avatars'); //eslint-disable-line
+var index = require('../app/controllers/index'); //eslint-disable-line
 
-module.exports = (app, passport) => {
+module.exports = function (app, passport) { //eslint-disable-line
   // User Routes
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);

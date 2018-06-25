@@ -1,0 +1,34 @@
+<div ng-controller="GameController" id="chat-container" class="chat-panel-slide-down" >
+    <button id="chat-up-down" ng-click="togglePanel()">
+            <span class = "notify-info"> {{ newMessages >0 ? newMessages : null }}  {{ info }}</span>
+        CHAT
+         <i id="up-down-icon" class="fas fa-sort-up"></i> </button>
+    <div id="msg-container">
+        <ul id="msg-list">
+            <li class="chat-item" ng-repeat="chat in chats">
+                <div class="chat-item-left">
+                    <img class="chat-avatar" ng-src="{{chat.avatar}}" />
+                </div>
+                <div class="chat-item-right">
+                    <div class="chat-item-right-top">
+                        <span class="chat-name"><b>{{chat.userName}}</b></span>
+                        <span class="chat-time">{{chat.date | date: 'hh:mm'}}</span>
+                    </div>
+                    <div class="chat-item-right-bottom">
+                        <div>{{chat.message}}</div>
+                    </div>
+                </div>  
+            </li>
+        </ul>
+    </div>
+    <div id="input-container">
+        <form name="messageForm" id="chat-form">
+                <span class= "chat-control">
+                    <input type="text" id="chat-input" ng-model="message" class="form-control" placeholder="Type a message"/>
+                    <button type="submit" id="chat-submit-btn" ng-click="sendMessage(message)" class="">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </button>
+                </span>
+        </form>
+    </div>
+</div>
