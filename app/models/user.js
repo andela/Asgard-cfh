@@ -26,7 +26,7 @@ const UserSchema = new Schema({
   google: {},
   active: { type: Boolean, required: true, default: false },
   outgoingInvitation: [],
-  incominginvitation: [],
+  incomingInvitation: [],
   friends: []
 });
 

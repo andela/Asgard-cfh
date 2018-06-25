@@ -452,16 +452,62 @@ exports.friendInvite = ((req, res) => {
   const senderEmail = req.email;
 
   User.findOneAndUpdate(
-    senderEmail,
+    { email: senderEmail },
     { $push: { outgoingInvitation: { email, name } } }
   ).then(() => {
-    console.log('successfull');
+    console.log('successfull sent to outgoing');
   }).catch((error) => {
     console.log(error);
+  });
+
+  User.findOneAndUpdate(
+    { email },
+    { $push: { incomingInvitation: { senderEmail, senderName } } }
+  ).then(() => {
+    console.log('successfull sent to incoming. ');
+  }).catch((error) => {
+    console.log(error);
+  });
+
+  return res.status(200).json({
+    message: 'Friend Invite sent successfully'
   });
 });
 
 exports.acceptFriend = ((req, res) => {
+  const { acceptEmail, acceptName } = req.body;
+  const { email, name } = req;
 
+  // check if user email exists in the incoming array.
+  // remove user from the incoming array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email },
+    {
+      $pull: { incomingInvitation: { senderEmail: acceptEmail, senderName: acceptName } },
+      $push: { friends: { acceptEmail, acceptName } }
+    },
+
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  // remove from the ooutgoing array too in the other users array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email: acceptEmail },
+    {
+      $pull: { outgoingInvitation: { email, name } },
+      $push: { friends: { email, name } }
+    },
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  return res.status(200).json({
+    message: `${acceptEmail} has been added to your friends list. `
+  });
 });
 
