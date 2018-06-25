@@ -22,6 +22,11 @@ angular.module('mean.system').controller('IndexController', [
     $scope.loginError = null;
     $scope.dontShow = false;
     $scope.avatars = [];
+    let userId = null;
+    if (window.user) {
+      userId = window.user._id;
+    }
+    $scope.user = {};
 
     AvatarService.getAvatars()
       .then((data) => {
@@ -105,5 +110,8 @@ angular.module('mean.system').controller('IndexController', [
           localStorage.removeItem('token');
           $location.path('/#!');
         });
+    };
+    $scope.openDropdown = () => {
+      $('.dropdown-toggle').dropdown();
     };
   }]);
