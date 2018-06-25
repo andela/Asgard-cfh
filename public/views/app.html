@@ -55,111 +55,114 @@
                     <h5 style="color: red"> No such user found </h5>
                   </div>
                 </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  
+            </div>
+          </div>
+          <ul class="navbar-nav">
+            <div class="auth" ng-show="showOptions">
+            <li class="nav-item">
+              <div class="nav-link auth">
+                  <a class="nav-link" href="#!/signin">SIGN IN</a>
               </div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link auth">
+                  <a class="nav-link" href="#!/signup">SIGN UP</a>
+              </div>
+            </li>
             </div>
-
-          </div>
-        </div>
-        <ul class="navbar-nav">
-          <div class="auth" ng-show="showOptions">
+            <div class="auth" ng-hide="showOptions">
+            <li class="nav-item">
+              <div ng-controller="IndexController" ng-click="logout()" class="nav-link auth">
+                SIGN OUT
+              </div>
+            </li>
+            </div>
           <li class="nav-item">
-            <div class="nav-link auth">
-                <a class="nav-link" href="#!/signin">SIGN IN</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="nav-link auth">
-                <a class="nav-link" href="#!/signup">SIGN UP</a>
-            </div>
-          </li>
+              <div class="nav-link btn btn-danger abandon-game" data-step="12" data-intro="Click to leave the game and go back to the Home Page. You wont be able to join the game again if it has already started." ng-click="abandonGame()">
+                Abandon Game
+              </div>
+            </li>
+          </ul>
+          <div class="profile-icon">
+            <i id="user" class="fa fa-user"></i> 
           </div>
-          <div class="auth" ng-hide="showOptions">
-          <li class="nav-item">
-            <div ng-controller="IndexController" ng-click="logout()" class="nav-link auth">
-              SIGN OUT
-            </div>
-          </li>
+        </form>
+      </div>
+    </nav>  
+    <!-- Tour Modal -->
+    <div id="gameModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Play Game</h5>
           </div>
-        <li class="nav-item">
-            <div class="nav-link btn btn-danger abandon-game" data-step="12" data-intro="Click to leave the game and go back to the Home Page. You wont be able to join the game again if it has already started." ng-click="abandonGame()">
-              Abandon Game
-            </div>
-          </li>
-        </ul>
-        <div class="profile-icon">
-          <i id="user" class="fa fa-user"></i> 
-        </div>
-      </form>
-    </div>
-  </nav>  
-  <!-- Tour Modal -->
-  <div id="gameModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Play Game</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button> -->
-        </div>
-        <div class="modal-body">
-          <p style="font-weight: bold">Would you like to Take a Tour on How To Play Before the Game begins?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" ng-click="closeModal()">Close</button>
-          <a href="javascript:void(0);" class="btn btn-warning" data-dismiss="modal" onclick="javascript:introJs().start();">Take Tour</a>
+          <div class="modal-body">
+            <p style="font-weight: bold">Would you like to Take a Tour on How To Play Before the Game begins?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" ng-click="closeModal()">Close</button>
+            <a href="javascript:void(0);" class="btn btn-warning" data-dismiss="modal" onclick="javascript:introJs().start();">Take Tour</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container gameplay-container">
-    <div class="upper-gameplay-container">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-9">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-3">
-                  <div class="component-wrapper">
-                    <div class="timer-container" data-step="5" data-intro="This is a countdown timer that shows how much time is remaining to select answer and start next round. Stay Alert🚨">
-                      <timer></timer>
+    <div class="container gameplay-container">
+      <div class="upper-gameplay-container">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-9">
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="component-wrapper">
+                      <div class="timer-container" data-step="5" data-intro="This is a countdown timer that shows how much time is remaining to select answer and start next round. Stay Alert🚨">
+                        <timer></timer>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="component-wrapper">
-                    <div class="question-container-outer" data-step="3" data-intro="You can see how many players have joined the game. A minimum of 3 players and a maximum of 12 players can play the gamne for each round.">
-                      <question data-step="4" data-intro="When the game begins the questions would come up here 👍"></question>
+                  <div class="col-sm-6">
+                    <div class="component-wrapper">
+                      <div class="question-container-outer" data-step="3" data-intro="You can see how many players have joined the game. A minimum of 3 players and a maximum of 12 players can play the gamne for each round.">
+                        <question data-step="4" data-intro="When the game begins the questions would come up here 👍"></question>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class="czar-card" data-step="6" data-intro="This is a card you click when you are the czar to draw the next question 🃏">
-                    <img class="czar-image" src="../img/landing/czar.png"  alt="czar-pick">
+                  <div class="col-sm-3">
+                    <div class="czar-card" id="myCard" ng-click="czarSelectBlackCard()" data-step="6" data-intro="This is a card you click when you are the czar to draw the next question 🃏">
+                      <div class="flipper">
+                          <div class="front">
+                              <img class="czar-image" src="../img/landing/czar.png"  alt="czar-pick">
+                          </div>
+                          <div class="back">
+                              <img class="czar-image" src="../img/landing/joker-card.png"  alt="czar-pick">
+                          </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="player-answer" data-step="2" data-intro="Here are the instructions to play the game so you don't look like a dummy 😱">
+                <answers data-step="5" data-intro="When the game begins answers to questions would come up here 👍"></answers>
+              </div>
             </div>
-            <div class="player-answer" data-step="2" data-intro="Here are the instructions to play the game so you don't look like a dummy 😱">
-              <answers data-step="5" data-intro="When the game begins answers to questions would come up here 👍"></answers>
-            </div>
-          </div>
-          <div class="col-sm-3 player-outer" data-step="10" data-intro="Here You can see the list of players that have joined the game">
-            <div class="social-bar-container">
-              <player></player>
+            <div class="col-sm-3 player-outer" data-step="10" data-intro="Here You can see the list of players that have joined the game">
+              <div class="social-bar-container">
+                <player></player>
+              </div>
             </div>
           </div>
         </div>
+  
       </div>
-
     </div>
   </div>
-</div>
-
-<!-- <span id="tweet-container">
-  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-</span> -->
+  
+  <!-- <span id="tweet-container">
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </span> -->
