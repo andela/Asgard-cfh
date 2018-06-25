@@ -312,7 +312,7 @@ exports.avatars = (req, res) => {
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = (req, res) => {
+exports.addDonations = (req, res) => {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
@@ -330,6 +330,46 @@ exports.addDonation = (req, res) => {
           if (!duplicate) {
             user.donations.push(req.body);
             user.premium = 1;
+            user.save();
+          }
+        });
+    }
+  }
+  res.send();
+};
+
+exports.addDonation = (req, res) => {
+  if (req.body && req.user && req.user._id) {
+    // Verify that the object contains crowdrise data
+    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+      User.findOne({
+        _id: req.user._id
+      })
+        .exec((err, user) => {
+        // Confirm that this object hasn't already been entered
+          let duplicate = false;
+          for (let i = 0; i < user.donations.length; i++) {
+            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+              duplicate = true;
+            }
+          }
+          // if (!duplicate) {
+          //   user.donations.push(req.body);
+          //   user.premium = 1;
+          //   user.save();
+          // }
+          if (!duplicate) {
+            let donations = 0;
+            user.donations.push(req.body);
+            user.donations.map((donation) => {
+              donations += donation.amount;
+            });
+
+            if (donations < 50) {
+              user.premium = 1;
+            } else {
+              user.premium = 2;
+            }
             user.save();
           }
         });

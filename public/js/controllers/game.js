@@ -97,8 +97,16 @@ angular.module('mean.system')
     };
 
     $scope.isPremium = function($index) {
-      return game.players[$index].premium;
+      return $scope.premium = game.players[$index].premium;
     };
+
+    $scope.addDonation = function() {
+      //  return console.log(window.user);
+             return $scope.premium = game.players[$index].premium;
+    };
+
+
+
 
     $scope.currentCzar = function($index) {
       return $index === game.czar;
