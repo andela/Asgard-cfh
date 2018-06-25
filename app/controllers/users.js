@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 const mongoose = require('mongoose'),
+  Game = mongoose.model('Game'),
   User = mongoose.model('User');
 const avatars = require('./avatars').all();
 const jwt = require('jsonwebtoken');
@@ -469,4 +470,49 @@ exports.getDonations = (req, res) => {
       donationsInfo = userHelpers.getDonations(users);
       return res.status(200).json(donationsInfo);
     });
+};
+
+exports.profile = (req, res) => {
+  const { id } = req.params;
+  const details = {};
+  User.findById({ _id: id }).then((user) => {
+    if (!user) {
+      return res.status(404).json({
+        message: 'User Not Found',
+      });
+    }
+    Game.find({ gameWinner: user.name })
+      .then((gamesWon) => {
+        details.id = user._id;
+        details.email = user.email;
+        details.name = user.name;
+        details.username = user.username;
+        details.image = user.profileImage;
+        details.gamesWon = gamesWon.length;
+        Game.find().exec((err, games) => {
+          if (err) {
+            return res.status(400).json({
+              message: 'Error Occured'
+            });
+          }
+          let roundsWon;
+          const gamesLog = games.map(game => ({
+            gameId: game.gameId,
+            playedAt: game.played || game.playedAt,
+            playerNames: game.players.map(player => player.username),
+            players: game.players,
+            playerPoints: game.players.map((player) => {
+              if (player.username === user.name) {
+                roundsWon = player.points;
+              }
+              return player.points;
+            }),
+            roundsWon,
+            gameWinner: game.gameWinner === user.name ? 'WON' : 'LOST'
+          }));
+          details.userGame = gamesLog.filter(game => game.playerNames.includes(user.name));
+          return res.status(200).json(details);
+        });
+      });
+  }).catch(() => res.status(500).json({ message: 'Server Error' }));
 };

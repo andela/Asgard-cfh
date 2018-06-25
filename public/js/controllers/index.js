@@ -22,12 +22,25 @@ angular.module('mean.system').controller('IndexController', [
     $scope.loginError = null;
     $scope.dontShow = false;
     $scope.avatars = [];
+    let userId = null;
+    if (window.user) {
+      userId = window.user._id;
+    }
+    $scope.user = {};
 
     AvatarService.getAvatars()
       .then((data) => {
         $scope.avatars = data;
       });
 
+    if (window.user) {
+      $window.onload = $http.get(`/api/profile/${userId}`)
+        .then((res) => {
+          $scope.user = res.data;
+        });
+    } else if ($location.path === '/profile') {
+      $location.path('/');
+    }
     $scope.image = '';
     $scope.image_preview = '';
     $scope.readImage = () => {
@@ -105,5 +118,8 @@ angular.module('mean.system').controller('IndexController', [
           localStorage.removeItem('token');
           $location.path('/#!');
         });
+    };
+    $scope.openDropdown = () => {
+      $('.dropdown-toggle').dropdown();
     };
   }]);

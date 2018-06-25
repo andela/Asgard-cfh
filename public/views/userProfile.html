@@ -1,0 +1,102 @@
+    <div ng-controller="IndexController">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse center-link" id="navbarNavDropdown">
+              <ul class="navbar-nav cfh-navbar">
+                <li class="nav-item">
+                  <a class="nav-link" target="_self" href="#!/#howToPlay">HOW TO PLAY
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" target="_self" href="#!/#charitySect">CHARITY</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" target="_self" ng-click="openDropdown()" id="navbarDropdown" data-toggle="dropdown">PLAY GAME</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/play">Play with strangers</a>
+                        <a class="dropdown-item" href="/play?custom">Play with friends</a>
+                    </div>
+                </li>             
+
+              </ul>
+              <a class="navbar-brand" href="#!/">
+                <img src="../img/landing/logo.png" width="100px" alt="logo" />
+              </a>
+              <ul class="navbar-nav">
+                <div class="auth" ng-show="showOptions">
+                <li class="nav-item">
+                  <a class="nav-link" href="#!/signup">SIGN UP</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#!/signin">SIGN IN</a>
+                </li>
+              </div>
+                <li class="nav-item">
+                    <a class="nav-link" target="_self" href="#!/#charitySect">DASHBOARD</a>
+                </li>
+                <li class="nav-item" ng-hide="showOptions">
+                  <a class="nav-link" ng-click="logout()">SIGN OUT</a>
+                </li>
+                <div class="profile-icon ml-5">
+                  <li class="nav-item"> 
+                     <a href="#!/profile"> <i id="user" class="nav-link fa fa-user"></i> </a> 
+                  </li>
+                </div>
+              </ul>
+            </div>
+        </nav>
+
+
+        <div class="jumbotron bg-grey">
+            <div class="text-center user-details">
+                <img ng-src = "{{ user.image ? user.image : 'img/profile.png' }}"  alt="">
+                <p class="lead mt-3">Name:  {{user.name}}</p>
+                <p class="lead">Email:  {{user.email}} </p>
+                <p class="lead">Game won: {{user.gamesWon}} </p>
+            </div>
+        </div>
+
+    <div class="container text-center game-log">
+        <h2 class=" my-4 ">Game Log</h2>
+        <div>
+            <table class="table">
+                <thead class="t">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Games Played</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Result</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <tr ng-repeat="game in user.userGame">
+                        <th scope="row">{{ $index + 1 }}</th>
+                        <td>{{ game.gameId }}</td>
+                        <td>{{ game.roundsWon }}</td>
+                        <td>{{ game.gameWinner}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <footer >
+        <div class="business-footer">
+            <div class="text-center">
+            <p class="footer">
+                Legal stuff: This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA).
+                <br/> Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license
+                of the Cards Against Humanity card game,
+                <br /> all proceeds from donations go directly to charity, as managed by crowdrise.
+            </p>
+            <span class="asgard"> created By: Team Asgard</span>
+            </div>
+        </div>
+    </footer>
+</div>
