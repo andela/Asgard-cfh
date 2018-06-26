@@ -39,12 +39,11 @@
                       <label for="email">Your email</label>
                   </div>
                   <div class="md-form pb-1 pb-md-3 signup-password">
-                      <input type="password" id="Form-pass3" class="form-control" placeholder="xxxxx84" ng-model="user.password" required novalidate />
+                      <input type="password" id="Form-pass3" class="form-control" ng-model="user.password" required novalidate />
                       <label for="Form-pass3">Your password</label>
                   </div>
-                  <div class="control-group">
-                    <div class="controls choose-image">
-                        <!-- <label for="profile-pic">Select file</label> -->
+                  <div class="control-group" style="cursor: pointer">
+                    <div class="controls choose-image" style="cursor: pointer">
                     <input ng-change="readImage()" id="profile-pic" type="file" ng-model="user.image" name="image" accept=".jpg, .png, .jpeg" />
 
                     </div>
