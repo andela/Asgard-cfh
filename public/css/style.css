@@ -490,14 +490,14 @@
  .authenticate-card {
    width: 100%;
    max-width: 28rem;
-   margin: 1% auto 0;
+   margin: 0 auto 0;
    box-shadow: 3px 4px 10px rgb(51, 30, 5);
  }
 
  .authenticate-signup-card {
    width: 100%;
    max-width: 28rem;
-   margin: 0% auto 0;
+   margin: 1% auto;
    box-shadow: 3px 4px 10px rgb(51, 30, 5);
  }
 
@@ -1150,3 +1150,23 @@ background-color: rgba(245, 155, 91, 0.281);
 margin-top: 5rem;
 margin-bottom: 10rem;
 }
+
+#success-message p {
+  padding: 20px;
+  text-align: center;
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+#success-message .envelope {
+  display: flex;
+  justify-content: center;
+  margin: 5% 0 0;
+  font-size: 3em;
+  color: #f47721;
+  line-height: 1.8;
+  -webkit-animation: bounce .3s infinite alternate;
+  -moz-animation: bounce .3s infinite alternate;
+  animation: bounce .3s infinite alternate;
+}
+
