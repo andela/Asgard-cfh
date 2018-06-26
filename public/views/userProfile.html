@@ -77,7 +77,7 @@
                     <tr ng-repeat="game in user.userGame">
                         <th scope="row">{{ $index + 1 }}</th>
                         <td>{{ game.gameId }}</td>
-                        <td ng-repeat="log in game.log">{{ log.points }}</td>
+                        <td>{{ game.roundsWon }}</td>
                         <td>{{ game.gameWinner}}</td>
                     </tr>
                 </tbody>

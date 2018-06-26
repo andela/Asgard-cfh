@@ -8,10 +8,10 @@ angular.module('mean.system').controller('IndexController', [
   'socket',
   'game',
   'AvatarService',
-  ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) => {
+  function ($scope, Global, $http, $window, $location, $q, socket, game, AvatarService) {
     $scope.global = Global;
 
-    $scope.playAsGuest = () => {
+    $scope.playAsGuest = function () {
       game.joinGame();
       $location.path('/app');
     };
@@ -29,7 +29,7 @@ angular.module('mean.system').controller('IndexController', [
     $scope.user = {};
 
     AvatarService.getAvatars()
-      .then((data) => {
+      .then(function (data) {
         $scope.avatars = data;
       });
 
@@ -41,6 +41,7 @@ angular.module('mean.system').controller('IndexController', [
     } else if ($location.path === '/profile') {
       $location.path('/');
     }
+
     $scope.image = '';
     $scope.image_preview = '';
     $scope.readImage = () => {
@@ -48,16 +49,16 @@ angular.module('mean.system').controller('IndexController', [
       if (file) {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
-        fileReader.onload = (event) => {
+        fileReader.onload = function (event) {
           $scope.image_preview = event.target.result;
           $scope.image = file;
         };
       }
     };
 
-    $scope.signUp = () => {
+    $scope.signUp = function () {
       if ($scope.image) {
-        const imageData = new FormData();
+        var imageData = new FormData();
         imageData.append('file', $scope.image);
         imageData.append('upload_preset', 'zyu1ajoa');
         imageData.append('api_key', '126852175969548');
@@ -100,7 +101,7 @@ angular.module('mean.system').controller('IndexController', [
       }
     };
 
-    $scope.login = () => {
+    $scope.login = function () {
       $http.post('/api/auth/login', $scope.user)
         .then((response) => {
           localStorage.setItem('token', response.data.token);
@@ -112,7 +113,7 @@ angular.module('mean.system').controller('IndexController', [
         });
     };
 
-    $scope.logout = () => {
+    $scope.logout = function () {
       $http.get('/signout')
         .then(() => {
           localStorage.removeItem('token');
