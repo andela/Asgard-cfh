@@ -1289,9 +1289,10 @@ u {
   width: 25%;
   }
  .user-details img{
-  margin-top: 50px;
+  margin-top: 10px;
   height: 200px;
-  width: 200px
+  width: 200px;
+  /* object-fit: cover; */
 }
 
 .bg-grey {
