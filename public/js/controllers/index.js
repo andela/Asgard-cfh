@@ -33,7 +33,7 @@ angular.module('mean.system').controller('IndexController', [
         $scope.avatars = data;
       });
 
-    if (window.user) {
+    if (localStorage.token) {
       $window.onload = $http.get(`/api/profile/${userId}`)
         .then((res) => {
           $scope.user = res.data;
