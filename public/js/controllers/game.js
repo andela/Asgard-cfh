@@ -193,13 +193,18 @@ angular.module('mean.system')
         return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
       };
 
-      $scope.isPremium = function ($index) {
-        return game.players[$index].premium;
-      };
+    $scope.isPremium = function($index) {
+      return $scope.premium = game.players[$index].premium;
+    };
 
-      $scope.currentCzar = function ($index) {
-        return $index === game.czar;
-      };
+    $scope.addDonation = function() {
+      //  return console.log(window.user);
+             return $scope.premium = game.players[$index].premium;
+    };
+
+    $scope.currentCzar = function($index) {
+      return $index === game.czar;
+    };
 
       $scope.winningColor = function ($index) {
         if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
