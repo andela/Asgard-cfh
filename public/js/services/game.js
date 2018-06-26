@@ -176,45 +176,45 @@ angular.module('mean.system')
       } else if (data.state === 'game dissolved' || data.state === 'game ended') {
         game.players[game.playerIndex].hand = [];
         game.time = 0;
-      }
-    });
+  
+    } 
+  });
 
-    socket.on('notification', function(data) {
-      addToNotificationQueue(data.notification);
-    });
+  socket.on('notification', function(data) {
+    addToNotificationQueue(data.notification);
+  });
 
-    game.joinGame = function(mode,room,createPrivate) {
-      mode = mode || 'joinGame';
-      room = room || '';
-      createPrivate = createPrivate || false;
-      var userID = !!window.user ? user._id : 'unauthenticated';
-      socket.emit(mode, { userID: userID, room: room, createPrivate: createPrivate });
-    };
+  game.joinGame = function(mode,room,createPrivate) {
+    mode = mode || 'joinGame';
+    room = room || '';
+    createPrivate = createPrivate || false;
+    var userID = !!window.user ? user._id : 'unauthenticated';
+    socket.emit(mode,{userID: userID, room: room, createPrivate: createPrivate});
+  };
 
-    game.startGame = function() {
-      socket.emit('startGame');
-    };
+  game.startGame = function(regionId) {
+    socket.emit('startGame', {regionId: regionId});
+  };
 
-    game.leaveGame = function() {
-      game.players = [];
-      game.time = 0;
-      socket.emit('leaveGame');
-    };
+  game.leaveGame = function() {
+    game.players = [];
+    game.time = 0;
+    socket.emit('leaveGame');
+  };
 
-    game.pickCards = function(cards) {
-      socket.emit('pickCards', { cards: cards });
-    };
+  game.pickCards = function(cards) {
+    socket.emit('pickCards',{cards: cards});
+  };
 
-    game.beginGame = function() {
-      socket.emit('czarPickCard');
-    };
+  game.beginGame = () => {
+    socket.emit('czarPickCard')
+  }
 
-    game.pickWinning = function(card) {
-      socket.emit('pickWinning', { card: card.id });
-    };
+  game.pickWinning = function(card) {
+    socket.emit('pickWinning',{card: card.id});
+  };
 
-    decrementTime();
+  decrementTime();
 
-    return game;
-  }]);
-
+  return game;
+}]);

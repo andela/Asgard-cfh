@@ -10,6 +10,9 @@ angular.module('mean.system')
       $scope.showTable = false;
       $scope.modalShown = false;
       $scope.game = game;
+      $scope.regionId = ($scope.selectedRegion === "Africa") ? "1" : "2";
+      $scope.selectedRegion = "Africa"
+      $scope.regions = [ "Africa", "Europe", "Asia", "Americas", "others" ];
       $scope.pickedCards = [];
       var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
@@ -123,6 +126,7 @@ angular.module('mean.system')
         }
         return {};
       };
+
       $scope.sendPickedCards = function() {
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
@@ -134,14 +138,25 @@ angular.module('mean.system')
         }
         return false;
       };
-      $scope.closeModal = function () {
-        $('#gameModal').remove();
-        $('.modal-backdrop').hide();
-      };
-      $scope.cardIsSecondSelected = function(card) {
-        if (game.curQuestion.numAnswers > 1) {
-          return card === $scope.pickedCards[1];
-        }
+
+    $scope.closeModal = () => {
+      $('#gameModal').remove();
+      $('.modal-backdrop').hide();
+    };
+
+    $scope.closeRegionModal = () => {
+      $('#regionModal').remove();
+      $('.modal-backdrop').hide();
+    };
+
+    $scope.openRegionModal = () => {
+      $('#regionModal').modal('show');
+    };
+
+    $scope.cardIsSecondSelected = function(card) {
+      if (game.curQuestion.numAnswers > 1) {
+        return card === $scope.pickedCards[1];
+      } else {
         return false;
       };
       $scope.firstAnswer = function ($index) {
@@ -150,7 +165,7 @@ angular.module('mean.system')
         }
         return false;
       };
-
+    }
       $scope.secondAnswer = function ($index) {
         if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
           return true;
@@ -193,29 +208,36 @@ angular.module('mean.system')
         return '#f9f9f9';
       };
 
-      $scope.pickWinning = function (winningSet) {
-        if ($scope.isCzar()) {
-          game.pickWinning(winningSet.card[0]);
-          $scope.winningCardPicked = true;
-        }
-      };
+    $scope.pickWinning = function(winningSet) {
+      if ($scope.isCzar()) {
+        game.pickWinning(winningSet.card[0]);
+        $scope.winningCardPicked = true;
+      }
+    };
+
+    $scope.winnerPicked = function() {
+      return game.winningCard !== -1;
+    };
+
+    $scope.startGame = function() {
+      if ($scope.isCustomGame()) {
+        $http.post('/api/games/'+$scope.game.gameID+'/start')
+          .then(() => {
+            $scope.showTour = false;
+            $scope.closeRegionModal();
+            return game.startGame();
+          });
+      } else {
+        $scope.showTour = false;
+        $scope.closeRegionModal();
+        game.startGame($scope.regionId);
+      }
+    };
 
       $scope.winnerPicked = function () {
         return game.winningCard !== -1;
       };
 
-      $scope.startGame = function () {
-        if ($scope.isCustomGame()) {
-          $http.post('/api/games/'+$scope.game.gameID+'/start')
-            .then(function () {
-              $scope.showTour = false;
-              return game.startGame();
-            });
-        } else {
-          $scope.showTour = false;
-          game.startGame();
-        }
-      };
       $scope.abandonGame = function () {
           game.leaveGame();
           $location.path('/');
