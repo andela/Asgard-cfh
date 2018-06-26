@@ -58,10 +58,11 @@
                 <p class="lead mt-3">Name:  {{user.name}}</p>
                 <p class="lead">Email:  {{user.email}} </p>
                 <p class="lead">Game won: {{user.gamesWon}} </p>
+                <p class="lead">Friends: {{user.friends.length}} </p>
             </div>
         </div>
 
-    <div class="container text-center game-log">
+    <!-- <div class="container text-center game-log">
         <h2 class=" my-4 ">Game Log</h2>
         <div>
             <table class="table">
@@ -85,6 +86,153 @@
         </div>
 
     </div>
+
+    <div class="container text-center">
+        <h4>Friends</h4>
+        <div class="my-4">
+            <ul ng-repeat="friend in user.friends">
+                <li>{{friend.acceptName || friend.name}} - {{friend.acceptEmail || friend.email}}</li> 
+            </ul>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <h4>Friend Requests</h4>
+        <div class="my-4">
+            <ul ng-repeat="incomingUser in user.incomingInvitation">
+                <li>{{incomingUser.senderName}} - {{incomingUser.senderEmail}}
+
+                    <button ng-click="acceptFriendInvites(incomingUser)"> Accept </button>
+                    <button ng-click="rejectFriendInvites(incomingUser)"> Reject </button>
+                
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <h4>Pending Friend Invitation</h4>
+        <div class="my-4">
+            <ul ng-repeat="User in user.outgoingInvitation">
+                <li>{{User.name}} - {{User.email}}</li>
+            </ul>
+        </div>
+    </div> -->
+    
+    <div class="container gameplay-container" style="background: transparent !important; border: none; width: 100%">
+            <div class="row">
+              <div class="col-lg-12 col-md-9 col-sm-12 col-xs-12">
+                <div class="table-responsive">
+                  <ul class="nav nav-pills dashboard-log" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link logs active" id="pills-gamelog-tab" data-toggle="pill" href="#pills-gamelog" role="tab" aria-controls="pills-gamelog"
+                        aria-selected="true">Game Log</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link logs" id="pills-friends-tab" data-toggle="pill" href="#pills-friends" role="tab" aria-controls="pills-friends"
+                        aria-selected="false">Friends</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content container table-content container-fluid gameplay-container" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-gamelog" role="tabpanel" aria-labelledby="pills-gamelog-tab">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">GameID</th>
+                            <th scope="col">Points</th>
+                            <th scope="col">Result</th>
+                            <th scope="col">Players</th>
+                            <th scope="col">Date Played</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="game in user.userGame">
+                            <th class="line-right" scope="row">{{$index + 1}}</th>
+                            <td class="line-right">{{game.gameId}}</td>
+                            <td class="line-right">{{game.roundsWon}}</td>
+                            <td class="line-right">{{game.gameWinner}}</td>
+                            <td class="line-right">
+                              <ul>
+                                <li id="no-dot" ng-repeat="player in game.players">
+                                  {{player.username}}
+                                </li>
+                              </ul>
+                            </td>
+                            <td>{{game.played || game.playedAt | date : "fullDate"}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
+                      <table class="table table-striped">
+                        <h2>Friends</h2>
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="friend in user.friends">
+                            <th class="line-right" scope="row">{{$index + 1}}</th>
+                            <td class="line-right">{{friend.acceptName || friend.name}}</td>
+                            <td class="line-right">{{friend.acceptEmail || friend.email}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-striped">
+                        <h2>Friend Requests</h2>
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Accept</th>
+                            <th scope="col">Decline</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="incomingUser in user.incomingInvitation">
+                            <th class="line-right" scope="row">{{$index + 1}}</th>
+                            <td class="line-right">{{incomingUser.senderName}}</td>
+                            <td class="line-right">{{incomingUser.senderEmail}}</td>
+                            <td class="line-right"><button ng-click="acceptFriendInvites(incomingUser)"> Accept </button></td>
+                            <td class="line-right"><button ng-click="rejectFriendInvites(incomingUser)"> Reject </button></td>
+                          </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-striped">
+                            <h2>Sent Friend Invitation</h2>
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="User in user.outgoingInvitation">
+                                <th class="line-right" scope="row">{{$index + 1}}</th>
+                                <td class="line-right">{{User.name}}</td>
+                                <td class="line-right">{{User.email}}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+
+
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
 
     <footer >
         <div class="business-footer">

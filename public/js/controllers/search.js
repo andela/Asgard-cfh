@@ -44,4 +44,27 @@ $scope.sendInvites = function(user){
         toastr.error('Error: invite not sent');
     });
 } 
+
+$scope.sendFriendInvites = function(user){
+    const token = localStorage.token;
+    console.log(token);
+
+    $http({
+        method: 'POST',
+        url: '/api/invite-friend',
+        data: { email: user.email,
+                name: user.name, },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        }
+    }).then((response) => {
+        toastr.success('Invitation sent successfully')
+    },
+    (error) => {
+        toastr.error('Error: invite not sent');
+    });
+} 
+
 });
+

@@ -13,6 +13,7 @@ exports.isLoggedIn = (req, res, next) => {
       });
     }
     req.name = decoded.name;
+    req.email = decoded.email;
     return next();
   });
 };

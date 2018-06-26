@@ -414,6 +414,17 @@ exports.invite = (req, res) => {
   });
 };
 
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/search
+   */
 exports.searchUser = (req, res) => {
   const { term } = req.body;
   const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -457,6 +468,139 @@ exports.searchUser = (req, res) => {
    *
    * @return {Object} - Success message
    *
+   * ROUTE: POST: /invite-friend
+   */
+exports.friendInvite = ((req, res) => {
+  const { email, name } = req.body;
+  const senderName = req.name; // the name coming from the token
+  const senderEmail = req.email;
+
+  User.findOneAndUpdate(
+    { email: senderEmail },
+    { $push: { outgoingInvitation: { email, name } } }
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send request'
+  }));
+
+  User.findOneAndUpdate(
+    { email },
+    { $push: { incomingInvitation: { senderEmail, senderName } } }
+  ).then(() => {
+  }).catch(error => res.status(400).json({
+    message: 'could not send request'
+  }));
+
+  return res.status(200).json({
+    message: 'Friend Invite sent successfully'
+  });
+});
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /accept-friend-invite
+   */
+exports.acceptFriend = ((req, res) => {
+  const { acceptEmail, acceptName } = req.body;
+  const { email, name } = req;
+
+  // check if user email exists in the incoming array.
+  // remove user from the incoming array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email },
+    {
+      $pull: { incomingInvitation: { senderEmail: acceptEmail, senderName: acceptName } },
+      $push: { friends: { acceptEmail, acceptName } }
+    },
+
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  // remove from the ooutgoing array too in the other users array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email: acceptEmail },
+    {
+      $pull: { outgoingInvitation: { email, name } },
+      $push: { friends: { email, name } }
+    },
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  return res.status(200).json({
+    message: `${acceptEmail} has been added to your friends list. `
+  });
+});
+
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /accept-friend-invite
+   */
+exports.rejectFriend = ((req, res) => {
+  const { rejectEmail, rejectName } = req.body;
+  const { email, name } = req;
+
+  // check if user email exists in the incoming array.
+  // remove user from the incoming array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email },
+    {
+      $pull: { incomingInvitation: { senderEmail: rejectEmail, senderName: rejectName } },
+    },
+
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  // remove from the ooutgoing array too in the other users array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email: rejectEmail },
+    {
+      $pull: { outgoingInvitation: { email, name } },
+    },
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  return res.status(200).json({
+    message: `${rejectEmail}'s friend request has been rejected. `
+  });
+});
+
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
    * ROUTE: POST: /api/donations
    */
 exports.getDonations = (req, res) => {
@@ -472,6 +616,17 @@ exports.getDonations = (req, res) => {
     });
 };
 
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/profile/:id
+   */
 exports.profile = (req, res) => {
   const { id } = req.params;
   const details = {};
@@ -487,6 +642,9 @@ exports.profile = (req, res) => {
         details.email = user.email;
         details.name = user.name;
         details.username = user.username;
+        details.incomingInvitation = user.incomingInvitation;
+        details.outgoingInvitation = user.outgoingInvitation;
+        details.friends = user.friends;
         details.image = user.profileImage;
         details.gamesWon = gamesWon.length;
         Game.find().exec((err, games) => {

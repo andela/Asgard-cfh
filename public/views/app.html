@@ -10,50 +10,49 @@
       <ul class="game-nav navbar-nav mr-auto">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
         <li class="nav-item" data-step="1" data-intro="Welcome to Card for Humanity a Game for horrible people 😄, I will be taking you on a brief tour on how to play the game click next to continue">
-          <a href="#!/">
-            <img src="../img/landing/logo.png" alt="logo" width="80px">
-          </a>
+          <a href="#!/"><img src="../img/landing/logo.png" alt="logo" width="80px"></a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <a href="javascript:void(0);" class="auth nav-link" ng-show="showTour" data-step="13" data-intro="Did you miss anything? Click the back button or click here to start again 🧐"
-          onclick="javascript:introJs().start();">TAKE A TOUR</a>
+          <a href="javascript:void(0);" class="auth nav-link" ng-show="showTour" data-step="13" data-intro="Did you miss anything? Click the back button or click here to start again 🧐" onclick="javascript:introJs().start();">TAKE A TOUR</a>
         <!-- trings-->
         <!-- Trigger the modal with a button -->
-        <a class="auth nav-link" ng-show="isCustomGame() && game.state === 'awaiting players'" data-step="11" data-intro="You can invite your friends to join your game. Just search for a friend and click the invite button next to his name"
-          data-toggle="modal" data-target="#myModal">INVITE FRIENDS </a>
+        <a class="auth nav-link" ng-show="isCustomGame() && game.state === 'awaiting players'" data-step="11" data-intro="You can invite your friends to join your game. Just search for a friend and click the invite button next to his name" data-toggle="modal" data-target="#myModal">INVITE FRIENDS </a>
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-body">
-                <div ng-controller="searchController" class="text-primary">
-                  <h4>
-                    <label for="friendEmail" class="text-danger"> Input friend's email and send an invite! </label>
-                  </h4>
-                  <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here" />
-                  <table class="table" ng-show="foundUsers && inputValue">
-                    <thead>
-                      <tr>
-                        <th style="text-align: center">Name</th>
-                        <th style="text-align: center">Email</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="user in foundUsers">
-                        <td> {{user.name}}</td>
-                        <td>{{user.email}}</td>
-                        <td>
-                          <button type="button" ng-click="sendInvites(user)"> Invite </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  </br>
-                  <div class="error" ng-show="userNotFound && inputValue">
-                    <h5 style="color: red"> No such user found </h5>
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div ng-controller="searchController" class="text-primary">
+                    <h4>
+                      <label for="friendEmail" class="text-danger" style="color: #fd9267"> Input friend's email and send an invite! </label>
+                    </h4>
+                    <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here" />
+                    <table class="table text-dark" ng-show="foundUsers && inputValue">
+                      <thead>
+                        <tr>
+                          <th style="">Name</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="user in foundUsers">
+                          <td> {{user.name}}</td>
+                          <td>
+                            <button type="button" ng-click="sendInvites(user)"> Invite </button>
+                          </td>
+                          <td>
+                            <button type=“button” ng-click=“sendFriendInvites(user)“> <i class=“fa fa-user-plus”></i> Add Friend </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </br>
+                    <div class="error" ng-show="userNotFound && inputValue">
+                      <h5 style="color: #fd9267"> No such user found </h5>
+                    </div>
                   </div>
                 </div>
               </div>
