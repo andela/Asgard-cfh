@@ -1309,14 +1309,17 @@ u {
   width: 25%;
   }
  .user-details img{
-  margin-top: 50px;
+  margin-top: 10px;
   height: 200px;
-  width: 200px
+  width: 200px;
+  /* object-fit: cover; */
 }
 
 .bg-grey {
-background-color: rgba(245, 155, 91, 0.281);
+  background-color: rgba(245, 155, 91, 0.281);
+  height: 38rem;
 }
+
 .game-log {
 margin-top: 5rem;
 margin-bottom: 10rem;

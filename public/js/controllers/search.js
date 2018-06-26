@@ -60,9 +60,11 @@ $scope.sendFriendInvites = function(user){
         }
     }).then((response) => {
         toastr.success('Invitation sent successfully')
+        console.log(response)
     },
     (error) => {
         toastr.error('Error: invite not sent');
+        console.log(error)
     });
 } 
 
