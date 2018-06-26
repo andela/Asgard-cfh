@@ -1,6 +1,6 @@
 <div id="question-container-inner">
   <div class="card question-block">
-    <div id="question-text" ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></div>
+    <div id="question-text" ng-bind-html="trustAsHtml(game.curQuestion.text)" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></div>
     <!-- <div ng-show="isCzar() === false && game.state === 'czar pick card'" style="text-align:center">CZAR is Selecting Card. Please Wait...</div> -->
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
@@ -13,7 +13,7 @@
       <div id="loading-container">
         <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
       </div>
-      <div id="start-game-container text-right" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
+      <div id="start-game-container text-right" ng-click="openRegionModal()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
         <div class="btn btn-info " id='start-game-button'>
           Start Game</br>with {{game.players.length}} players
         </div>

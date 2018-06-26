@@ -1,4 +1,3 @@
-/* eslint-disable */
 var app = angular.module('mean.system')
 
 app.filter('highlight', ['$sce', function ($sce) {
@@ -29,7 +28,6 @@ $scope.sendInvites = function(user){
     const token = localStorage.token;
     console.log(token);
     console.log($scope.invite);
-
     $http({
         method: 'POST',
         url: '/api/invite',
