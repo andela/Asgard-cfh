@@ -100,7 +100,7 @@ UserSchema.methods = {
         if (!plainText || !this.hashed_password) {
             return false;
         }
-        return bcrypt.compareSync(plainText,this.hashed_password);
+        return bcrypt.compareSync(plainText, this.hashed_password);
     },
 
   /**
