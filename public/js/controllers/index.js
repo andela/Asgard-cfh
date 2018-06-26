@@ -18,10 +18,12 @@ angular.module('mean.system').controller('IndexController', [
 
     $scope.showLoginError = false;
     $scope.hasSignupError = false;
+    $scope.loading = 'disabled';
     $scope.SignupError = null;
     $scope.loginError = null;
     $scope.dontShow = false;
     $scope.avatars = [];
+    $scope.email = '';
     let userId = null;
     if (window.user) {
       userId = window.user._id;
@@ -56,7 +58,9 @@ angular.module('mean.system').controller('IndexController', [
       }
     };
 
-    $scope.signUp = function () {
+    $scope.signUp = () => {
+      $scope.loading = true;
+      document.getElementById('signup-button').innerHTML = 'loading..';
       if ($scope.image) {
         var imageData = new FormData();
         imageData.append('file', $scope.image);
@@ -72,8 +76,9 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
-                $('#signUpModal').modal('show');
+                $location.path('/success');
               }, (error) => {
+                document.getElementById('signup-button').innerHTML = 'Sign Up';
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
                   $scope.signupError = error.data.errors[0].msg || error.data.msg;
@@ -84,10 +89,12 @@ angular.module('mean.system').controller('IndexController', [
       } else {
         $http.post('/api/auth/signup', $scope.user)
           .then(
-            () => {
-              $('#signUpModal').modal('show');
+            (response) => {
+              localStorage.setItem('email', $scope.user.email);
+              $location.path('/success');
             },
             (error) => {
+              document.getElementById('signup-button').innerHTML = 'Sign Up';
               if (error.data.errors) {
                 $scope.hasSignupError = true;
                 $scope.signupError = error.data.errors[0].msg || error.data.message;
@@ -171,4 +178,5 @@ angular.module('mean.system').controller('IndexController', [
         }
       );
     };
+    $scope.email = localStorage.getItem('email');
   }]);

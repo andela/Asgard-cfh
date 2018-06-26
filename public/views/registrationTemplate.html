@@ -1,19 +1,20 @@
 <div id="main-bod" ng-controller="IndexController">
-        <div class="background">
-          <section class="form-gradient parent-form ">
-              <button class="back-home"><a href="/" class="fa-lg p-2 m-2 arrow-ic arrow"><i class="fa fa-arrow-circle-left"></i></a>Back</button>
-                  <div class="card authenticate-signup-card">
-                      <div class="header pt-3 peach-gradient">
-                          <div class="row d-flex justify-content-center">
-                              <h3 class="white-text mb-3 pt-3 font-weight-bold">Sign up Successful</h3>
-                          </div>
-                      </div>
-                      <div id="success-message">
-                        <p > An email has been sent to your email. Please follow
-                        the link in the email message to complete registration.</p>
-                      </div>
-                  </div>
-              </section>
-        </div>
-        </div>
+    <div class="background">
+        <section class="form-gradient parent-form ">
+            <button class="back-home"><a href="/" class="fa-lg p-2 m-2 arrow-ic arrow"><i class="fa fa-arrow-circle-left"></i>Home</a></button>
+                <div class="card authenticate-signup-card">
+                    <div class="header pt-3 peach-gradient">
+                        <div class="row d-flex justify-content-center">
+                            <h3 class="white-text mb-3 pt-3 font-weight-bold">Sign up Successful</h3>
+                        </div>
+                    </div>
+                    <div id="success-message">
+                    <i class="envelope fa fa-envelope"></i>
+                    <p> An email has been sent to <b>{{email}}</b>. Please follow
+                    the link in the email to login.</p>
+                    </div>
+                </div>
+            </section>
+    </div>
+</div>
         
