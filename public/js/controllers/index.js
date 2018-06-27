@@ -58,6 +58,7 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.signUp = () => {
+      $scope.hasSignupError = false;
       document.getElementById('signup-button').innerHTML = 'LOADING...';
       document.getElementById('signup-button').setAttribute('disabled', true);
       if ($scope.image) {
@@ -78,12 +79,12 @@ angular.module('mean.system').controller('IndexController', [
                 localStorage.setItem('email', $scope.user.email);
                 $location.path('/success');
               }, (error) => {
-                document.getElementById('signup-button').innerHTML = 'Sign Up';
-                document.getElementById('signup-button').removeAttribute('disabled');
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
                   $scope.signupError = error.data.errors[0].msg || error.data.msg;
                 }
+                document.getElementById('signup-button').innerHTML = 'Sign Up';
+                document.getElementById('signup-button').removeAttribute('disabled');
               });
           }
         });
@@ -111,6 +112,7 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.login = function () {
+      $scope.showLoginError = false;
       document.getElementById('login-button').innerHTML = 'LOADING...';
       document.getElementById('login-button').setAttribute('disabled', true);
       $http.post('/api/auth/login', $scope.user)
