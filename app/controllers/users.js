@@ -354,11 +354,6 @@ exports.addDonation = (req, res) => {
               duplicate = true;
             }
           }
-          // if (!duplicate) {
-          //   user.donations.push(req.body);
-          //   user.premium = 1;
-          //   user.save();
-          // }
           if (!duplicate) {
             let donations = 0;
             user.donations.push(req.body);
