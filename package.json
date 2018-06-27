@@ -18,6 +18,7 @@
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text node node_modules/gulp-cli/bin/gulp test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
+    "test:client": "karma start karma.conf.js",
     "postinstall": "node node_modules/gulp-cli/bin/gulp install"
   },
   "dependencies": {
