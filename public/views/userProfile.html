@@ -29,16 +29,47 @@
               </a>
               <ul class="navbar-nav">
                 <div class="auth" ng-show="showOptions">
+                    <li class="nav-item">
+                    <a class="nav-link" href="#!/signup">SIGN UP</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#!/signin">SIGN IN</a>
+                    </li>
+                </div>
                 <li class="nav-item">
-                  <a class="nav-link" href="#!/signup">SIGN UP</a>
+                    <a class="nav-link" target="_self" href="#" data-toggle="modal" data-target="#exampleModal">
+                      <i class="fa fa-bell mx-0" aria-hidden="true"></i>
+                      <small class="mx-0" ng-if="user.incomingInvitation.length > 0">{{user.incomingInvitation.length}}</small>
+                    </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#!/signin">SIGN IN</a>
-                </li>
-              </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Friend Requests</h5>
+                            <div ng-repeat="incomingUser in user.incomingInvitation" >
+                                <p>{{incomingUser.senderName}} wants to add you as a friend </p>
+                                <button ng-click="acceptFriendInvites(incomingUser)"> Accept </button>  
+                                <button ng-click="rejectFriendInvites(incomingUser)"> Reject </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" target="_self" href="#!/#charitySect">DASHBOARD</a>
                 </li>
+
                 <li class="nav-item" ng-hide="showOptions">
                   <a class="nav-link" ng-click="logout()">SIGN OUT</a>
                 </li>
@@ -51,41 +82,90 @@
             </div>
         </nav>
 
+        <div class="row">
+            <div class="bg-grey col-md-4">
+                <div class="text-center user-details">
+                    <img class="mt-5" ng-src = "{{ user.image ? user.image : 'img/profile.png' }}"  alt="">
+                    <p class="lead mt-3">Name:  {{user.name}}</p>
+                    <p class="lead">Email:  {{user.email}} </p>
+                    <p class="lead">Game won: {{user.gamesWon}} </p>
+                    <p class="lead">Friends: {{user.friends.length}} </p>
+                </div>
+            </div>
+    
+            <div class="container gameplay-container col-md-8" style="background: transparent !important; border: none; width: 100%">
+                <div class="row">
+                <div class="col-lg-12 col-md-9 col-sm-12 col-xs-12">
+                    <div class="table-responsive">
+                    <ul class="nav nav-pills dashboard-log" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                        <a class="nav-link logs active" target="_self" id="pills-gamelog-tab" data-toggle="pill" href="#pills-gamelog" role="tab" aria-controls="pills-gamelog"
+                            aria-selected="true">Game Log</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link logs" target="_self" id="pills-friends-tab" data-toggle="pill" href="#pills-friends" role="tab" aria-controls="pills-friends"
+                            aria-selected="false">Friends</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content container table-content container-fluid gameplay-container" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-gamelog" role="tabpanel" aria-labelledby="pills-gamelog-tab">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">GameID</th>
+                                <th scope="col">Points</th>
+                                <th scope="col">Result</th>
+                                <th scope="col">Players</th>
+                                <th scope="col">Date Played</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="game in user.userGame">
+                                <th class="line-right" scope="row">{{$index + 1}}</th>
+                                <td class="line-right">{{game.gameId}}</td>
+                                <td class="line-right">{{game.roundsWon}}</td>
+                                <td class="line-right">{{game.gameWinner}}</td>
+                                <td class="line-right">
+                                <ul>
+                                    <li id="no-dot" ng-repeat="player in game.players">
+                                    {{player.username}}
+                                    </li>
+                                </ul>
+                                </td>
+                                <td>{{game.played || game.playedAt | date : "fullDate"}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
 
-        <div class="jumbotron bg-grey">
-            <div class="text-center user-details">
-                <img ng-src = "{{ user.image ? user.image : 'img/profile.png' }}"  alt="">
-                <p class="lead mt-3">Name:  {{user.name}}</p>
-                <p class="lead">Email:  {{user.email}} </p>
-                <p class="lead">Game won: {{user.gamesWon}} </p>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="friend in user.friends">
+                                <th class="line-right" scope="row">{{$index + 1}}</th>
+                                <td class="line-right">{{friend.acceptName || friend.name}}</td>
+                                <td class="line-right">{{friend.acceptEmail || friend.email}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            
             </div>
         </div>
-
-    <div class="container text-center game-log">
-        <h2 class=" my-4 ">Game Log</h2>
-        <div>
-            <table class="table">
-                <thead class="t">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Games Played</th>
-                        <th scope="col">Points</th>
-                        <th scope="col">Result</th>
-                    </tr>
-                </thead>
-                <tbody class="">
-                    <tr ng-repeat="game in user.userGame">
-                        <th scope="row">{{ $index + 1 }}</th>
-                        <td>{{ game.gameId }}</td>
-                        <td>{{ game.roundsWon }}</td>
-                        <td>{{ game.gameWinner}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
     <footer >
         <div class="business-footer">
             <div class="text-center">

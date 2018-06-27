@@ -4,8 +4,13 @@
           <div id="player-container-inner">
               <div id="avatar_">
                   <span ng-show="isPremium($index)">
-                    <img ng-src="img/king.png" id="king">
-                  </span>
+                    <div ng-if="premium === 1">
+                        <img ng-src="img/silverCrown2.png" id="king" width="50px" height="50px">
+                      </div>
+                      <div ng-if="premium === 2">
+                        <img ng-src="img/goldenCrown.png" id="king" width="50px" height="50px">
+                      </div>
+                    </span>
                   <img class="user-image" ng-src="{{player.profileImage || player.avatar}}"/>
                 </div>
             <div id="player-name" data-step="8" data-intro="Here You can see the name of a player in the game"><p>{{player.username | upperFirstLetter}}</p></div>

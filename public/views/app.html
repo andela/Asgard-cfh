@@ -5,7 +5,6 @@
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="game-nav navbar-nav mr-auto">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -30,23 +29,25 @@
               <div class="modal-body">
                 <div ng-controller="searchController" class="text-primary">
                   <h4>
-                    <label for="friendEmail" class="text-danger"> Input friend's email and send an invite! </label>
+                    <label for="friendEmail" class="text-dark"> Input friend's email and send an invite! </label>
                   </h4>
                   <input type="text" class="form-control" ng-change="findUsers()" ng-model="inputValue" placeholder="search here" />
                   <table class="table" ng-show="foundUsers && inputValue">
                     <thead>
                       <tr>
-                        <th style="text-align: center">Name</th>
-                        <th style="text-align: center">Email</th>
+                        <th style="">Name</th>
+                        <th></th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr ng-repeat="user in foundUsers">
                         <td> {{user.name}}</td>
-                        <td>{{user.email}}</td>
                         <td>
-                          <button type="button" ng-click="sendInvites(user)"> Invite </button>
+                          <button type="button" ng-click="sendInvites(user)" data-dismiss="modal"> Invite </button>
+                        </td>
+                        <td>
+                          <button type="button" ng-click="sendFriendInvites(user)" data-dismiss="modal"> <i class="fa fa-user-plus"></i> Add Friend </button>
                         </td>
                       </tr>
                     </tbody>
@@ -58,10 +59,9 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
               </div>
             </div>
-
           </div>
         </div>
         <ul class="navbar-nav">
@@ -132,7 +132,7 @@
         </div>
       </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" ng-click="startGame()">
+            <button type="button" class="btn btn-warning" ng-click="startGame()">
               Proceed
             </button>
           </div>
@@ -190,8 +190,7 @@
       </div>
 
     </div>
-    <!-- <answers></answers> -->
-    <!-- <chatpanel></chatpanel> -->
+    
   </div>
 </div>
 

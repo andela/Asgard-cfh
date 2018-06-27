@@ -69,23 +69,5 @@ console.log(`Express app started on port ${port}`); //eslint-disable-line
 // Initializing logger
 logger.init(app, passport, mongoose);
 
-// const Game = mongoose.model('Game');
-
-// Game.find().exec((err, games) => {
-//   if (err) {
-//     return res.status(400).json({
-//       message: 'Error Occured'
-//     })
-//   }
-//   const userGameLog = games.map(game => ({
-//     gameId: game.gameId,
-//     playedAt: game.played,
-//     userGame: game.players
-//       .filter(player => player.username === 'Rotimi')
-//   }));
-//   const userGame = userGameLog.filter(y => y.userGame.length !== 0);
-// });
-
-
 // expose app
 export default app;

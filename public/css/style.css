@@ -267,6 +267,15 @@
    .center-link {
      text-align: center;
    }
+   .nav-contents {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+  }
+  .align-button {
+    margin: 5% auto;
+  }
    .game-text {
      padding-top: 15%;
      color: #fff;
@@ -419,9 +428,9 @@
  }
 
  .form-gradient input[type=text]:focus:not([readonly]) {
-   border-bottom: 1px solid #fd9267;
-   -webkit-box-shadow: 0 1px 0 0 #fd9267;
-   box-shadow: 0 1px 0 0 #fd9267;
+   border-bottom: 1px solid #fd9267 !important;
+   -webkit-box-shadow: 0 1px 0 0 #fd9267 !important;
+   box-shadow: 0 1px 0 0 #fd9267 !important;
  }
 
  .form-gradient input[type=text]:focus:not([readonly]) label {
@@ -429,9 +438,9 @@
  }
 
  .form-gradient input[type=password]:focus:not([readonly]) {
-   border-bottom: 1px solid #fd9267;
-   -webkit-box-shadow: 0 1px 0 0 #fd9267;
-   box-shadow: 0 1px 0 0 #fd9267;
+   border-bottom: 1px solid #fd9267 !important;
+   -webkit-box-shadow: 0 1px 0 0 #fd9267 !important;
+   box-shadow: 0 1px 0 0 #fd9267 !important;
  }
 
  .form-gradient input[type=password]:focus:not([readonly]) label {
@@ -439,9 +448,9 @@
  }
 
  .peach-gradient {
-   background: -webkit-linear-gradient(50deg, #ffd86f, #fc6262) !important;
-   background: -o-linear-gradient(50deg, #ffd86f, #fc6262) !important;
-   background: linear-gradient(40deg, #ffd86f, #fc6262) !important;
+   background: -webkit-linear-gradient(50deg,#f98532d1,#f98532d1) !important;
+   background: -o-linear-gradient(15deg,#f98532d1,#f98532d1) !important;
+   background: linear-gradient(50deg,#f98532d1,#f98532d1) !important;
  }
 
  .back-home {
@@ -492,14 +501,14 @@
  .authenticate-card {
    width: 100%;
    max-width: 28rem;
-   margin: 1% auto 0;
+   margin: 0 auto 0;
    box-shadow: 3px 4px 10px rgb(51, 30, 5);
  }
 
  .authenticate-signup-card {
    width: 100%;
    max-width: 28rem;
-   margin: 0% auto 0;
+   margin: 1% auto;
    box-shadow: 3px 4px 10px rgb(51, 30, 5);
  }
 
@@ -577,6 +586,7 @@
    margin: 0 1%;
    border-radius: 7px;
    border: 2px solid black;
+   position: relative;
  }
 
  .czar-image {
@@ -915,7 +925,10 @@
 
  @media (max-width: 520px) {
    .oldcard.smallest {
-     font-size: 10px;
+      font-size: 20px;
+      overflow: scroll;
+      width: 40%;
+      margin-left: 5%; 
    }
  }
 
@@ -1044,7 +1057,10 @@
    border-bottom: 2px solid orange;
    border-radius: 4px;
    margin-right: 11%;
-   outline: none !important
+   outline: none !important;
+   cursor: pointer;
+   background: -webkit-linear-gradient(50deg,#f98532d1,#f98532d1) !important;
+   color: #fff
  }
 
  #profile-pic::after {
@@ -1174,16 +1190,20 @@
 }
 .chat-item-left{
   display: flex;
-  width: 15%;
+  width: 20%;
+  overflow: hidden;
+  padding: 10px;
 }
 .chat-item-right{
-  width: 75%;
+  width: 80%;
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 .chat-avatar{
   height: 30px;
   margin-top: 4px;
+  background-size: contain;
 }
 .chat-name{
   font-size: 14px;
@@ -1289,15 +1309,38 @@ u {
   width: 25%;
   }
  .user-details img{
-  margin-top: 50px;
+  margin-top: 10px;
   height: 200px;
-  width: 200px
+  width: 200px;
+  /* object-fit: cover; */
 }
 
 .bg-grey {
-background-color: rgba(245, 155, 91, 0.281);
+  background-color: rgba(245, 155, 91, 0.281);
+  height: 38rem;
 }
+
 .game-log {
 margin-top: 5rem;
 margin-bottom: 10rem;
 }
+
+#success-message p {
+  padding: 20px;
+  text-align: center;
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+#success-message .envelope {
+  display: flex;
+  justify-content: center;
+  margin: 5% 0 0;
+  font-size: 3em;
+  color: #f47721;
+  line-height: 1.8;
+  -webkit-animation: bounce .3s infinite alternate;
+  -moz-animation: bounce .3s infinite alternate;
+  animation: bounce .3s infinite alternate;
+}
+

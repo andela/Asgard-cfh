@@ -153,7 +153,7 @@ angular.module('mean.system')
       $('#regionModal').modal('show');
     };
 
-    $scope.cardIsSecondSelected = function(card) {
+    $scope.cardIsSecondSelected = function(card) { // eslint-disable-line
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[1];
       } else {
@@ -193,13 +193,18 @@ angular.module('mean.system')
         return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
       };
 
-      $scope.isPremium = function ($index) {
-        return game.players[$index].premium;
-      };
+    $scope.isPremium = function($index) {
+      return $scope.premium = game.players[$index].premium;
+    };
 
-      $scope.currentCzar = function ($index) {
-        return $index === game.czar;
-      };
+    $scope.addDonation = function() {
+      //  return console.log(window.user);
+             return $scope.premium = game.players[$index].premium;
+    };
+
+    $scope.currentCzar = function($index) { // eslint-disable-line
+      return $index === game.czar;
+    };
 
       $scope.winningColor = function ($index) {
         if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
@@ -208,14 +213,14 @@ angular.module('mean.system')
         return '#f9f9f9';
       };
 
-    $scope.pickWinning = function(winningSet) {
+    $scope.pickWinning = function(winningSet) { // eslint-disable-line
       if ($scope.isCzar()) {
         game.pickWinning(winningSet.card[0]);
         $scope.winningCardPicked = true;
       }
     };
 
-    $scope.winnerPicked = function() {
+    $scope.winnerPicked = function() { // eslint-disable-line
       return game.winningCard !== -1;
     };
 

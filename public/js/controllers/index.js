@@ -22,6 +22,7 @@ angular.module('mean.system').controller('IndexController', [
     $scope.loginError = null;
     $scope.dontShow = false;
     $scope.avatars = [];
+    $scope.email = '';
     let userId = null;
     if (window.user) {
       userId = window.user._id;
@@ -33,18 +34,19 @@ angular.module('mean.system').controller('IndexController', [
         $scope.avatars = data;
       });
 
-    if (localStorage.token) {
+    if ($location.url() === '/profile') {
       $window.onload = $http.get(`/api/profile/${userId}`)
         .then((res) => {
           $scope.user = res.data;
         });
-    } else if ($location.path === '/profile') {
+    }
+    if ($location.url() === '/profile' && !localStorage.token) {
       $location.path('/');
     }
 
     $scope.image = '';
     $scope.image_preview = '';
-    $scope.readImage = () => {
+    $scope.readImage = (event) => {
       const file = event.target.files[0];
       if (file) {
         const fileReader = new FileReader();
@@ -56,7 +58,10 @@ angular.module('mean.system').controller('IndexController', [
       }
     };
 
-    $scope.signUp = function () {
+    $scope.signUp = () => {
+      $scope.hasSignupError = false;
+      document.getElementById('signup-button').innerHTML = 'LOADING...';
+      document.getElementById('signup-button').setAttribute('disabled', true);
       if ($scope.image) {
         var imageData = new FormData();
         imageData.append('file', $scope.image);
@@ -72,22 +77,28 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
-                $('#signUpModal').modal('show');
+                localStorage.setItem('email', $scope.user.email);
+                $location.path('/success');
               }, (error) => {
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
                   $scope.signupError = error.data.errors[0].msg || error.data.msg;
                 }
+                document.getElementById('signup-button').innerHTML = 'Sign Up';
+                document.getElementById('signup-button').removeAttribute('disabled');
               });
           }
         });
       } else {
         $http.post('/api/auth/signup', $scope.user)
           .then(
-            () => {
-              $('#signUpModal').modal('show');
+            (response) => {
+              localStorage.setItem('email', $scope.user.email);
+              $location.path('/success');
             },
             (error) => {
+              document.getElementById('signup-button').innerHTML = 'Sign Up';
+              document.getElementById('signup-button').removeAttribute('disabled');
               if (error.data.errors) {
                 $scope.hasSignupError = true;
                 $scope.signupError = error.data.errors[0].msg || error.data.message;
@@ -102,14 +113,19 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.login = function () {
+      $scope.showLoginError = false;
+      document.getElementById('login-button').innerHTML = 'LOADING...';
+      document.getElementById('login-button').setAttribute('disabled', true);
       $http.post('/api/auth/login', $scope.user)
         .then((response) => {
           localStorage.setItem('token', response.data.token);
           $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
         }, (error) => {
+          document.getElementById('login-button').innerHTML = 'LOG IN';
+          document.getElementById('login-button').removeAttribute('disabled');
           $scope.showLoginError = true;
-          $scope.loginError = error.data.message;
+          $scope.loginError = error.data.message || 'Invalid Email or Password';
         });
     };
 
@@ -123,4 +139,54 @@ angular.module('mean.system').controller('IndexController', [
     $scope.openDropdown = () => {
       $('.dropdown-toggle').dropdown();
     };
+
+    $scope.acceptFriendInvites = function (user) {
+      const token = localStorage.token;
+
+      $http({
+        method: 'POST',
+        url: '/api/accept-friend-invite',
+        data: {
+          acceptEmail: user.senderEmail,
+          acceptName: user.senderName,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`
+        }
+      }).then(
+        (response) => {
+          toastr.success('Friend Invitation accepted successfully');
+          $window.location.reload();
+        },
+        (error) => {
+          toastr.error('Error: Could not add friend');
+        }
+      );
+    };
+
+    $scope.rejectFriendInvites = function (user) {
+      const token = localStorage.token;
+
+      $http({
+        method: 'POST',
+        url: '/api/reject-friend-invite',
+        data: {
+          rejectEmail: user.senderEmail,
+          rejectName: user.senderName,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`
+        }
+      }).then(
+        (response) => {
+          toastr.success('Friend Invitation accepted successfully');
+        },
+        (error) => {
+          toastr.error('Error: Could not reject friend');
+        }
+      );
+    };
+    $scope.email = localStorage.getItem('email');
   }]);

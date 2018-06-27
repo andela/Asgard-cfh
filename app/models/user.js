@@ -25,6 +25,9 @@ const UserSchema = new Schema({
   github: {},
   google: {},
   active: { type: Boolean, required: true, default: false },
+  outgoingInvitation: [],
+  incomingInvitation: [],
+  friends: []
 });
 
 /**
@@ -97,7 +100,7 @@ UserSchema.methods = {
         if (!plainText || !this.hashed_password) {
             return false;
         }
-        return bcrypt.compareSync(plainText,this.hashed_password);
+        return bcrypt.compareSync(plainText, this.hashed_password);
     },
 
   /**

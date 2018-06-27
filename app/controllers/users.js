@@ -171,7 +171,7 @@ exports.signUp = (req, res) => {
           sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
           const msg = {
             to: newUser.email,
-            from: 'noreply@asgardcfh.com',
+            from: 'noreply@asgard_cfh.com',
             subject: 'CFH EMAIL VERIFICATION',
             text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
             html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
@@ -180,13 +180,14 @@ exports.signUp = (req, res) => {
             if (err) return err;
             return res.status(201).send({
               message: 'Signed up successfully, please check email for activation link',
-              token: temporaryToken
+              token: temporaryToken,
+              email
             });
           });
         });
       } else {
         return res.status(409).send({
-          message: 'this email is in use already',
+          message: 'This email is in use already',
           success: false
         });
       }
@@ -312,7 +313,7 @@ exports.avatars = (req, res) => {
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = (req, res) => {
+exports.addDonations = (req, res) => {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
@@ -330,6 +331,41 @@ exports.addDonation = (req, res) => {
           if (!duplicate) {
             user.donations.push(req.body);
             user.premium = 1;
+            user.save();
+          }
+        });
+    }
+  }
+  res.send();
+};
+
+exports.addDonation = (req, res) => {
+  if (req.body && req.user && req.user._id) {
+    // Verify that the object contains crowdrise data
+    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+      User.findOne({
+        _id: req.user._id
+      })
+        .exec((err, user) => {
+        // Confirm that this object hasn't already been entered
+          let duplicate = false;
+          for (let i = 0; i < user.donations.length; i++) {
+            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+              duplicate = true;
+            }
+          }
+          if (!duplicate) {
+            let donations = 0;
+            user.donations.push(req.body);
+            user.donations.map((donation) => {
+              donations += donation.amount;
+            });
+
+            if (donations < 50) {
+              user.premium = 1;
+            } else {
+              user.premium = 2;
+            }
             user.save();
           }
         });
@@ -394,7 +430,7 @@ exports.invite = (req, res) => {
   const { recieverEmail, gameURL } = req.body;
   const { name } = req;
   const msg = {
-    from: 'cfh@andela.com',
+    from: 'noreply@asgard_cfh.com',
     to: recieverEmail,
     subject: `${name} is inviting you to join a game`,
     html: `<h1>Cards For Humanity Asgard</h1><p>${name} is inviting you to join this game ${gameURL}</p>`
@@ -414,6 +450,17 @@ exports.invite = (req, res) => {
   });
 };
 
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/search
+   */
 exports.searchUser = (req, res) => {
   const { term } = req.body;
   const escapeRegex = term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -457,6 +504,139 @@ exports.searchUser = (req, res) => {
    *
    * @return {Object} - Success message
    *
+   * ROUTE: POST: /invite-friend
+   */
+exports.friendInvite = ((req, res) => {
+  const { email, name } = req.body;
+  const senderName = req.name; // the name coming from the token
+  const senderEmail = req.email;
+
+  User.findOneAndUpdate(
+    { email: senderEmail },
+    { $push: { outgoingInvitation: { email, name } } }
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send request'
+  }));
+
+  User.findOneAndUpdate(
+    { email },
+    { $push: { incomingInvitation: { senderEmail, senderName } } }
+  ).then(() => {
+  }).catch(error => res.status(400).json({
+    message: 'could not send request'
+  }));
+
+  return res.status(200).json({
+    message: 'Friend Invite sent successfully'
+  });
+});
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /accept-friend-invite
+   */
+exports.acceptFriend = ((req, res) => {
+  const { acceptEmail, acceptName } = req.body;
+  const { email, name } = req;
+
+  // check if user email exists in the incoming array.
+  // remove user from the incoming array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email },
+    {
+      $pull: { incomingInvitation: { senderEmail: acceptEmail, senderName: acceptName } },
+      $push: { friends: { acceptEmail, acceptName } }
+    },
+
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  // remove from the ooutgoing array too in the other users array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email: acceptEmail },
+    {
+      $pull: { outgoingInvitation: { email, name } },
+      $push: { friends: { email, name } }
+    },
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  return res.status(200).json({
+    message: `${acceptEmail} has been added to your friends list. `
+  });
+});
+
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /accept-friend-invite
+   */
+exports.rejectFriend = ((req, res) => {
+  const { rejectEmail, rejectName } = req.body;
+  const { email, name } = req;
+
+  // check if user email exists in the incoming array.
+  // remove user from the incoming array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email },
+    {
+      $pull: { incomingInvitation: { senderEmail: rejectEmail, senderName: rejectName } },
+    },
+
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  // remove from the ooutgoing array too in the other users array
+  // add user to the friends array from both sides.
+  User.findOneAndUpdate(
+    { email: rejectEmail },
+    {
+      $pull: { outgoingInvitation: { email, name } },
+    },
+  ).then(() => {
+  }).catch(() => res.status(400).json({
+    message: 'could not send friend invite'
+  }));
+
+  return res.status(200).json({
+    message: `${rejectEmail}'s friend request has been rejected. `
+  });
+});
+
+
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
    * ROUTE: POST: /api/donations
    */
 exports.getDonations = (req, res) => {
@@ -472,6 +652,17 @@ exports.getDonations = (req, res) => {
     });
 };
 
+/**
+   * @description - Generate Donations info for users
+   *
+   * @param  {object} req - request
+   *
+   * @param  {object} res - response
+   *
+   * @return {Object} - Success message
+   *
+   * ROUTE: POST: /api/profile/:id
+   */
 exports.profile = (req, res) => {
   const { id } = req.params;
   const details = {};
@@ -487,6 +678,9 @@ exports.profile = (req, res) => {
         details.email = user.email;
         details.name = user.name;
         details.username = user.username;
+        details.incomingInvitation = user.incomingInvitation;
+        details.outgoingInvitation = user.outgoingInvitation;
+        details.friends = user.friends;
         details.image = user.profileImage;
         details.gamesWon = gamesWon.length;
         Game.find().exec((err, games) => {

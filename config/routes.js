@@ -117,4 +117,13 @@ module.exports = function (app, passport) { //eslint-disable-line
 
   // Search
   app.post('/api/search', users.searchUser);
+
+  // send friends invitation
+  app.post('/api/invite-friend', middleWare.isLoggedIn, users.friendInvite);
+
+  // accept friends invitation
+  app.post('/api/accept-friend-invite', middleWare.isLoggedIn, users.acceptFriend);
+
+  // reject friends invitation
+  app.post('/api/reject-friend-invite', middleWare.isLoggedIn, users.rejectFriend);
 };

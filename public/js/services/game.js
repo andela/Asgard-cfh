@@ -142,6 +142,16 @@ angular.module('mean.system')
         } else {
           addToNotificationQueue('Waiting for Czar to pick card');
         }
+      } else if (data.state === 'winner has been chosen' &&
+                game.curQuestion.text.indexOf('<u></u>') > -1) {
+        game.curQuestion = data.curQuestion;
+      } else if (data.state === 'awaiting players') {
+        joinOverrideTimeout = $timeout(function() { // eslint-disable-line 
+          game.joinOverride = true;
+        }, 15000);
+      } else if (data.state === 'game dissolved' || data.state === 'game ended') {
+        game.players[game.playerIndex].hand = [];
+        game.time = 0;
       }
 
       if (data.state === 'waiting for players to pick') {

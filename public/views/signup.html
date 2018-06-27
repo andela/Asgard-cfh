@@ -2,7 +2,7 @@
   
 <div class="background">
   <section class="form-gradient parent-form ">
-      <button class="back-home"><a href="/" class="fa-lg p-2 m-2 arrow-ic arrow"><i class="fa fa-arrow-circle-left"></i></a>Back</button>
+      <button class="back-home"><a href="/" class="fa-lg p-2 m-2 arrow-ic arrow"><i class="fa fa-arrow-circle-left"></i>Back</a></button>
           <div class="card authenticate-signup-card">
               <div class="header pt-3 peach-gradient">
                   <div class="row d-flex justify-content-center">
@@ -39,21 +39,19 @@
                       <label for="email">Your email</label>
                   </div>
                   <div class="md-form pb-1 pb-md-3 signup-password">
-                      <input type="password" id="Form-pass3" class="form-control" placeholder="xxxxx84" ng-model="user.password" required novalidate />
+                      <input type="password" id="Form-pass3" class="form-control" ng-model="user.password" required novalidate />
                       <label for="Form-pass3">Your password</label>
                   </div>
-                  <div class="control-group">
-                    <div class="controls choose-image">
-                        <!-- <label for="profile-pic">Select file</label> -->
-                    <input ng-change="readImage()" id="profile-pic" type="file" ng-model="user.image" name="image" accept=".jpg, .png, .jpeg" />
-
+                  <div class="control-group" style="cursor: pointer">
+                    <div class="controls choose-image" style="cursor: pointer">
+                    <input custom-on-change="readImage" id="profile-pic" type="file" name="image" accept=".jpg, .png, .jpeg" />
                     </div>
                 </div>
                 <img ng-src="{{image_preview}}" class="image-preview" >
                   <div class="row d-flex align-items-center mb-4 align-signup">
                       <div class="col-md-1 col-md-5 d-flex align-items-start">
                           <div class="text-center login-button">
-                              <button type="submit" class="btn btn-grey btn-rounded z-depth-1a">Sign Up</button>
+                              <button type="submit" class="btn btn-grey btn-rounded z-depth-1a" id="signup-button">Sign Up</button>
                           </div>
                       </div>
                       <div class="col-md-7">
@@ -65,25 +63,5 @@
       
           </div>
       </section>
-      
-      <!-- Modal -->
-      <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button> -->
-                      <h4 class="modal-title" id="modelTitleId">Registration Successful</h4>
-                  </div>
-                  <div class="modal-body">
-                      You have Successfully Signed Up Check your Email for an Activation Link to Complete Registration
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                  </div>
-              </div>
-          </div>
-      </div>
 </div>
 </div>
