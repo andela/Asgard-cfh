@@ -44,8 +44,7 @@
                   </div>
                   <div class="control-group" style="cursor: pointer">
                     <div class="controls choose-image" style="cursor: pointer">
-                    <input ng-change="readImage()" id="profile-pic" type="file" ng-model="user.image" name="image" accept=".jpg, .png, .jpeg" />
-
+                    <input custom-on-change="readImage" id="profile-pic" type="file" name="image" accept=".jpg, .png, .jpeg" />
                     </div>
                 </div>
                 <img ng-src="{{image_preview}}" class="image-preview" >

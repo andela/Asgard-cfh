@@ -18,7 +18,6 @@ angular.module('mean.system').controller('IndexController', [
 
     $scope.showLoginError = false;
     $scope.hasSignupError = false;
-    $scope.loading = 'disabled';
     $scope.SignupError = null;
     $scope.loginError = null;
     $scope.dontShow = false;
@@ -46,7 +45,7 @@ angular.module('mean.system').controller('IndexController', [
 
     $scope.image = '';
     $scope.image_preview = '';
-    $scope.readImage = () => {
+    $scope.readImage = (event) => {
       const file = event.target.files[0];
       if (file) {
         const fileReader = new FileReader();
@@ -59,8 +58,8 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.signUp = () => {
-      $scope.loading = true;
-      document.getElementById('signup-button').innerHTML = 'loading..';
+      document.getElementById('signup-button').innerHTML = 'LOADING...';
+      document.getElementById('signup-button').setAttribute('disabled', true);
       if ($scope.image) {
         var imageData = new FormData();
         imageData.append('file', $scope.image);
@@ -76,9 +75,11 @@ angular.module('mean.system').controller('IndexController', [
             $scope.user.profileImage = res.secure_url;
             $http.post('/api/auth/signup', $scope.user)
               .then(() => {
+                localStorage.setItem('email', $scope.user.email);
                 $location.path('/success');
               }, (error) => {
                 document.getElementById('signup-button').innerHTML = 'Sign Up';
+                document.getElementById('signup-button').removeAttribute('disabled');
                 if (error.data.errors) {
                   $scope.hasSignupError = true;
                   $scope.signupError = error.data.errors[0].msg || error.data.msg;
@@ -95,6 +96,7 @@ angular.module('mean.system').controller('IndexController', [
             },
             (error) => {
               document.getElementById('signup-button').innerHTML = 'Sign Up';
+              document.getElementById('signup-button').removeAttribute('disabled');
               if (error.data.errors) {
                 $scope.hasSignupError = true;
                 $scope.signupError = error.data.errors[0].msg || error.data.message;
@@ -109,14 +111,18 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.login = function () {
+      document.getElementById('login-button').innerHTML = 'LOADING...';
+      document.getElementById('login-button').setAttribute('disabled', true);
       $http.post('/api/auth/login', $scope.user)
         .then((response) => {
           localStorage.setItem('token', response.data.token);
           $http.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           $location.path('/');
         }, (error) => {
+          document.getElementById('login-button').innerHTML = 'LOG IN';
+          document.getElementById('login-button').removeAttribute('disabled');
           $scope.showLoginError = true;
-          $scope.loginError = error.data.message;
+          $scope.loginError = error.data.message || 'Invalid Email or Password';
         });
     };
 

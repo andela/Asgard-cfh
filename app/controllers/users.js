@@ -171,7 +171,7 @@ exports.signUp = (req, res) => {
           sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
           const msg = {
             to: newUser.email,
-            from: 'noreply@asgardcfh.com',
+            from: 'noreply@asgard_cfh.com',
             subject: 'CFH EMAIL VERIFICATION',
             text: `Hello ${newUser.name} Welcome to Card for Humanity, please kindly click ${emailVerificationURL}/activate/${temporaryToken}>here to complete your registration process`,
             html: `Hello <strong>${newUser.name}</strong><br><br> Welcome to Card for Humanity, please kindly click the link to complete your activation:<br><br><a href=${emailVerificationURL}/activate/${temporaryToken}>emailVerificationURL/activate/</a>`,
@@ -187,7 +187,7 @@ exports.signUp = (req, res) => {
         });
       } else {
         return res.status(409).send({
-          message: 'this email is in use already',
+          message: 'This email is in use already',
           success: false
         });
       }
@@ -435,7 +435,7 @@ exports.invite = (req, res) => {
   const { recieverEmail, gameURL } = req.body;
   const { name } = req;
   const msg = {
-    from: 'cfh@andela.com',
+    from: 'noreply@asgard_cfh.com',
     to: recieverEmail,
     subject: `${name} is inviting you to join a game`,
     html: `<h1>Cards For Humanity Asgard</h1><p>${name} is inviting you to join this game ${gameURL}</p>`
