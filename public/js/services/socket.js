@@ -1,6 +1,6 @@
 angular.module('mean.system')
   .factory('socket', ['$rootScope', function ($rootScope) {
-    var socket = io.connect();
+    var socket = io.connect('https://asgard-cfh-staging.herokuapp.com');
     return {
       on: function(eventName, callback) {
       socket.on(eventName, function() {
