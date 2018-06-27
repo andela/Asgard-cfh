@@ -34,12 +34,13 @@ angular.module('mean.system').controller('IndexController', [
         $scope.avatars = data;
       });
 
-    if (localStorage.token) {
+    if ($location.url() === '/profile') {
       $window.onload = $http.get(`/api/profile/${userId}`)
         .then((res) => {
           $scope.user = res.data;
         });
-    } else if ($location.path === '/profile') {
+    }
+    if ($location.url() === '/profile' && !localStorage.token) {
       $location.path('/');
     }
 
@@ -156,6 +157,7 @@ angular.module('mean.system').controller('IndexController', [
       }).then(
         (response) => {
           toastr.success('Friend Invitation accepted successfully');
+          $window.location.reload();
         },
         (error) => {
           toastr.error('Error: Could not add friend');
